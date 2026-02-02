@@ -10,6 +10,7 @@ import {
   FlaskConical,
   Layers,
   MessageSquareText,
+  Mic,
   Sparkles,
   Star,
   Video,
@@ -19,6 +20,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { LiveAvatarChat } from "@/components/ui/LiveAvatarChat";
 
 type ChatIntent = "what" | "who" | "where";
 
@@ -673,20 +675,41 @@ function LiveIntro() {
   );
 }
 
+const SCENARIO_CONFIGS: Record<LiveScenario, { title: string; description: string; avatarImage?: string }> = {
+  sales: {
+    title: "Продажи и партнёрства",
+    description: "Ассистент отвечает на вопросы, отбирает лидов и греет интерес — ещё до первого звонка.",
+  },
+  projects: {
+    title: "Презентации проектов", 
+    description: "Идеи, которые раньше требовали встречи — теперь объясняются сами.",
+  },
+  team: {
+    title: "Команда и сообщество",
+    description: "Единая подача для новых сотрудников и участников. Без лишних сообщений.",
+  },
+  expert: {
+    title: "Первое касание",
+    description: "Сильное впечатление с первой секунды. Даже если ты не онлайн.",
+  },
+};
+
 function LiveScenarios() {
   const [selected, setSelected] = useState<LiveScenario>("sales");
-  const [session, setSession] = useState<LiveSession | null>(null);
-  const [busy, setBusy] = useState(false);
+  const [showAvatarCard, setShowAvatarCard] = useState(false);
+  const [isCallOpen, setIsCallOpen] = useState(false);
 
-  const getPrompt = useMockLiveContext();
-
-  const createSession = async (scenario: LiveScenario) => {
+  const handleSelectScenario = (scenario: LiveScenario) => {
     setSelected(scenario);
-    setBusy(true);
-    await new Promise((r) => setTimeout(r, 450));
-    const sessionId = `sess_${Math.random().toString(16).slice(2, 10)}`;
-    setSession({ scenario, sessionId, prompt: getPrompt(scenario) });
-    setBusy(false);
+    setShowAvatarCard(true);
+  };
+
+  const handleStartCall = () => {
+    setIsCallOpen(true);
+  };
+
+  const handleCloseCall = () => {
+    setIsCallOpen(false);
   };
 
   const buttons: { key: LiveScenario; label: string }[] = [
@@ -696,12 +719,14 @@ function LiveScenarios() {
     { key: "expert", label: "Первое касание" },
   ];
 
+  const currentConfig = SCENARIO_CONFIGS[selected];
+
   return (
     <SectionShell
       id="scenarios"
       eyebrow="Экран 7 · Сценарии"
-      title="Где это по-настоящему полезно"
-      subtitle="Начинаем с одного сценария. Строим — под твою задачу."
+      title="Начинаем с одного сценария"
+      subtitle="Строим — под твою задачу."
     >
       <div className="grid gap-6 lg:grid-cols-5" data-testid="grid-live">
         <Card className="glass rounded-2xl p-5 lg:col-span-2" data-testid="card-live-controls">
@@ -719,10 +744,9 @@ function LiveScenarios() {
                 variant="secondary"
                 className={cn(
                   "h-11 justify-between rounded-xl bg-muted text-foreground hover:bg-secondary",
-                  selected === b.key && "ring-2 ring-[hsl(var(--accent))]",
+                  selected === b.key && showAvatarCard && "ring-2 ring-[hsl(var(--accent))]",
                 )}
-                onClick={() => createSession(b.key)}
-                disabled={busy}
+                onClick={() => handleSelectScenario(b.key)}
                 data-testid={`button-scenario-${b.key}`}
               >
                 <span className="text-xs sm:text-sm truncate">{b.label}</span>
@@ -731,62 +755,88 @@ function LiveScenarios() {
             ))}
           </div>
 
-          <div className="mt-6 rounded-xl border border-border bg-muted p-4" data-testid="card-live-meta">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <div className="text-xs text-muted-foreground" data-testid="text-live-session-label">
-                  ID Сессии
-                </div>
-                <div className="mt-1 font-mono text-xs sm:text-sm" data-testid="text-live-session-id">
-                  {session?.sessionId ?? "—"}
-                </div>
-              </div>
-              <div className="rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground" data-testid="status-live">
-                {busy ? "Загрузка..." : session ? "Готов" : "Ожидание"}
-              </div>
-            </div>
-            <div className="mt-3 text-xs leading-relaxed text-muted-foreground" data-testid="text-live-prompt">
-              {session?.prompt ??
-                "Выберите сценарий, чтобы подготовить контекст для аватара."}
-            </div>
-          </div>
           <div className="mt-6">
             <PrimaryCTA href="#pilot" label="Хочу такое решение" testId="button-scenarios-continue" />
           </div>
         </Card>
 
         <Card className="glass glow-ring relative overflow-hidden rounded-2xl p-0 lg:col-span-3" data-testid="card-live-embed">
-          <div className="p-5">
-            <div className="flex items-center justify-between">
-              <div className="text-sm font-medium" data-testid="text-live-embed-title">
-                Визуализация аватара
+          {showAvatarCard ? (
+            <div className="relative">
+              <div className="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-xl">
+                  <Video className="w-12 h-12 text-white" />
+                </div>
               </div>
-              <div className="text-xs text-muted-foreground" data-testid="text-live-embed-note">
-                Живой формат
+              
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-5">
+                <div className="flex items-end justify-between gap-4">
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold text-lg" data-testid="text-avatar-title">
+                      {currentConfig.title}
+                    </h3>
+                    <p className="text-white/70 text-sm mt-1 line-clamp-2" data-testid="text-avatar-desc">
+                      {currentConfig.description}
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleStartCall}
+                    className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white rounded-full text-sm font-medium transition-colors whitespace-nowrap"
+                    data-testid="button-chat-now"
+                  >
+                    Chat now
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="border-t border-border bg-muted/30 p-5">
-            <div
-              className="flex aspect-video items-center justify-center rounded-xl border border-border bg-card"
-              data-testid="iframe-live-placeholder"
-            >
-              <div className="max-w-md text-center p-4">
-                <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs text-muted-foreground">
-                  <Video className="h-3.5 w-3.5 text-[hsl(var(--accent))]" />
-                  <span>Цифровой двойник</span>
-                </div>
-                <div className="font-serif text-xl sm:text-2xl tracking-[-0.02em]" data-testid="text-live-placeholder-title">
-                  Контекст: {buttons.find(b => b.key === selected)?.label}
-                </div>
-                <div className="mt-2 text-sm leading-relaxed text-muted-foreground" data-testid="text-live-placeholder-desc">
-                  В реальном продукте здесь будет видеопоток аватара, который говорит вашими словами.
+          ) : (
+            <>
+              <div className="p-5">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-medium" data-testid="text-live-embed-title">
+                    Визуализация аватара
+                  </div>
+                  <div className="text-xs text-muted-foreground" data-testid="text-live-embed-note">
+                    Живой формат
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+              <div className="border-t border-border bg-muted/30 p-5">
+                <div
+                  className="flex aspect-video items-center justify-center rounded-xl border border-border bg-card"
+                  data-testid="iframe-live-placeholder"
+                >
+                  <div className="max-w-md text-center p-4">
+                    <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs text-muted-foreground">
+                      <Video className="h-3.5 w-3.5 text-[hsl(var(--accent))]" />
+                      <span>Цифровой двойник</span>
+                    </div>
+                    <div className="font-serif text-xl sm:text-2xl tracking-[-0.02em]" data-testid="text-live-placeholder-title">
+                      Выберите сценарий
+                    </div>
+                    <div className="mt-2 text-sm leading-relaxed text-muted-foreground" data-testid="text-live-placeholder-desc">
+                      Нажмите на один из сценариев слева, чтобы увидеть карточку аватара.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </Card>
       </div>
+
+      <LiveAvatarChat
+        isOpen={isCallOpen}
+        onClose={handleCloseCall}
+        scenario={{
+          key: selected,
+          title: currentConfig.title,
+          description: currentConfig.description,
+          avatarImage: currentConfig.avatarImage,
+        }}
+        language="ru"
+      />
     </SectionShell>
   );
 }
