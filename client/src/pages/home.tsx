@@ -1,24 +1,15 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { LazyMotion, domAnimation, motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
-  BadgeCheck,
-  Calendar,
   Check,
   ChevronDown,
-  Cpu,
-  FlaskConical,
-  Layers,
   MessageSquareText,
-  Mic,
-  Sparkles,
-  Star,
   Video,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { LiveAvatarChat } from "@/components/ui/LiveAvatarChat";
 
@@ -50,126 +41,6 @@ const item = {
   show: { opacity: 1, y: 0 },
 };
 
-function SectionShell({
-  id,
-  eyebrow,
-  title,
-  subtitle,
-  children,
-  className,
-}: {
-  id: string;
-  eyebrow?: string;
-  title: string;
-  subtitle?: string | React.ReactNode;
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <section
-      id={id}
-      className={cn(
-        "relative flex min-h-screen items-center justify-center overflow-hidden py-12 snap-start",
-        className,
-      )}
-      data-testid={`section-${id}`}
-    >
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          {eyebrow ? (
-            <div
-              className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium tracking-wide text-muted-foreground"
-              data-testid={`text-eyebrow-${id}`}
-            >
-              <Sparkles className="h-3.5 w-3.5 text-[hsl(var(--accent))]" />
-              <span>{eyebrow}</span>
-            </div>
-          ) : null}
-
-          <h2
-            className="font-serif text-3xl leading-tight tracking-[-0.02em] text-balance sm:text-4xl"
-            data-testid={`text-title-${id}`}
-          >
-            {title}
-          </h2>
-          {subtitle ? (
-            <div
-              className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg"
-              data-testid={`text-subtitle-${id}`}
-            >
-              {subtitle}
-            </div>
-          ) : null}
-        </div>
-
-        <div className="mt-10" data-testid={`content-${id}`}>
-          {children}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Pill({
-  icon,
-  label,
-}: {
-  icon: React.ReactNode;
-  label: string;
-}) {
-  return (
-    <div
-      className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-muted-foreground"
-      data-testid={`pill-${label.replaceAll(" ", "-").toLowerCase()}`}
-    >
-      <span className="text-[hsl(var(--accent))]">{icon}</span>
-      <span>{label}</span>
-    </div>
-  );
-}
-
-function PrimaryCTA({
-  href,
-  label,
-  testId,
-  onClick,
-}: {
-  href: string;
-  label: string;
-  testId: string;
-  onClick?: () => void;
-}) {
-  return (
-    <a href={href} className="inline-flex" data-testid={testId} onClick={onClick}>
-      <Button className="h-11 gap-2 rounded-full px-5">
-        {label}
-        <ArrowRight className="h-4 w-4" />
-      </Button>
-    </a>
-  );
-}
-
-function SecondaryCTA({
-  href,
-  label,
-  testId,
-}: {
-  href: string;
-  label: string;
-  testId: string;
-}) {
-  return (
-    <a href={href} className="inline-flex" data-testid={testId}>
-      <Button
-        variant="secondary"
-        className="h-11 rounded-full bg-muted px-5 text-foreground hover:bg-secondary"
-      >
-        {label}
-      </Button>
-    </a>
-  );
-}
-
 function useMockChatResponse() {
   return (intent: ChatIntent) => {
     switch (intent) {
@@ -185,287 +56,124 @@ function useMockChatResponse() {
   };
 }
 
-function useMockLiveContext() {
-  return (scenario: LiveScenario) => {
-    if (scenario === "sales") {
-      return "Ассистент отвечает на вопросы, отбирает лидов и греет интерес — ещё до первого звонка.";
-    }
-    if (scenario === "projects") {
-      return "Идеи, которые раньше требовали встречи — теперь объясняются сами.";
-    }
-    if (scenario === "team") {
-      return "Единая подача для новых сотрудников и участников. Без лишних сообщений.";
-    }
-    return "Сильное впечатление с первой секунды. Даже если ты не онлайн.";
-  };
-}
-
 function Hero() {
   return (
     <section
-      className="relative flex min-h-screen items-center justify-center overflow-hidden py-8 snap-start"
+      className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden px-6 py-12 snap-start"
       data-testid="section-hero"
     >
       <div
-        className="pointer-events-none absolute inset-0 grid-fade"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 noise"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-50/80 via-white to-white"
         aria-hidden
       />
 
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-card)] sm:p-10 lg:p-14">
-          <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-black/[0.03]" />
-
-          <LazyMotion features={domAnimation}>
-            <motion.div
-              variants={container}
-              initial="hidden"
-              animate="show"
-              className="relative"
-            >
-              <motion.div variants={item} className="flex flex-wrap gap-2">
-                <Pill
-                  icon={<Star className="h-3.5 w-3.5" />}
-                  label="Живое представительство"
-                />
-                <Pill
-                  icon={<MessageSquareText className="h-3.5 w-3.5" />}
-                  label="AI диалог"
-                />
-                <Pill icon={<Video className="h-3.5 w-3.5" />} label="Цифровой двойник" />
-              </motion.div>
-
-            <motion.h1
-              variants={item}
-              className="mt-8 font-serif text-4xl leading-[1.04] tracking-[-0.03em] text-balance sm:text-5xl lg:text-6xl"
-              data-testid="text-hero-title"
-            >
-              {APP_TITLE}
-            </motion.h1>
-
-            <motion.p
-              variants={item}
-              className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
-              data-testid="text-hero-subtitle"
-            >
-              Общается с гостями, ведёт твои направления и вызывает эффект «вау» — легко, понятно и без твоего участия.
-            </motion.p>
-
-            <motion.div
-              variants={item}
-              className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
-            >
-              <PrimaryCTA
-                href="#how"
-                label="Показать, как это работает"
-                testId="button-scroll-how"
-              />
-            </motion.div>
+      <LazyMotion features={domAnimation}>
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="relative mx-auto w-full max-w-lg text-center"
+        >
+          <motion.div 
+            variants={item}
+            className="mx-auto mb-8 h-32 w-32 overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 p-1 shadow-xl shadow-blue-500/20"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=400"
+              alt="AI Avatar"
+              className="h-full w-full rounded-full object-cover"
+            />
           </motion.div>
-          </LazyMotion>
-        </div>
-      </div>
+
+          <motion.h1
+            variants={item}
+            className="font-serif text-[2.5rem] leading-[1.1] tracking-[-0.03em] text-balance sm:text-5xl"
+            data-testid="text-hero-title"
+          >
+            {APP_TITLE}
+          </motion.h1>
+
+          <motion.p
+            variants={item}
+            className="mx-auto mt-5 max-w-sm text-lg leading-relaxed text-muted-foreground"
+            data-testid="text-hero-subtitle"
+          >
+            AI-ассистент, который общается с гостями и представляет тебя — 24/7
+          </motion.p>
+
+          <motion.div variants={item} className="mt-10">
+            <a href="#demo" className="inline-flex" data-testid="button-scroll-demo">
+              <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-black/10">
+                Попробовать
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+            </a>
+          </motion.div>
+
+          <motion.div 
+            variants={item}
+            className="mt-16 flex items-center justify-center gap-2 text-sm text-muted-foreground"
+          >
+            <ChevronDown className="h-4 w-4 animate-bounce" />
+            <span>Листай вниз</span>
+          </motion.div>
+        </motion.div>
+      </LazyMotion>
     </section>
   );
 }
 
-function Problem() {
-  const problems = useMemo(
-    () => [
-      {
-        title: "Снова объяснять с нуля",
-        desc: "Ты каждый раз заново рассказываешь, чем занимаешься. Для клиентов, партнёров, даже знакомых.",
-      },
-      {
-        title: "Потеря времени",
-        desc: "Первые касания съедают энергию. Много слов — мало смысла и действий.",
-      },
-      {
-        title: "Никогда не вовремя",
-        desc: "Когда тебе пишут — ты занят. А когда ты готов — уже поздно.",
-      },
-      {
-        title: "Нельзя масштабироваться",
-        desc: "Ты хочешь расти, но всё упирается в твои ответы и твой график.",
-      },
-    ],
-    [],
-  );
-
+function WhyItMatters() {
   return (
-    <SectionShell
-      id="problem"
-      eyebrow="Экран 2 · Проблема"
-      title="Почему это вообще нужно?"
+    <section
+      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start"
+      id="why"
+      data-testid="section-why"
     >
-      <div className="grid gap-4 sm:grid-cols-2" data-testid="grid-problems">
-        {problems.map((p, idx) => (
-          <Card
-            key={p.title}
-            className="glass rounded-2xl p-5"
-            data-testid={`card-problem-${idx}`}
+      <div className="mx-auto w-full max-w-lg">
+        <LazyMotion features={domAnimation}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
-            <div className="flex items-start gap-3">
-              <div className="mt-0.5 rounded-xl border border-border bg-muted p-2 text-[hsl(var(--accent))]">
-                <Layers className="h-4 w-4" />
+            <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] text-center sm:text-4xl">
+              Зачем это нужно?
+            </h2>
+            
+            <div className="mt-10 space-y-6">
+              <div className="rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 p-6 border border-red-100">
+                <div className="text-lg font-medium text-red-900 mb-2">Проблема</div>
+                <p className="text-muted-foreground leading-relaxed">
+                  Ты постоянно объясняешь одно и то же. Клиентам, партнёрам, команде. Это отнимает время и энергию.
+                </p>
               </div>
-              <div>
-                <div
-                  className="text-base font-medium"
-                  data-testid={`text-problem-title-${idx}`}
-                >
-                  {p.title}
-                </div>
-                <div
-                  className="mt-2 text-sm leading-relaxed text-muted-foreground"
-                  data-testid={`text-problem-desc-${idx}`}
-                >
-                  {p.desc}
-                </div>
+              
+              <div className="flex justify-center">
+                <ArrowRight className="h-6 w-6 text-muted-foreground rotate-90" />
+              </div>
+              
+              <div className="rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 p-6 border border-green-100">
+                <div className="text-lg font-medium text-green-900 mb-2">Решение</div>
+                <p className="text-muted-foreground leading-relaxed">
+                  AI-ассистент говорит за тебя. Отвечает на вопросы, объясняет суть и ведёт к действию — круглосуточно.
+                </p>
               </div>
             </div>
-          </Card>
-        ))}
-      </div>
-      <div className="mt-10">
-        <PrimaryCTA href="#solution" label="Хочу понять, как это решить" testId="button-scroll-solution" />
-      </div>
-    </SectionShell>
-  );
-}
 
-function Solution() {
-  const points = [
-    {
-      title: "Говорит за тебя",
-      desc: "Доносит твою идею так, как ты бы рассказал сам — только чётко и без повторов.",
-    },
-    {
-      title: "Общается 24/7",
-      desc: "Отвечает на вопросы, объясняет, направляет — даже когда ты спишь или в дороге.",
-    },
-    {
-      title: "Ведёт к действию",
-      desc: "Помогает гостям сделать следующий шаг — без суеты и лишних писем.",
-    },
-  ];
-
-  return (
-    <SectionShell
-      id="solution"
-      eyebrow="Экран 3 · Решение"
-      title="Это не сайт. Не бот."
-      subtitle={
-        <p className="text-balance">
-          Это как если бы ты сам встречал каждого гостя — <span className="text-foreground font-medium">но автоматически.</span>
-        </p>
-      }
-    >
-      <div className="grid gap-4 lg:grid-cols-3" data-testid="grid-solution">
-        {points.map((p, idx) => (
-          <Card
-            key={p.title}
-            className="glass rounded-2xl p-5"
-            data-testid={`card-solution-${idx}`}
-          >
-            <div className="flex items-center gap-2">
-              <div className="rounded-xl border border-border bg-muted p-2 text-[hsl(var(--accent))]">
-                <Sparkles className="h-4 w-4" />
-              </div>
-              <div
-                className="text-base font-medium"
-                data-testid={`text-solution-title-${idx}`}
-              >
-                {p.title}
-              </div>
+            <div className="mt-12 text-center">
+              <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
+                <Button className="h-12 gap-2 rounded-full px-6 shadow-md">
+                  Смотреть демо
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </a>
             </div>
-            <div
-              className="mt-3 text-sm leading-relaxed text-muted-foreground"
-              data-testid={`text-solution-desc-${idx}`}
-            >
-              {p.desc}
-            </div>
-          </Card>
-        ))}
+          </motion.div>
+        </LazyMotion>
       </div>
-      <div className="mt-10">
-        <PrimaryCTA href="#how" label="Как это вообще работает?" testId="button-scroll-how-solution" />
-      </div>
-    </SectionShell>
-  );
-}
-
-function HowItWorks() {
-  const steps = [
-    {
-      n: "01",
-      title: "Открытие",
-      desc: "Человек открывает твоё представительство",
-    },
-    {
-      n: "02",
-      title: "Диалог",
-      desc: "Сразу начинается диалог — легко и по делу",
-    },
-    {
-      n: "03",
-      title: "Понимание",
-      desc: "Ассистент понимает, зачем он пришёл",
-    },
-    {
-      n: "04",
-      title: "Действие",
-      desc: "И ведёт его к нужному действию: узнать больше, оставить заявку, перейти дальше",
-    },
-  ];
-
-  return (
-    <SectionShell
-      id="how"
-      eyebrow="Экран 4 · Как это работает"
-      title="Как это работает"
-      subtitle="Ты занимаешься важным. Ассистент — всем остальным."
-    >
-      <div className="grid gap-4 lg:grid-cols-4" data-testid="grid-how">
-        {steps.map((s) => (
-          <Card
-            key={s.n}
-            className="glass rounded-2xl p-5"
-            data-testid={`card-step-${s.n}`}
-          >
-            <div className="flex items-center justify-between">
-              <div
-                className="font-mono text-xs text-muted-foreground"
-                data-testid={`text-step-number-${s.n}`}
-              >
-                {s.n}
-              </div>
-              <div className="rounded-full border border-border bg-muted px-2 py-1 text-xs text-[hsl(var(--accent))]">
-                <Check className="h-3.5 w-3.5" />
-              </div>
-            </div>
-            <div
-              className="mt-3 text-base font-medium"
-              data-testid={`text-step-title-${s.n}`}
-            >
-              {s.title}
-            </div>
-            <div
-              className="mt-2 text-sm leading-relaxed text-muted-foreground"
-              data-testid={`text-step-desc-${s.n}`}
-            >
-              {s.desc}
-            </div>
-          </Card>
-        ))}
-      </div>
-      <div className="mt-10">
-        <PrimaryCTA href="#text-demo" label="Показать вживую" testId="button-scroll-demo" />
-      </div>
-    </SectionShell>
+    </section>
   );
 }
 
@@ -474,7 +182,7 @@ function TextDemo() {
     {
       id: "m1",
       role: "assistant",
-      text: "Привет! Я могу рассказать, чем мы занимаемся, ответить на любые вопросы или подсказать следующий шаг. С чего начнём?",
+      text: "Привет! Я — консультант сервиса. Расскажу, как работает онлайн-представительство. Что тебя интересует?",
     },
   ]);
   const [loading, setLoading] = useState<ChatIntent | null>(null);
@@ -485,10 +193,10 @@ function TextDemo() {
 
     const userText =
       intent === "what"
-        ? "Расскажи, что это вообще"
+        ? "Что это такое?"
         : intent === "who"
-          ? "Кому это нужно?"
-          : "Где это можно использовать?";
+          ? "Кому подойдёт?"
+          : "Где можно применить?";
 
     setMessages((m) => [
       ...m,
@@ -506,174 +214,124 @@ function TextDemo() {
   };
 
   return (
-    <SectionShell
-      id="text-demo"
-      eyebrow="Экран 5 · Демо"
-      title="Попробуй, как это чувствуется"
-      subtitle="Ассистент, который всегда в ресурсе и говорит именно твоими словами."
+    <section
+      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start bg-gradient-to-b from-white to-slate-50"
+      id="demo"
+      data-testid="section-demo"
     >
-      <div className="grid gap-6 lg:grid-cols-5" data-testid="grid-text-demo">
-        <Card
-          className="glass glow-ring rounded-2xl p-5 lg:col-span-3"
-          data-testid="card-chat"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="rounded-xl border border-border bg-muted p-2 text-[hsl(var(--accent))]">
-                <MessageSquareText className="h-4 w-4" />
-              </div>
-              <div>
-                <div className="text-sm font-medium" data-testid="text-chat-title">
-                  AI-ассистент
-                </div>
-                <div
-                  className="text-xs text-muted-foreground"
-                  data-testid="text-chat-subtitle"
-                >
-                  Демонстрация диалога
-                </div>
-              </div>
+      <div className="mx-auto w-full max-w-lg">
+        <LazyMotion features={domAnimation}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="text-center mb-8">
+              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
+                Спроси консультанта
+              </h2>
+              <p className="mt-3 text-muted-foreground">
+                Это демо — так будет общаться твой ассистент
+              </p>
             </div>
-          </div>
 
-          <div
-            className="mt-4 space-y-3"
-            data-testid="list-chat-messages"
-          >
-            {messages.map((msg, idx) => (
-              <div
-                key={msg.id}
-                className={cn(
-                  "flex",
-                  msg.role === "user" ? "justify-end" : "justify-start",
-                )}
-                data-testid={`row-chat-message-${idx}`}
-              >
-                <div
-                  className={cn(
-                    "max-w-[92%] rounded-2xl border px-4 py-3 text-sm leading-relaxed",
-                    msg.role === "user"
-                      ? "border-border bg-muted"
-                      : "border-border bg-card",
-                  )}
-                  data-testid={`text-chat-message-${idx}`}
-                >
-                  {msg.text}
+            <Card className="rounded-3xl border-0 shadow-xl shadow-black/5 overflow-hidden" data-testid="card-chat">
+              <div className="bg-gradient-to-r from-blue-500 to-cyan-500 px-5 py-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center">
+                    <MessageSquareText className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-white font-medium" data-testid="text-chat-title">
+                      Консультант сервиса
+                    </div>
+                    <div className="text-white/70 text-xs">
+                      Онлайн
+                    </div>
+                  </div>
                 </div>
               </div>
-            ))}
-            {loading ? (
-              <div
-                className="flex justify-start"
-                data-testid="row-chat-loading"
-              >
-                <div className="rounded-2xl border border-border bg-card px-4 py-3 text-sm text-muted-foreground">
-                  Печатает...
+
+              <div className="p-4 bg-white min-h-[200px] max-h-[280px] overflow-y-auto" data-testid="list-chat-messages">
+                <div className="space-y-3">
+                  {messages.map((msg, idx) => (
+                    <div
+                      key={msg.id}
+                      className={cn(
+                        "flex",
+                        msg.role === "user" ? "justify-end" : "justify-start",
+                      )}
+                      data-testid={`row-chat-message-${idx}`}
+                    >
+                      <div
+                        className={cn(
+                          "max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed",
+                          msg.role === "user"
+                            ? "bg-blue-500 text-white rounded-br-md"
+                            : "bg-slate-100 text-foreground rounded-bl-md",
+                        )}
+                        data-testid={`text-chat-message-${idx}`}
+                      >
+                        {msg.text}
+                      </div>
+                    </div>
+                  ))}
+                  {loading ? (
+                    <div className="flex justify-start" data-testid="row-chat-loading">
+                      <div className="bg-slate-100 rounded-2xl rounded-bl-md px-4 py-2.5 text-sm text-muted-foreground">
+                        <span className="animate-pulse">Печатает...</span>
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
               </div>
-            ) : null}
-          </div>
-        </Card>
 
-        <Card className="glass rounded-2xl p-5 lg:col-span-2" data-testid="card-chat-controls">
-          <div
-            className="text-sm font-medium"
-            data-testid="text-chat-controls-title"
-          >
-            Твои вопросы
-          </div>
-          <div
-            className="mt-1 text-xs text-muted-foreground"
-            data-testid="text-chat-controls-subtitle"
-          >
-            Нажми, чтобы проверить ответы.
-          </div>
-
-          <div className="mt-5 grid gap-3" data-testid="grid-chat-buttons">
-            <Button
-              variant="secondary"
-              className="h-11 justify-between rounded-xl bg-muted text-foreground hover:bg-secondary"
-              onClick={() => ask("what")}
-              disabled={loading !== null}
-              data-testid="button-intent-what"
-            >
-              <span className="text-xs sm:text-sm">Расскажи, что это вообще</span>
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="secondary"
-              className="h-11 justify-between rounded-xl bg-muted text-foreground hover:bg-secondary"
-              onClick={() => ask("who")}
-              disabled={loading !== null}
-              data-testid="button-intent-who"
-            >
-              <span className="text-xs sm:text-sm">Кому это нужно?</span>
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="secondary"
-              className="h-11 justify-between rounded-xl bg-muted text-foreground hover:bg-secondary"
-              onClick={() => ask("where")}
-              disabled={loading !== null}
-              data-testid="button-intent-where"
-            >
-              <span className="text-xs sm:text-sm">Где это использовать?</span>
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </div>
-
-          <div
-            className="mt-6 rounded-xl border border-border bg-muted p-4"
-            data-testid="card-chat-note"
-          >
-            <div className="flex items-start gap-3">
-              <div className="mt-0.5 rounded-lg border border-border bg-card p-2 text-[hsl(var(--accent))]">
-                <FlaskConical className="h-4 w-4" />
-              </div>
-              <div>
-                <div
-                  className="text-sm font-medium"
-                  data-testid="text-chat-note-title"
-                >
-                  Примечание
-                </div>
-                <div
-                  className="mt-1 text-xs leading-relaxed text-muted-foreground"
-                  data-testid="text-chat-note-desc"
-                >
-                  Это только демо. Твой хаб будет говорить именно твоими словами — под твои задачи.
+              <div className="p-4 bg-slate-50 border-t border-slate-100" data-testid="grid-chat-buttons">
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => ask("what")}
+                    disabled={loading !== null}
+                    className="px-4 py-2 rounded-full bg-white border border-slate-200 text-sm hover:bg-slate-100 transition-colors disabled:opacity-50"
+                    data-testid="button-intent-what"
+                  >
+                    Что это такое?
+                  </button>
+                  <button
+                    onClick={() => ask("who")}
+                    disabled={loading !== null}
+                    className="px-4 py-2 rounded-full bg-white border border-slate-200 text-sm hover:bg-slate-100 transition-colors disabled:opacity-50"
+                    data-testid="button-intent-who"
+                  >
+                    Кому подойдёт?
+                  </button>
+                  <button
+                    onClick={() => ask("where")}
+                    disabled={loading !== null}
+                    className="px-4 py-2 rounded-full bg-white border border-slate-200 text-sm hover:bg-slate-100 transition-colors disabled:opacity-50"
+                    data-testid="button-intent-where"
+                  >
+                    Где применить?
+                  </button>
                 </div>
               </div>
+            </Card>
+
+            <div className="mt-8 text-center">
+              <a href="#scenarios" className="inline-flex" data-testid="button-demo-continue">
+                <Button className="h-12 gap-2 rounded-full px-6 shadow-md">
+                  Смотреть примеры визиток
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </a>
             </div>
-          </div>
-          <div className="mt-6">
-            <PrimaryCTA href="#live" label="Продолжить" testId="button-demo-continue" />
-          </div>
-        </Card>
+          </motion.div>
+        </LazyMotion>
       </div>
-    </SectionShell>
+    </section>
   );
 }
 
-function LiveIntro() {
-  return (
-    <SectionShell
-      id="live"
-      eyebrow="Экран 6 · Live аватар"
-      title="Хочешь — общайся вживую"
-      subtitle={
-        <div className="space-y-4">
-          <p>Твоё представительство может включать видеозвонок. Гость увидит тебя — или твоего ассистента — прямо в хабе.</p>
-          <p className="text-sm">Это может быть ты сам — как цифровой двойник. Или кто-то из команды. Выбираешь ты.</p>
-        </div>
-      }
-    >
-      <div className="mt-10">
-        <PrimaryCTA href="#scenarios" label="Показать, как это выглядит" testId="button-scroll-scenarios" />
-      </div>
-    </SectionShell>
-  );
-}
 
 const SCENARIO_CONFIGS: Record<LiveScenario, { title: string; description: string; avatarImage?: string }> = {
   sales: {
@@ -700,119 +358,106 @@ const SCENARIO_CONFIGS: Record<LiveScenario, { title: string; description: strin
 
 function LiveScenarios() {
   const [selected, setSelected] = useState<LiveScenario>("sales");
-  const [showAvatarCard, setShowAvatarCard] = useState(false);
   const [isCallOpen, setIsCallOpen] = useState(false);
 
-  const handleSelectScenario = (scenario: LiveScenario) => {
-    setSelected(scenario);
-    setShowAvatarCard(true);
-  };
-
-  const handleStartCall = () => {
-    setIsCallOpen(true);
-  };
-
-  const handleCloseCall = () => {
-    setIsCallOpen(false);
-  };
-
-  const buttons: { key: LiveScenario; label: string }[] = [
-    { key: "sales", label: "Продажи и партнёрства" },
-    { key: "projects", label: "Презентации проектов" },
-    { key: "team", label: "Команда и сообщество" },
-    { key: "expert", label: "Первое касание" },
-  ];
-
+  const scenarios: LiveScenario[] = ["sales", "projects", "team", "expert"];
   const currentConfig = SCENARIO_CONFIGS[selected];
 
   return (
-    <SectionShell
+    <section
+      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start"
       id="scenarios"
-      eyebrow="Экран 7 · Сценарии"
-      title="Начинаем с одного сценария"
-      subtitle="Строим — под твою задачу."
+      data-testid="section-scenarios"
     >
-      <div className="mx-auto max-w-2xl" data-testid="grid-live">
-        <Card className="glass rounded-2xl p-5" data-testid="card-live-controls">
-          <div className="text-sm font-medium" data-testid="text-live-controls-title">
-            Сценарии
-          </div>
-          <div className="mt-1 text-xs text-muted-foreground" data-testid="text-live-controls-subtitle">
-            Выберите кейс для демонстрации.
-          </div>
+      <div className="mx-auto w-full max-w-lg">
+        <LazyMotion features={domAnimation}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="text-center mb-8">
+              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
+                Примеры визиток
+              </h2>
+              <p className="mt-3 text-muted-foreground">
+                Свайпай, чтобы посмотреть разные сценарии
+              </p>
+            </div>
 
-          <div className="mt-5 space-y-3" data-testid="grid-live-buttons">
-            {buttons.map((b) => (
-              <div key={b.key} className="space-y-3">
-                <Button
-                  variant="secondary"
+            <div className="flex gap-2 justify-center mb-6" data-testid="scenario-tabs">
+              {scenarios.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setSelected(s)}
                   className={cn(
-                    "h-11 w-full justify-between rounded-xl bg-muted text-foreground hover:bg-secondary transition-all",
-                    selected === b.key && showAvatarCard && "ring-2 ring-[hsl(var(--accent))] bg-secondary",
+                    "w-3 h-3 rounded-full transition-all",
+                    selected === s 
+                      ? "bg-blue-500 w-8" 
+                      : "bg-slate-200 hover:bg-slate-300"
                   )}
-                  onClick={() => handleSelectScenario(b.key)}
-                  data-testid={`button-scenario-${b.key}`}
+                  data-testid={`tab-scenario-${s}`}
+                />
+              ))}
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selected}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Card 
+                  className="relative overflow-hidden rounded-3xl border-0 shadow-2xl shadow-black/10 aspect-[3/4]"
+                  data-testid="card-scenario"
                 >
-                  <span className="text-xs sm:text-sm truncate">{b.label}</span>
-                  <ArrowRight className={cn("h-4 w-4 transition-transform", selected === b.key && showAvatarCard && "rotate-90")} />
-                </Button>
-
-                <AnimatePresence>
-                  {selected === b.key && showAvatarCard && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden"
+                  <img 
+                    src={currentConfig.avatarImage} 
+                    alt={currentConfig.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                  
+                  <div className="absolute inset-x-0 bottom-0 p-6">
+                    <h3 className="text-white font-serif text-2xl tracking-tight" data-testid="text-scenario-title">
+                      {currentConfig.title}
+                    </h3>
+                    <p className="text-white/80 text-sm mt-2 leading-relaxed" data-testid="text-scenario-desc">
+                      {currentConfig.description}
+                    </p>
+                    
+                    <button
+                      onClick={() => setIsCallOpen(true)}
+                      className="mt-5 w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-black rounded-full font-semibold transition-all hover:bg-white/90 shadow-lg"
+                      data-testid="button-start-demo"
                     >
-                      <Card className="glass glow-ring relative overflow-hidden rounded-2xl p-0 min-h-[300px]" data-testid="card-live-embed">
-                        <div className="absolute inset-0">
-                          <div className="w-full h-full bg-slate-900">
-                            <img 
-                              src={currentConfig.avatarImage} 
-                              alt={currentConfig.title}
-                              className="w-full h-full object-cover opacity-80"
-                            />
-                          </div>
-                          
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-6 flex flex-col justify-end">
-                            <div className="flex items-end justify-between gap-4">
-                              <div className="flex-1">
-                                <h3 className="text-white font-serif text-xl tracking-tight" data-testid="text-avatar-title">
-                                  {currentConfig.title}
-                                </h3>
-                                <p className="text-white/80 text-xs mt-2 max-w-md leading-relaxed" data-testid="text-avatar-desc">
-                                  {currentConfig.description}
-                                </p>
-                              </div>
-                              <button
-                                onClick={handleStartCall}
-                                className="flex items-center gap-2 px-5 py-2.5 bg-[#0080FF] hover:bg-[#0070E0] text-white rounded-full text-xs font-semibold transition-all shadow-lg shadow-blue-500/25 whitespace-nowrap mb-1"
-                                data-testid="button-chat-now"
-                              >
-                                Chat now
-                                <ArrowRight className="w-3.5 h-3.5" />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </Card>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
-          </div>
+                      <Video className="w-5 h-5" />
+                      Открыть визитку
+                    </button>
+                  </div>
+                </Card>
+              </motion.div>
+            </AnimatePresence>
 
-          <div className="mt-8 flex justify-center">
-            <PrimaryCTA href="#pilot" label="Хочу такое решение" testId="button-scenarios-continue" />
-          </div>
-        </Card>
+            <div className="mt-8 text-center">
+              <a href="#contact" className="inline-flex" data-testid="button-scenarios-continue">
+                <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
+                  Хочу такое решение
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </a>
+            </div>
+          </motion.div>
+        </LazyMotion>
       </div>
 
       <LiveAvatarChat
         isOpen={isCallOpen}
-        onClose={handleCloseCall}
+        onClose={() => setIsCallOpen(false)}
         scenario={{
           key: selected,
           title: currentConfig.title,
@@ -821,82 +466,13 @@ function LiveScenarios() {
         }}
         language="ru"
       />
-    </SectionShell>
+    </section>
   );
 }
 
-function Pilot() {
-  return (
-    <SectionShell
-      id="pilot"
-      eyebrow="Экран 8 · Пилот"
-      title="Ты не покупаешь платформу."
-      subtitle="Ты запускаешь решение — под свою задачу."
-    >
-      <Card className="glass glow-ring rounded-2xl p-6" data-testid="card-pilot">
-        <div className="grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <div className="font-serif text-2xl" data-testid="text-pilot-title">
-              Что входит
-            </div>
-            <ul className="mt-4 space-y-3" data-testid="list-pilot-items">
-              {[
-                "1 цифровое представительство (хаб)",
-                "1–2 ассистента (текст или видео)",
-                "1 конкретная цель — которую решаем вместе",
-                "Полная настройка и запуск «под ключ»",
-                "Индивидуальный стиль и tone of voice",
-              ].map((x, i) => (
-                <li key={x} className="flex items-start gap-3" data-testid={`row-pilot-item-${i}`}>
-                  <div className="mt-1 rounded-full border border-border bg-muted p-1 text-[hsl(var(--accent))]">
-                    <Check className="h-3.5 w-3.5" />
-                  </div>
-                  <div className="text-sm text-muted-foreground" data-testid={`text-pilot-item-${i}`}>
-                    {x}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <div className="rounded-2xl border border-border bg-muted p-5" data-testid="card-pilot-price">
-              <div className="text-xs text-muted-foreground" data-testid="text-pilot-price-label">
-                Стоимость пилота
-              </div>
-              <div className="mt-2 font-serif text-4xl tracking-[-0.02em]" data-testid="text-pilot-price">
-                $2,500
-              </div>
-              <div className="mt-2 text-sm text-muted-foreground" data-testid="text-pilot-price-note">
-                Одноразовая настройка и запуск.
-              </div>
-
-              <div className="mt-5">
-                <a href="#contact" data-testid="button-scroll-contact">
-                  <Button className="h-11 w-full rounded-xl">Обсудить запуск</Button>
-                </a>
-              </div>
-            </div>
-
-            <div className="mt-4 rounded-2xl border border-border bg-muted p-5" data-testid="card-pilot-timeline">
-              <div className="text-sm font-medium" data-testid="text-pilot-timeline-title">
-                Результат
-              </div>
-              <div className="mt-2 text-xs leading-relaxed text-muted-foreground" data-testid="text-pilot-timeline-desc">
-                Если работает — масштабируем. Если нет — ты хотя бы перестал объяснять вручную.
-              </div>
-            </div>
-          </div>
-        </div>
-      </Card>
-    </SectionShell>
-  );
-}
-
-function Contact() {
+function ContactSection() {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
-  const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
 
   const submit = async () => {
@@ -907,130 +483,98 @@ function Contact() {
   };
 
   return (
-    <SectionShell
+    <section
+      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start bg-gradient-to-b from-slate-50 to-white"
       id="contact"
-      eyebrow="Экран 9 · Контакт"
-      title="Созвонимся?"
-      subtitle="Напиши, и мы обсудим, подойдёт ли хаб под твою задачу. Без спама. Без воронок. Просто живой разговор."
+      data-testid="section-contact"
     >
-      <div className="grid gap-6 lg:grid-cols-5" data-testid="grid-contact">
-        <Card className="glass glow-ring rounded-2xl p-6 lg:col-span-3" data-testid="card-contact-form">
-          <div className="grid gap-4">
-            <div>
-              <div className="text-sm font-medium" data-testid="text-contact-name-label">
-                Имя *
-              </div>
-              <Input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Твоё имя"
-                className="mt-2 h-11 rounded-xl border-border bg-card"
-                data-testid="input-name"
-              />
+      <div className="mx-auto w-full max-w-lg">
+        <LazyMotion features={domAnimation}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="text-center mb-8">
+              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
+                Запустим пилот?
+              </h2>
+              <p className="mt-3 text-muted-foreground">
+                Настройка под ключ — $2,500
+              </p>
             </div>
 
-            <div>
-              <div className="text-sm font-medium" data-testid="text-contact-contact-label">
-                Email или Telegram *
-              </div>
-              <Input
-                value={contact}
-                onChange={(e) => setContact(e.target.value)}
-                placeholder="@username или email"
-                className="mt-2 h-11 rounded-xl border-border bg-card"
-                data-testid="input-contact"
-              />
-            </div>
-
-            <div>
-              <div className="text-sm font-medium" data-testid="text-contact-message-label">
-                Что хочешь автоматизировать? (необязательно)
-              </div>
-              <Textarea
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Опиши свою задачу в паре слов"
-                className="mt-2 min-h-28 rounded-xl border-border bg-card"
-                data-testid="input-message"
-              />
-            </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button
-                onClick={submit}
-                className="h-11 rounded-xl px-8"
-                disabled={status !== "idle" || !name || !contact}
-                data-testid="button-submit-lead"
-              >
-                {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено" : "Отправить"}
-              </Button>
-              <div className="text-sm text-muted-foreground" data-testid="status-lead">
-                {status === "sent" ? (
-                  <span className="text-[hsl(var(--accent))]">Спасибо, {name}! Мы свяжемся с тобой через {contact} — без формальностей.</span>
-                ) : (
-                  "Никакого спама. Только живой разговор."
-                )}
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="glass rounded-2xl p-6 lg:col-span-2" data-testid="card-contact-aside">
-          <div className="font-serif text-xl" data-testid="text-contact-aside-title">
-            Что дальше
-          </div>
-          <div className="mt-3 text-sm leading-relaxed text-muted-foreground" data-testid="text-contact-aside-desc">
-            Мы изучим твой запрос и предложим удобное время для звонка, чтобы обсудить внедрение хаба в твои процессы.
-          </div>
-
-          <div className="mt-6 rounded-xl border border-border bg-muted p-4" data-testid="card-contact-bullets">
-            <div className="flex items-start gap-3">
-              <div className="mt-0.5 rounded-lg border border-border bg-card p-2 text-[hsl(var(--accent))]">
-                <Calendar className="h-4 w-4" />
-              </div>
-              <div>
-                <div className="text-sm font-medium" data-testid="text-contact-bullets-title">
-                  Быстрый старт
+            <Card className="rounded-3xl border-0 shadow-xl shadow-black/5 p-6" data-testid="card-contact">
+              <div className="space-y-4">
+                <div className="space-y-4 mb-6">
+                  {[
+                    "Цифровое представительство",
+                    "1–2 AI-ассистента",
+                    "Индивидуальный стиль",
+                    "Запуск за неделю",
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3" data-testid={`feature-${i}`}>
+                      <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center">
+                        <Check className="h-3.5 w-3.5 text-green-600" />
+                      </div>
+                      <span className="text-sm">{item}</span>
+                    </div>
+                  ))}
                 </div>
-                <div className="mt-1 text-xs leading-relaxed text-muted-foreground" data-testid="text-contact-bullets-desc">
-                  Если задача понятна — запускаем пилот в течение недели.
+
+                <div className="border-t border-slate-100 pt-6">
+                  <div className="space-y-4">
+                    <Input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Твоё имя"
+                      className="h-12 rounded-xl border-slate-200 bg-slate-50"
+                      data-testid="input-name"
+                    />
+                    <Input
+                      value={contact}
+                      onChange={(e) => setContact(e.target.value)}
+                      placeholder="Telegram или email"
+                      className="h-12 rounded-xl border-slate-200 bg-slate-50"
+                      data-testid="input-contact"
+                    />
+                    <Button
+                      onClick={submit}
+                      className="h-12 w-full rounded-xl"
+                      disabled={status !== "idle" || !name || !contact}
+                      data-testid="button-submit-lead"
+                    >
+                      {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено!" : "Обсудить запуск"}
+                    </Button>
+                  </div>
+                  
+                  {status === "sent" && (
+                    <p className="mt-4 text-center text-sm text-green-600" data-testid="status-success">
+                      Спасибо, {name}! Свяжемся через {contact}
+                    </p>
+                  )}
                 </div>
               </div>
-            </div>
-          </div>
-        </Card>
+            </Card>
+
+            <p className="mt-6 text-center text-xs text-muted-foreground">
+              Без спама. Без воронок. Просто разговор.
+            </p>
+          </motion.div>
+        </LazyMotion>
       </div>
-    </SectionShell>
+    </section>
   );
 }
 
 
 function Footer() {
   return (
-    <footer className="border-t border-border py-10" data-testid="footer">
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-sm text-muted-foreground" data-testid="text-footer-left">
-            {APP_TITLE}
-          </div>
-          <div className="flex flex-wrap gap-3 text-sm" data-testid="nav-footer">
-            {[
-              { href: "#how", label: "How" },
-              { href: "#text-demo", label: "Text demo" },
-              { href: "#scenarios", label: "Live" },
-              { href: "#pilot", label: "Pilot" },
-              { href: "#contact", label: "Contact" },
-            ].map((x) => (
-              <a
-                key={x.href}
-                href={x.href}
-                className="text-muted-foreground hover:text-foreground"
-                data-testid={`link-footer-${x.label.toLowerCase()}`}
-              >
-                {x.label}
-              </a>
-            ))}
-          </div>
+    <footer className="border-t border-slate-100 py-8 px-6" data-testid="footer">
+      <div className="mx-auto max-w-lg text-center">
+        <div className="text-sm text-muted-foreground" data-testid="text-footer">
+          {APP_TITLE}
         </div>
       </div>
     </footer>
@@ -1041,14 +585,10 @@ export default function HomePage() {
   return (
     <div className="min-h-dvh" data-testid="page-home">
       <Hero />
-      <Problem />
-      <Solution />
-      <HowItWorks />
+      <WhyItMatters />
       <TextDemo />
-      <LiveIntro />
       <LiveScenarios />
-      <Pilot />
-      <Contact />
+      <ContactSection />
       <Footer />
     </div>
   );
