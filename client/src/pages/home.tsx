@@ -730,13 +730,16 @@ function LiveScenarios() {
                     </div>
                   </div>
 
-                  <div className="mt-5 relative">
+                  <div className="mt-5 relative flex flex-col h-[300px] bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-white/50 overflow-hidden">
                     <div className="absolute -top-6 left-4 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-white/80" />
-                    <div className="p-4 bg-white/80 backdrop-blur-sm rounded-2xl text-sm leading-relaxed text-slate-700 shadow-sm border border-white/50 max-h-[200px] overflow-y-auto">
+                    
+                    <div className="flex-1 p-4 overflow-y-auto space-y-3">
                       {messages.length === 0 ? (
-                        <TypewriterText text={`Привет! Я ${businessCard.avatarName}. Помогу разобраться — что хочешь узнать?`} />
+                        <div className="text-sm leading-relaxed text-slate-700">
+                          <TypewriterText text={`Привет! Я ${businessCard.avatarName}. Помогу разобраться — что хочешь узнать?`} />
+                        </div>
                       ) : (
-                        <div className="space-y-3">
+                        <>
                           {messages.map((msg) => (
                             <div
                               key={msg.id}
@@ -747,10 +750,10 @@ function LiveScenarios() {
                             >
                               <div
                                 className={cn(
-                                  "px-3 py-2 rounded-xl max-w-[90%]",
+                                  "px-3 py-2 rounded-xl max-w-[90%] text-sm",
                                   msg.role === "user"
                                     ? "bg-blue-500 text-white"
-                                    : "bg-white/50 text-slate-700 border border-slate-100"
+                                    : "bg-white text-slate-700 border border-slate-100 shadow-sm"
                                 )}
                               >
                                 {msg.text}
@@ -758,39 +761,35 @@ function LiveScenarios() {
                             </div>
                           ))}
                           <div ref={chatEndRef} />
-                        </div>
+                        </>
                       )}
+                    </div>
+
+                    <div className="p-2 bg-slate-50/50 border-t border-slate-100">
+                      <div className="relative group">
+                        <Input
+                          value={inputValue}
+                          onChange={(e) => setInputValue(e.target.value)}
+                          placeholder="Напиши вопрос..."
+                          className="h-12 pl-4 pr-10 rounded-xl border-slate-200 bg-white shadow-sm focus-visible:ring-purple-400 transition-all text-sm"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              handleSendMessage();
+                            }
+                          }}
+                          data-testid="input-scenario-chat"
+                        />
+                        <button
+                          onClick={handleSendMessage}
+                          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-2 bg-gradient-to-r from-violet-500 to-purple-500 rounded-lg text-white shadow-sm hover:scale-105 transition-transform"
+                        >
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="mt-6 space-y-3">
-                    <div className="relative group">
-                      <Input
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        placeholder="Напиши вопрос здесь..."
-                        className="h-14 pl-5 pr-12 rounded-2xl border-white bg-white/90 shadow-inner focus-visible:ring-purple-400 transition-all text-base"
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            handleSendMessage();
-                          }
-                        }}
-                        data-testid="input-scenario-chat"
-                      />
-                      <button
-                        onClick={handleSendMessage}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-gradient-to-r from-violet-500 to-purple-500 rounded-xl text-white shadow-md hover:scale-105 transition-transform"
-                      >
-                        <ArrowRight className="w-5 h-5" />
-                      </button>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-purple-200 to-transparent" />
-                      <span className="text-[10px] font-bold text-purple-400 uppercase tracking-widest">или</span>
-                      <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-purple-200 to-transparent" />
-                    </div>
-
+                  <div className="mt-4 space-y-3">
                     <button
                       onClick={() => {
                         setIsChatMode(false);
