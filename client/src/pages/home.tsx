@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LazyMotion, domAnimation, motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -465,15 +465,68 @@ const SCENARIO_CONFIGS: Record<LiveScenario, ScenarioConfig> = {
   },
 };
 
+function TypewriterText({ text }: { text: string }) {
+  const [displayedText, setDisplayedText] = useState("");
+  
+  useEffect(() => {
+    let i = 0;
+    setDisplayedText("");
+    const timer = setInterval(() => {
+      setDisplayedText((prev) => prev + text.charAt(i));
+      i++;
+      if (i >= text.length) clearInterval(timer);
+    }, 40);
+    return () => clearInterval(timer);
+  }, [text]);
+
+  return <span>{displayedText}</span>;
+}
+
 function LiveScenarios() {
   const [selected, setSelected] = useState<LiveScenario>("sales");
   const [isCardOpen, setIsCardOpen] = useState(false);
   const [isCallOpen, setIsCallOpen] = useState(false);
   const [isChatMode, setIsChatMode] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [inputValue, setInputValue] = useState("");
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
   const scenarios: LiveScenario[] = ["sales", "projects", "team", "expert"];
   const currentConfig = SCENARIO_CONFIGS[selected];
   const { businessCard } = currentConfig;
+
+  useEffect(() => {
+    if (isCardOpen) {
+      setMessages([]);
+    }
+  }, [isCardOpen, selected]);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSendMessage = () => {
+    if (!inputValue.trim()) return;
+    
+    const userMsg: ChatMessage = {
+      id: Date.now().toString(),
+      role: "user",
+      text: inputValue
+    };
+    
+    setMessages(prev => [...prev, userMsg]);
+    setInputValue("");
+
+    // Mock response logic
+    setTimeout(() => {
+      const assistantMsg: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        text: "Отличный вопрос! Я с удовольствием расскажу подробнее. Для этого лучше всего созвониться в видео-формате, где я смогу показать всё наглядно. Нажми кнопку 'Позвонить аватару' ниже!"
+      };
+      setMessages(prev => [...prev, assistantMsg]);
+    }, 1000);
+  };
 
   return (
     <section
@@ -679,35 +732,53 @@ function LiveScenarios() {
 
                   <div className="mt-5 relative">
                     <div className="absolute -top-6 left-4 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-white/80" />
-                    <div className="p-4 bg-white/80 backdrop-blur-sm rounded-2xl text-sm leading-relaxed text-slate-700 shadow-sm border border-white/50">
-                      <motion.span
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                      >
-                        {`Привет! Я ${businessCard.avatarName}. Помогу разобраться — что хочешь узнать?`}
-                      </motion.span>
+                    <div className="p-4 bg-white/80 backdrop-blur-sm rounded-2xl text-sm leading-relaxed text-slate-700 shadow-sm border border-white/50 max-h-[200px] overflow-y-auto">
+                      {messages.length === 0 ? (
+                        <TypewriterText text={`Привет! Я ${businessCard.avatarName}. Помогу разобраться — что хочешь узнать?`} />
+                      ) : (
+                        <div className="space-y-3">
+                          {messages.map((msg) => (
+                            <div
+                              key={msg.id}
+                              className={cn(
+                                "flex flex-col",
+                                msg.role === "user" ? "items-end" : "items-start"
+                              )}
+                            >
+                              <div
+                                className={cn(
+                                  "px-3 py-2 rounded-xl max-w-[90%]",
+                                  msg.role === "user"
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-white/50 text-slate-700 border border-slate-100"
+                                )}
+                              >
+                                {msg.text}
+                              </div>
+                            </div>
+                          ))}
+                          <div ref={chatEndRef} />
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   <div className="mt-6 space-y-3">
                     <div className="relative group">
                       <Input
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
                         placeholder="Напиши вопрос здесь..."
                         className="h-14 pl-5 pr-12 rounded-2xl border-white bg-white/90 shadow-inner focus-visible:ring-purple-400 transition-all text-base"
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
-                            setIsChatMode(true);
-                            setIsCallOpen(true);
+                            handleSendMessage();
                           }
                         }}
                         data-testid="input-scenario-chat"
                       />
                       <button
-                        onClick={() => {
-                          setIsChatMode(true);
-                          setIsCallOpen(true);
-                        }}
+                        onClick={handleSendMessage}
                         className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-gradient-to-r from-violet-500 to-purple-500 rounded-xl text-white shadow-md hover:scale-105 transition-transform"
                       >
                         <ArrowRight className="w-5 h-5" />
