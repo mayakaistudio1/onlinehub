@@ -679,18 +679,22 @@ const SCENARIO_CONFIGS: Record<LiveScenario, { title: string; description: strin
   sales: {
     title: "Продажи и партнёрства",
     description: "Ассистент отвечает на вопросы, отбирает лидов и греет интерес — ещё до первого звонка.",
+    avatarImage: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
   },
   projects: {
     title: "Презентации проектов", 
     description: "Идеи, которые раньше требовали встречи — теперь объясняются сами.",
+    avatarImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
   },
   team: {
     title: "Команда и сообщество",
     description: "Единая подача для новых сотрудников и участников. Без лишних сообщений.",
+    avatarImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
   },
   expert: {
     title: "Первое касание",
     description: "Сильное впечатление с первой секунды. Даже если ты не онлайн.",
+    avatarImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800",
   },
 };
 
@@ -760,28 +764,30 @@ function LiveScenarios() {
           </div>
         </Card>
 
-        <Card className="glass glow-ring relative overflow-hidden rounded-2xl p-0 lg:col-span-3" data-testid="card-live-embed">
+        <Card className="glass glow-ring relative overflow-hidden rounded-2xl p-0 lg:col-span-3 min-h-[400px]" data-testid="card-live-embed">
           {showAvatarCard ? (
-            <div className="relative">
-              <div className="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-xl">
-                  <Video className="w-12 h-12 text-white" />
-                </div>
+            <div className="absolute inset-0">
+              <div className="w-full h-full bg-slate-900">
+                <img 
+                  src={currentConfig.avatarImage} 
+                  alt={currentConfig.title}
+                  className="w-full h-full object-cover opacity-80"
+                />
               </div>
               
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-5">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-6 flex flex-col justify-end">
                 <div className="flex items-end justify-between gap-4">
                   <div className="flex-1">
-                    <h3 className="text-white font-semibold text-lg" data-testid="text-avatar-title">
+                    <h3 className="text-white font-serif text-2xl tracking-tight" data-testid="text-avatar-title">
                       {currentConfig.title}
                     </h3>
-                    <p className="text-white/70 text-sm mt-1 line-clamp-2" data-testid="text-avatar-desc">
+                    <p className="text-white/80 text-sm mt-2 max-w-md leading-relaxed" data-testid="text-avatar-desc">
                       {currentConfig.description}
                     </p>
                   </div>
                   <button
                     onClick={handleStartCall}
-                    className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white rounded-full text-sm font-medium transition-colors whitespace-nowrap"
+                    className="flex items-center gap-2 px-6 py-3 bg-[#0080FF] hover:bg-[#0070E0] text-white rounded-full text-sm font-semibold transition-all shadow-lg shadow-blue-500/25 whitespace-nowrap mb-1"
                     data-testid="button-chat-now"
                   >
                     Chat now
