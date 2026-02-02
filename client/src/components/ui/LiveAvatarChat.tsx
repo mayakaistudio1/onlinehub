@@ -85,6 +85,7 @@ export function LiveAvatarChat({
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const sessionStartTimeRef = useRef<number>(0);
   
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -502,112 +503,134 @@ export function LiveAvatarChat({
           </button>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center relative pt-20 overflow-hidden">
+        <div className="flex-1 flex flex-col relative overflow-hidden">
           {sessionState === "idle" && (
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="flex flex-col md:flex-row items-stretch justify-center gap-6 px-6 w-full max-w-5xl h-[calc(100dvh-160px)]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="absolute inset-0 flex flex-col"
             >
-              {/* LEFT: AVATAR INFO & CALL BUTTON */}
-              <div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-white/5 rounded-3xl border border-white/10">
+              {/* HERO AVATAR SECTION - Top 45% */}
+              <div className="relative h-[45%] overflow-hidden">
                 {scenario.avatarImage ? (
-                  <div className="w-40 h-40 mx-auto mb-6 rounded-2xl overflow-hidden border-4 border-white/20">
-                    <img 
-                      src={scenario.avatarImage} 
-                      alt={scenario.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                  <img 
+                    src={scenario.avatarImage} 
+                    alt={scenario.title}
+                    className="w-full h-full object-cover object-top"
+                  />
                 ) : (
-                  <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                    <Video className="w-12 h-12 text-white" />
+                  <div className="w-full h-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center">
+                    <Video className="w-24 h-24 text-white/50" />
                   </div>
                 )}
-                
-                <h2 className="text-white text-2xl font-bold mb-3">
-                  {scenario.title}
-                </h2>
-                <p className="text-white/70 text-sm mb-8 leading-relaxed max-w-sm">
-                  {scenario.description}
-                </p>
-                
-                <p className="text-white/60 text-sm mb-4">
-                  {TEXTS.duringCall.allowMic}
-                </p>
-                
-                <button
-                  onClick={startSession}
-                  className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-full font-semibold flex items-center gap-3 mx-auto transition-all shadow-lg shadow-cyan-500/30"
-                  data-testid="button-start-call"
-                >
-                  <Mic className="w-5 h-5" />
-                  {TEXTS.duringCall.enableMic}
-                </button>
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
               </div>
 
-              {/* RIGHT: TEXT CHAT (ALWAYS VISIBLE) */}
-              <div className="w-full md:w-80 lg:w-96 flex flex-col rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 overflow-hidden">
-                <div className="p-4 border-b border-white/10">
-                  <h4 className="text-white font-medium text-sm flex items-center gap-2">
-                    <MessageCircle className="w-4 h-4 text-blue-400" />
-                    Текстовый диалог
-                  </h4>
-                </div>
-                
-                <div 
-                  ref={scrollRef}
-                  className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-hide"
-                >
-                  {messages.length === 0 && (
-                    <div className="h-full flex items-center justify-center text-center p-4">
-                      <p className="text-white/30 text-xs italic">
-                        Вы можете начать переписку еще до начала видеозвонка
-                      </p>
-                    </div>
-                  )}
-                  {messages.map(msg => (
-                    <div 
-                      key={msg.id}
-                      className={cn(
-                        "flex flex-col max-w-[85%]",
-                        msg.role === "user" ? "ml-auto items-end" : "items-start"
-                      )}
-                    >
-                      <div className={cn(
-                        "px-3 py-2 rounded-2xl text-sm leading-relaxed",
-                        msg.role === "user" 
-                          ? "bg-blue-600 text-white rounded-tr-none" 
-                          : "bg-white/10 text-white rounded-tl-none"
-                      )}>
-                        {msg.text}
-                      </div>
-                    </div>
-                  ))}
+              {/* CONTENT SECTION - Bottom 55% */}
+              <div className="flex-1 flex flex-col px-6 pt-6 pb-8 -mt-12 relative z-10">
+                {/* Title & Description */}
+                <div className="text-center mb-6">
+                  <h2 className="text-white text-2xl font-bold mb-2 tracking-tight">
+                    {scenario.title}
+                  </h2>
+                  <p className="text-white/60 text-sm leading-relaxed max-w-xs mx-auto">
+                    {scenario.description}
+                  </p>
                 </div>
 
-                <form 
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    sendTextMessage(inputText);
-                  }}
-                  className="p-3 bg-black/20 flex gap-2"
-                >
-                  <input
-                    type="text"
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Написать..."
-                    className="flex-1 bg-white/10 border-none rounded-full px-4 py-2 text-sm text-white focus:ring-1 focus:ring-blue-500 outline-none"
-                  />
+                {/* Two Action Buttons */}
+                <div className="flex flex-col gap-3 mb-6">
                   <button
-                    type="submit"
-                    disabled={!inputText.trim() || isSending}
-                    className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white disabled:opacity-50 transition-opacity"
+                    onClick={startSession}
+                    className="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-2xl font-semibold flex items-center justify-center gap-3 transition-all shadow-lg shadow-cyan-500/20"
+                    data-testid="button-start-call"
                   >
-                    <ArrowRight className="w-5 h-5" />
+                    <Video className="w-5 h-5" />
+                    Видеозвонок
                   </button>
-                </form>
+                  <button
+                    onClick={() => setChatOpen(!chatOpen)}
+                    className={cn(
+                      "w-full py-4 rounded-2xl font-semibold flex items-center justify-center gap-3 transition-all",
+                      chatOpen 
+                        ? "bg-white text-gray-900" 
+                        : "bg-white/10 text-white hover:bg-white/20"
+                    )}
+                    data-testid="button-open-chat"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    {chatOpen ? "Скрыть чат" : "Написать"}
+                  </button>
+                </div>
+
+                {/* Expandable Chat Section */}
+                <AnimatePresence>
+                  {chatOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="flex-1 flex flex-col rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 overflow-hidden min-h-[200px] max-h-[300px]"
+                    >
+                      {/* Messages */}
+                      <div 
+                        ref={scrollRef}
+                        className="flex-1 overflow-y-auto p-4 space-y-3"
+                      >
+                        {messages.length === 0 && (
+                          <div className="h-full flex items-center justify-center text-center p-4">
+                            <p className="text-white/40 text-sm">
+                              Напишите сообщение, чтобы начать диалог
+                            </p>
+                          </div>
+                        )}
+                        {messages.map(msg => (
+                          <div 
+                            key={msg.id}
+                            className={cn(
+                              "flex flex-col max-w-[85%]",
+                              msg.role === "user" ? "ml-auto items-end" : "items-start"
+                            )}
+                          >
+                            <div className={cn(
+                              "px-4 py-2.5 rounded-2xl text-sm leading-relaxed",
+                              msg.role === "user" 
+                                ? "bg-blue-600 text-white rounded-tr-sm" 
+                                : "bg-white/10 text-white rounded-tl-sm"
+                            )}>
+                              {msg.text}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Input */}
+                      <form 
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          sendTextMessage(inputText);
+                        }}
+                        className="p-3 bg-black/30 flex gap-2 border-t border-white/5"
+                      >
+                        <input
+                          type="text"
+                          value={inputText}
+                          onChange={(e) => setInputText(e.target.value)}
+                          placeholder="Введите сообщение..."
+                          className="flex-1 bg-white/10 border-none rounded-full px-4 py-3 text-sm text-white placeholder:text-white/40 focus:ring-2 focus:ring-blue-500/50 outline-none"
+                        />
+                        <button
+                          type="submit"
+                          disabled={!inputText.trim() || isSending}
+                          className="w-11 h-11 rounded-full bg-blue-600 hover:bg-blue-700 flex items-center justify-center text-white disabled:opacity-50 transition-all"
+                        >
+                          <ArrowRight className="w-5 h-5" />
+                        </button>
+                      </form>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
           )}
