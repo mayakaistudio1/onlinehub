@@ -615,9 +615,9 @@ export function LiveAvatarChat({
           {/* ... other states (connecting, waiting, error) remain similar ... */}
 
           {sessionState === "connected" && (
-            <div className="w-full h-full flex flex-col md:flex-row gap-4 p-4">
-              {/* VIDEO SECTION */}
-              <div className="flex-1 relative rounded-3xl overflow-hidden bg-black flex items-center justify-center min-h-[300px]">
+            <div className="w-full h-full flex flex-col items-center justify-center p-4">
+              {/* VIDEO SECTION - FULL SCREEN */}
+              <div className="w-full max-w-4xl aspect-video relative rounded-3xl overflow-hidden bg-black flex items-center justify-center">
                 <video
                   ref={videoRef}
                   autoPlay
@@ -647,72 +647,6 @@ export function LiveAvatarChat({
                     <PhoneOff className="w-5 h-5" />
                   </button>
                 </div>
-              </div>
-
-              {/* CHAT SECTION */}
-              <div className="w-full md:w-80 lg:w-96 flex flex-col rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 overflow-hidden max-h-[400px] md:max-h-full">
-                <div className="p-4 border-b border-white/10">
-                  <h4 className="text-white font-medium text-sm flex items-center gap-2">
-                    <MessageCircle className="w-4 h-4 text-blue-400" />
-                    Текстовый диалог
-                  </h4>
-                </div>
-                
-                {/* Messages List */}
-                <div 
-                  ref={scrollRef}
-                  className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-hide"
-                >
-                  {messages.length === 0 && (
-                    <div className="h-full flex items-center justify-center text-center p-4">
-                      <p className="text-white/30 text-xs italic">
-                        Напишите сообщение, чтобы начать текстовый чат с ассистентом
-                      </p>
-                    </div>
-                  )}
-                  {messages.map(msg => (
-                    <div 
-                      key={msg.id}
-                      className={cn(
-                        "flex flex-col max-w-[85%]",
-                        msg.role === "user" ? "ml-auto items-end" : "items-start"
-                      )}
-                    >
-                      <div className={cn(
-                        "px-3 py-2 rounded-2xl text-sm leading-relaxed",
-                        msg.role === "user" 
-                          ? "bg-blue-600 text-white rounded-tr-none" 
-                          : "bg-white/10 text-white rounded-tl-none"
-                      )}>
-                        {msg.text}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Input Area */}
-                <form 
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    sendTextMessage(inputText);
-                  }}
-                  className="p-3 bg-black/20 flex gap-2"
-                >
-                  <input
-                    type="text"
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Написать..."
-                    className="flex-1 bg-white/10 border-none rounded-full px-4 py-2 text-sm text-white focus:ring-1 focus:ring-blue-500 outline-none"
-                  />
-                  <button
-                    type="submit"
-                    disabled={!inputText.trim() || isSending}
-                    className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white disabled:opacity-50 transition-opacity"
-                  >
-                    <ArrowRight className="w-5 h-5" />
-                  </button>
-                </form>
               </div>
             </div>
           )}
