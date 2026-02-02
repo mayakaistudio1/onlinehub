@@ -615,38 +615,36 @@ export function LiveAvatarChat({
           {/* ... other states (connecting, waiting, error) remain similar ... */}
 
           {sessionState === "connected" && (
-            <div className="w-full h-full flex flex-col items-center justify-center p-4">
-              {/* VIDEO SECTION - FULL SCREEN */}
-              <div className="w-full max-w-4xl aspect-video relative rounded-3xl overflow-hidden bg-black flex items-center justify-center">
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  playsInline
-                  muted
-                  className="w-full h-full object-cover"
-                  data-testid="video-avatar"
-                />
-                
-                {/* Mute/End buttons Overlay */}
-                <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-3">
-                  <button
-                    onClick={toggleMute}
-                    disabled={isAvatarSpeaking}
-                    className={cn(
-                      "w-12 h-12 rounded-full flex items-center justify-center transition-all backdrop-blur-md",
-                      isMuted ? "bg-white/20 text-white" : "bg-white text-black",
-                      isAvatarSpeaking && "opacity-50"
-                    )}
-                  >
-                    {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
-                  </button>
-                  <button
-                    onClick={() => stopSession(true)}
-                    className="w-12 h-12 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center shadow-lg"
-                  >
-                    <PhoneOff className="w-5 h-5" />
-                  </button>
-                </div>
+            <div className="absolute inset-0 flex items-center justify-center bg-black">
+              {/* VIDEO SECTION - TRUE FULL SCREEN */}
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                muted
+                className="w-full h-full object-cover"
+                data-testid="video-avatar"
+              />
+              
+              {/* Mute/End buttons Overlay */}
+              <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-4 z-10">
+                <button
+                  onClick={toggleMute}
+                  disabled={isAvatarSpeaking}
+                  className={cn(
+                    "w-14 h-14 rounded-full flex items-center justify-center transition-all backdrop-blur-md shadow-lg",
+                    isMuted ? "bg-white/20 text-white" : "bg-white text-black",
+                    isAvatarSpeaking && "opacity-50"
+                  )}
+                >
+                  {isMuted ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
+                </button>
+                <button
+                  onClick={() => stopSession(true)}
+                  className="w-14 h-14 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center shadow-lg"
+                >
+                  <PhoneOff className="w-6 h-6" />
+                </button>
               </div>
             </div>
           )}
