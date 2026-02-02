@@ -90,13 +90,15 @@ function Hero() {
         >
           <motion.div 
             variants={item}
-            className="mx-auto mb-8 h-32 w-32 overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 p-1 shadow-xl shadow-blue-500/20"
+            className="relative mx-auto mb-8"
           >
-            <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=400"
-              alt="AI Avatar"
-              className="h-full w-full rounded-full object-cover"
-            />
+            {/* Glow effect */}
+            <div className="absolute inset-0 h-28 w-28 mx-auto rounded-full bg-gradient-to-br from-pink-400 via-purple-400 to-cyan-400 blur-2xl opacity-40 animate-pulse" />
+            {/* Main orb */}
+            <div className="relative h-28 w-28 mx-auto rounded-full bg-gradient-to-br from-pink-500 via-fuchsia-400 to-cyan-400 shadow-2xl shadow-pink-500/30 animate-[pulse_3s_ease-in-out_infinite]">
+              <div className="absolute inset-1 rounded-full bg-gradient-to-br from-pink-400/80 via-purple-300/60 to-cyan-300/80 backdrop-blur-sm" />
+              <div className="absolute top-3 left-4 h-4 w-4 rounded-full bg-white/40 blur-sm" />
+            </div>
           </motion.div>
 
           <motion.h1
