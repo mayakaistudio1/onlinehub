@@ -587,89 +587,9 @@ export function LiveAvatarChat({
                     <Video className="w-5 h-5" />
                     Видеозвонок
                   </button>
-                  <button
-                    onClick={() => setChatOpen(!chatOpen)}
-                    className={cn(
-                      "w-full py-4 rounded-2xl font-semibold flex items-center justify-center gap-3 transition-all",
-                      chatOpen 
-                        ? "bg-white text-gray-900" 
-                        : "bg-white/10 text-white hover:bg-white/20"
-                    )}
-                    data-testid="button-open-chat"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    {chatOpen ? "Скрыть чат" : "Написать"}
-                  </button>
                 </div>
 
-                {/* Expandable Chat Section */}
-                <AnimatePresence>
-                  {chatOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="flex-1 flex flex-col rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 overflow-hidden min-h-[200px] max-h-[300px]"
-                    >
-                      {/* Messages */}
-                      <div 
-                        ref={scrollRef}
-                        className="flex-1 overflow-y-auto p-4 space-y-3"
-                      >
-                        {messages.length === 0 && (
-                          <div className="h-full flex items-center justify-center text-center p-4">
-                            <p className="text-white/40 text-sm">
-                              Напишите сообщение, чтобы начать диалог
-                            </p>
-                          </div>
-                        )}
-                        {messages.map(msg => (
-                          <div 
-                            key={msg.id}
-                            className={cn(
-                              "flex flex-col max-w-[85%]",
-                              msg.role === "user" ? "ml-auto items-end" : "items-start"
-                            )}
-                          >
-                            <div className={cn(
-                              "px-4 py-2.5 rounded-2xl text-sm leading-relaxed",
-                              msg.role === "user" 
-                                ? "bg-blue-600 text-white rounded-tr-sm" 
-                                : "bg-white/10 text-white rounded-tl-sm"
-                            )}>
-                              {msg.text}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Input */}
-                      <form 
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          sendTextMessage(inputText);
-                        }}
-                        className="p-3 bg-black/30 flex gap-2 border-t border-white/5"
-                      >
-                        <input
-                          type="text"
-                          value={inputText}
-                          onChange={(e) => setInputText(e.target.value)}
-                          placeholder="Введите сообщение..."
-                          className="flex-1 bg-white/10 border-none rounded-full px-4 py-3 text-sm text-white placeholder:text-white/40 focus:ring-2 focus:ring-blue-500/50 outline-none"
-                        />
-                        <button
-                          type="submit"
-                          disabled={!inputText.trim() || isSending}
-                          className="w-11 h-11 rounded-full bg-blue-600 hover:bg-blue-700 flex items-center justify-center text-white disabled:opacity-50 transition-all"
-                        >
-                          <ArrowRight className="w-5 h-5" />
-                        </button>
-                      </form>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* Chat Section Removed */}
               </div>
             </motion.div>
           )}
