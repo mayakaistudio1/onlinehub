@@ -551,20 +551,46 @@ function LiveScenarios() {
               </p>
             </div>
 
-            <div className="flex gap-2 justify-center mb-6" data-testid="scenario-tabs">
-              {scenarios.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setSelected(s)}
-                  className={cn(
-                    "w-3 h-3 rounded-full transition-all",
-                    selected === s 
-                      ? "bg-blue-500 w-8" 
-                      : "bg-slate-200 hover:bg-slate-300"
-                  )}
-                  data-testid={`tab-scenario-${s}`}
-                />
-              ))}
+            <div className="flex items-center justify-between mb-6" data-testid="scenario-navigation">
+              <button
+                onClick={() => {
+                  const currentIndex = scenarios.indexOf(selected);
+                  const nextIndex = (currentIndex - 1 + scenarios.length) % scenarios.length;
+                  setSelected(scenarios[nextIndex]);
+                }}
+                className="p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+                data-testid="button-prev-scenario"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              <div className="flex gap-2" data-testid="scenario-tabs">
+                {scenarios.map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => setSelected(s)}
+                    className={cn(
+                      "w-3 h-3 rounded-full transition-all",
+                      selected === s 
+                        ? "bg-blue-500 w-8" 
+                        : "bg-slate-200 hover:bg-slate-300"
+                    )}
+                    data-testid={`tab-scenario-${s}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={() => {
+                  const currentIndex = scenarios.indexOf(selected);
+                  const nextIndex = (currentIndex + 1) % scenarios.length;
+                  setSelected(scenarios[nextIndex]);
+                }}
+                className="p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+                data-testid="button-next-scenario"
+              >
+                <ArrowRight className="w-5 h-5" />
+              </button>
             </div>
 
             <AnimatePresence mode="wait">
