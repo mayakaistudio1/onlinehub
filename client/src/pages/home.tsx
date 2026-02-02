@@ -36,7 +36,7 @@ type LiveSession = {
   prompt: string;
 };
 
-const APP_TITLE = "Premium AI‑Enhanced Presence";
+const APP_TITLE = "Твоё живое онлайн-представительство";
 
 const container = {
   hidden: { opacity: 0, y: 10 },
@@ -59,7 +59,7 @@ function SectionShell({
   id: string;
   eyebrow?: string;
   title: string;
-  subtitle?: string;
+  subtitle?: string | React.ReactNode;
   children: React.ReactNode;
   className?: string;
 }) {
@@ -91,12 +91,12 @@ function SectionShell({
             {title}
           </h2>
           {subtitle ? (
-            <p
+            <div
               className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg"
               data-testid={`text-subtitle-${id}`}
             >
               {subtitle}
-            </p>
+            </div>
           ) : null}
         </div>
 
@@ -130,13 +130,15 @@ function PrimaryCTA({
   href,
   label,
   testId,
+  onClick,
 }: {
   href: string;
   label: string;
   testId: string;
+  onClick?: () => void;
 }) {
   return (
-    <a href={href} className="inline-flex" data-testid={testId}>
+    <a href={href} className="inline-flex" data-testid={testId} onClick={onClick}>
       <Button className="h-11 gap-2 rounded-full px-5">
         {label}
         <ArrowRight className="h-4 w-4" />
@@ -170,11 +172,11 @@ function useMockChatResponse() {
   return (intent: ChatIntent) => {
     switch (intent) {
       case "what":
-        return "This is a premium one-page representation that blends crisp positioning with AI-assisted dialogue—built for demos, intros, and Zoom conversations.";
+        return "Это твоё живое онлайн-представительство. Ассистент, который объясняет твоё дело, общается с гостями и помогает им понять, чем ты занимаешься. Всё — автоматически, в твоём стиле и 24/7.";
       case "who":
-        return "It fits founders, agencies, boutique consultancies, and product teams who need a high-signal narrative and a repeatable demo flow—without building a full platform.";
+        return "Тем, кто устал объяснять одно и то же. Тем, кто работает с клиентами, партнёрами, инвесторами, командой. Тем, кому важно первое впечатление и ясная подача.";
       case "where":
-        return "Use it on a landing page, in outreach, during a call, in a conference booth, or as a ‘click-to-understand’ link before a pilot.";
+        return "Для презентации проектов, онбординга, продаж, общения с сообществом. В любом случае, где важны слова — теперь за тебя говорит ассистент.";
       default:
         return "";
     }
@@ -184,15 +186,15 @@ function useMockChatResponse() {
 function useMockLiveContext() {
   return (scenario: LiveScenario) => {
     if (scenario === "sales") {
-      return "You are a calm, premium sales avatar. Introduce the service in 45 seconds. Ask one qualifying question. Offer a pilot.";
+      return "Ассистент отвечает на вопросы, отбирает лидов и греет интерес — ещё до первого звонка.";
     }
     if (scenario === "projects") {
-      return "You are a delivery lead avatar. Explain how a pilot runs week-by-week. Emphasize clarity, speed, and risk reduction.";
+      return "Идеи, которые раньше требовали встречи — теперь объясняются сами.";
     }
     if (scenario === "team") {
-      return "You are a team avatar. Present roles, collaboration style, and communication cadence. Keep it confident and concise.";
+      return "Единая подача для новых сотрудников и участников. Без лишних сообщений.";
     }
-    return "You are an expert avatar. Share a strong opinion, then give a practical framework. Keep the tone warm and authoritative.";
+    return "Сильное впечатление с первой секунды. Даже если ты не онлайн.";
   };
 }
 
@@ -224,13 +226,13 @@ function Hero() {
             <motion.div variants={item} className="flex flex-wrap gap-2">
               <Pill
                 icon={<Star className="h-3.5 w-3.5" />}
-                label="Premium one-page demo"
+                label="Живое представительство"
               />
               <Pill
                 icon={<MessageSquareText className="h-3.5 w-3.5" />}
-                label="AI text dialogue"
+                label="AI диалог"
               />
-              <Pill icon={<Video className="h-3.5 w-3.5" />} label="Live avatar" />
+              <Pill icon={<Video className="h-3.5 w-3.5" />} label="Цифровой двойник" />
             </motion.div>
 
             <motion.h1
@@ -246,9 +248,7 @@ function Hero() {
               className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
               data-testid="text-hero-subtitle"
             >
-              A crafted, minimal presentation that demonstrates your value proposition,
-              an AI-assisted dialogue, and a live avatar format—ready for Zoom demos
-              and pilot conversions.
+              Общается с гостями, ведёт твои направления и вызывает эффект «вау» — легко, понятно и без твоего участия.
             </motion.p>
 
             <motion.div
@@ -257,13 +257,8 @@ function Hero() {
             >
               <PrimaryCTA
                 href="#how"
-                label="Show how it works"
+                label="Показать, как это работает"
                 testId="button-scroll-how"
-              />
-              <SecondaryCTA
-                href="#pilot"
-                label="Pilot details"
-                testId="button-scroll-pilot"
               />
             </motion.div>
 
@@ -275,18 +270,18 @@ function Hero() {
               {[
                 {
                   icon: <BadgeCheck className="h-4 w-4" />,
-                  k: "High-signal narrative",
-                  v: "Designed for clarity",
+                  k: "Автоматизация касаний",
+                  v: "24/7 без пауз",
                 },
                 {
                   icon: <Cpu className="h-4 w-4" />,
-                  k: "AI demo included",
-                  v: "No typing required",
+                  k: "Умный ассистент",
+                  v: "Понимает контекст",
                 },
                 {
                   icon: <Calendar className="h-4 w-4" />,
-                  k: "Pilot-ready",
-                  v: "Fast to validate",
+                  k: "Готов к запуску",
+                  v: "Пилот за 7 дней",
                 },
               ].map((m) => (
                 <div
@@ -314,7 +309,7 @@ function Hero() {
               data-testid="link-scroll-problem"
             >
               <ChevronDown className="h-4 w-4" />
-              <span>Scroll</span>
+              <span>Листай дальше</span>
             </a>
           </motion.div>
         </div>
@@ -327,20 +322,20 @@ function Problem() {
   const problems = useMemo(
     () => [
       {
-        title: "Unclear positioning",
-        desc: "Prospects don’t get it fast enough—so you lose the room before the call starts.",
+        title: "Снова объяснять с нуля",
+        desc: "Ты каждый раз заново рассказываешь, чем занимаешься. Для клиентов, партнёров, даже знакомых.",
       },
       {
-        title: "Demos are inconsistent",
-        desc: "Every presenter says it differently. The story shifts and confidence drops.",
+        title: "Потеря времени",
+        desc: "Первые касания съедают энергию. Много слов — мало смысла и действий.",
       },
       {
-        title: "No ‘wow’ moment",
-        desc: "Your product might be great, but the first impression feels like another landing page.",
+        title: "Никогда не вовремя",
+        desc: "Когда тебе пишут — ты занят. А когда ты готов — уже поздно.",
       },
       {
-        title: "Hard to route to a pilot",
-        desc: "The next step is unclear—people bounce instead of booking a real conversation.",
+        title: "Нельзя масштабироваться",
+        desc: "Ты хочешь расти, но всё упирается в твои ответы и твой график.",
       },
     ],
     [],
@@ -349,9 +344,9 @@ function Problem() {
   return (
     <SectionShell
       id="problem"
-      eyebrow="Screen 2 · Problem"
-      title="A premium product deserves a premium first impression"
-      subtitle="Most pages are readable. Few are persuasive. This mini-app is built to create momentum."
+      eyebrow="Экран 2 · Проблема"
+      title="Почему это вообще нужно?"
+      subtitle="Твоё время — самый дорогой ресурс. Хватит тратить его на повторяющиеся объяснения."
     >
       <div className="grid gap-4 sm:grid-cols-2" data-testid="grid-problems">
         {problems.map((p, idx) => (
@@ -382,6 +377,9 @@ function Problem() {
           </Card>
         ))}
       </div>
+      <div className="mt-10">
+        <PrimaryCTA href="#solution" label="Хочу понять, как это решить" testId="button-scroll-solution" />
+      </div>
     </SectionShell>
   );
 }
@@ -389,25 +387,29 @@ function Problem() {
 function Solution() {
   const points = [
     {
-      title: "A single narrative",
-      desc: "One page. One flow. Every time the story lands the same way.",
+      title: "Говорит за тебя",
+      desc: "Доносит твою идею так, как ты бы рассказал сам — только чётко и без повторов.",
     },
     {
-      title: "AI dialogue as proof",
-      desc: "Pre-built intents demonstrate what the service does—without asking users to type.",
+      title: "Общается 24/7",
+      desc: "Отвечает на вопросы, объясняет, направляет — даже когда ты спишь или в дороге.",
     },
     {
-      title: "Live avatar format",
-      desc: "Show multiple contexts (sales, team, expert) with a session-based prompt.",
+      title: "Ведёт к действию",
+      desc: "Помогает гостям сделать следующий шаг — без суеты и лишних писем.",
     },
   ];
 
   return (
     <SectionShell
       id="solution"
-      eyebrow="Screen 3 · Solution"
-      title="A one-page experience with AI-augmented credibility"
-      subtitle="Minimal, readable, and built for demos. It looks premium—and behaves like a product."
+      eyebrow="Экран 3 · Решение"
+      title="Это не сайт. Не бот."
+      subtitle={
+        <p className="text-balance">
+          Это как если бы ты сам встречал каждого гостя — <span className="text-foreground font-medium">но автоматически.</span>
+        </p>
+      }
     >
       <div className="grid gap-4 lg:grid-cols-3" data-testid="grid-solution">
         {points.map((p, idx) => (
@@ -436,6 +438,9 @@ function Solution() {
           </Card>
         ))}
       </div>
+      <div className="mt-10">
+        <PrimaryCTA href="#how" label="Как это вообще работает?" testId="button-scroll-how-solution" />
+      </div>
     </SectionShell>
   );
 }
@@ -444,32 +449,32 @@ function HowItWorks() {
   const steps = [
     {
       n: "01",
-      title: "Positioning",
-      desc: "We compress your story into a high-signal narrative and a scroll flow that keeps attention.",
+      title: "Открытие",
+      desc: "Человек открывает твоё представительство",
     },
     {
       n: "02",
-      title: "AI dialogue",
-      desc: "We wire 3–5 intents to demonstrate value with crisp, on-brand responses.",
+      title: "Диалог",
+      desc: "Сразу начинается диалог — легко и по делу",
     },
     {
       n: "03",
-      title: "Live scenarios",
-      desc: "We prepare prompts for multiple avatar roles, so the demo adapts to the audience.",
+      title: "Понимание",
+      desc: "Ассистент понимает, зачем он пришёл",
     },
     {
       n: "04",
-      title: "Pilot conversion",
-      desc: "A direct path to a pilot call—pricing, scope, and contact capture in one place.",
+      title: "Действие",
+      desc: "И ведёт его к нужному действию: узнать больше, оставить заявку, перейти дальше",
     },
   ];
 
   return (
     <SectionShell
       id="how"
-      eyebrow="Screen 4 · How it works"
-      title="Four steps. One clean demo flow."
-      subtitle="This is designed for presentation, not complexity. Everything is modular and extendable."
+      eyebrow="Экран 4 · Как это работает"
+      title="Как это работает"
+      subtitle="Ты занимаешься важным. Ассистент — всем остальным."
     >
       <div className="grid gap-4 lg:grid-cols-4" data-testid="grid-how">
         {steps.map((s) => (
@@ -504,6 +509,9 @@ function HowItWorks() {
           </Card>
         ))}
       </div>
+      <div className="mt-10">
+        <PrimaryCTA href="#text-demo" label="Показать вживую" testId="button-scroll-demo" />
+      </div>
     </SectionShell>
   );
 }
@@ -513,7 +521,7 @@ function TextDemo() {
     {
       id: "m1",
       role: "assistant",
-      text: "Pick one of the three prompts below—this simulates an AI dialogue inside the service.",
+      text: "Привет! Я могу рассказать, чем мы занимаемся, ответить на любые вопросы или подсказать следующий шаг. С чего начнём?",
     },
   ]);
   const [loading, setLoading] = useState<ChatIntent | null>(null);
@@ -524,17 +532,17 @@ function TextDemo() {
 
     const userText =
       intent === "what"
-        ? "What is this?"
+        ? "Расскажи, что это вообще"
         : intent === "who"
-          ? "Who is it for?"
-          : "Where is it used?";
+          ? "Кому это нужно?"
+          : "Где это можно использовать?";
 
     setMessages((m) => [
       ...m,
       { id: `u-${Date.now()}`, role: "user", text: userText },
     ]);
 
-    await new Promise((r) => setTimeout(r, 450));
+    await new Promise((r) => setTimeout(r, 600));
 
     setMessages((m) => [
       ...m,
@@ -547,9 +555,9 @@ function TextDemo() {
   return (
     <SectionShell
       id="text-demo"
-      eyebrow="Screen 5 · Text demo"
-      title="AI dialogue demo (no typing)"
-      subtitle="Three intents. One click. A clean, readable response—like a real service demo."
+      eyebrow="Экран 5 · Демо"
+      title="Попробуй, как это чувствуется"
+      subtitle="Ассистент, который всегда в ресурсе и говорит именно твоими словами."
     >
       <div className="grid gap-6 lg:grid-cols-5" data-testid="grid-text-demo">
         <Card
@@ -563,13 +571,13 @@ function TextDemo() {
               </div>
               <div>
                 <div className="text-sm font-medium" data-testid="text-chat-title">
-                  Demo chat
+                  AI-ассистент
                 </div>
                 <div
                   className="text-xs text-muted-foreground"
                   data-testid="text-chat-subtitle"
                 >
-                  Assistant responses are mocked in this prototype.
+                  Демонстрация диалога
                 </div>
               </div>
             </div>
@@ -607,7 +615,7 @@ function TextDemo() {
                 data-testid="row-chat-loading"
               >
                 <div className="rounded-2xl border border-border/70 bg-white/4 px-4 py-3 text-sm text-muted-foreground">
-                  Thinking…
+                  Печатает...
                 </div>
               </div>
             ) : null}
@@ -619,13 +627,13 @@ function TextDemo() {
             className="text-sm font-medium"
             data-testid="text-chat-controls-title"
           >
-            Prompts
+            Твои вопросы
           </div>
           <div
             className="mt-1 text-xs text-muted-foreground"
             data-testid="text-chat-controls-subtitle"
           >
-            User doesn’t type—buttons simulate real intents.
+            Нажми, чтобы проверить ответы.
           </div>
 
           <div className="mt-5 grid gap-3" data-testid="grid-chat-buttons">
@@ -636,7 +644,7 @@ function TextDemo() {
               disabled={loading !== null}
               data-testid="button-intent-what"
             >
-              <span>What is this?</span>
+              <span className="text-xs sm:text-sm">Расскажи, что это вообще</span>
               <ArrowRight className="h-4 w-4" />
             </Button>
             <Button
@@ -646,7 +654,7 @@ function TextDemo() {
               disabled={loading !== null}
               data-testid="button-intent-who"
             >
-              <span>Who is it for?</span>
+              <span className="text-xs sm:text-sm">Кому это нужно?</span>
               <ArrowRight className="h-4 w-4" />
             </Button>
             <Button
@@ -656,7 +664,7 @@ function TextDemo() {
               disabled={loading !== null}
               data-testid="button-intent-where"
             >
-              <span>Where is it used?</span>
+              <span className="text-xs sm:text-sm">Где это использовать?</span>
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
@@ -674,18 +682,19 @@ function TextDemo() {
                   className="text-sm font-medium"
                   data-testid="text-chat-note-title"
                 >
-                  Prototype mode
+                  Примечание
                 </div>
                 <div
                   className="mt-1 text-xs leading-relaxed text-muted-foreground"
                   data-testid="text-chat-note-desc"
                 >
-                  In this mockup, responses are generated client-side. When you
-                  graduate to a full app, we’ll connect these intents to real
-                  endpoints.
+                  Это только демо. Твой хаб будет говорить именно твоими словами — под твои задачи.
                 </div>
               </div>
             </div>
+          </div>
+          <div className="mt-6">
+            <PrimaryCTA href="#live" label="Продолжить" testId="button-demo-continue" />
           </div>
         </Card>
       </div>
@@ -697,44 +706,17 @@ function LiveIntro() {
   return (
     <SectionShell
       id="live"
-      eyebrow="Screen 6 · Live format"
-      title="Live avatar format (explained)"
-      subtitle="A second mode where a live avatar presents in different roles—without changing the page flow."
+      eyebrow="Экран 6 · Live аватар"
+      title="Хочешь — общайся вживую"
+      subtitle={
+        <div className="space-y-4">
+          <p>Твоё представительство может включать видеозвонок. Гость увидит тебя — или твоего ассистента — прямо в хабе.</p>
+          <p className="text-sm">Это может быть ты сам — как цифровой двойник. Или кто-то из команды. Выбираешь ты.</p>
+        </div>
+      }
     >
-      <div className="grid gap-4 lg:grid-cols-3" data-testid="grid-live-intro">
-        {[
-          {
-            title: "Role-based prompts",
-            desc: "Sales, delivery, team, or expert—each with a tuned intro and tone.",
-          },
-          {
-            title: "Session context",
-            desc: "A sessionId ties the selected scenario to the live prompt context.",
-          },
-          {
-            title: "Iframe/placeholder",
-            desc: "Embed your preferred avatar runtime. This demo uses a polished placeholder.",
-          },
-        ].map((x, idx) => (
-          <Card
-            key={x.title}
-            className="glass rounded-2xl p-5"
-            data-testid={`card-live-intro-${idx}`}
-          >
-            <div
-              className="text-base font-medium"
-              data-testid={`text-live-intro-title-${idx}`}
-            >
-              {x.title}
-            </div>
-            <div
-              className="mt-2 text-sm leading-relaxed text-muted-foreground"
-              data-testid={`text-live-intro-desc-${idx}`}
-            >
-              {x.desc}
-            </div>
-          </Card>
-        ))}
+      <div className="mt-10">
+        <PrimaryCTA href="#scenarios" label="Показать, как это выглядит" testId="button-scroll-scenarios" />
       </div>
     </SectionShell>
   );
@@ -757,26 +739,26 @@ function LiveScenarios() {
   };
 
   const buttons: { key: LiveScenario; label: string }[] = [
-    { key: "sales", label: "Sales" },
-    { key: "projects", label: "Projects" },
-    { key: "team", label: "Team" },
-    { key: "expert", label: "Expert" },
+    { key: "sales", label: "Продажи и партнёрства" },
+    { key: "projects", label: "Презентации проектов" },
+    { key: "team", label: "Команда и сообщество" },
+    { key: "expert", label: "Первое касание" },
   ];
 
   return (
     <SectionShell
       id="scenarios"
-      eyebrow="Screen 7 · Live scenarios"
-      title="Switch the avatar context by scenario"
-      subtitle="Pick a scenario to create a sessionId and load context for a live avatar embed."
+      eyebrow="Экран 7 · Сценарии"
+      title="Где это по-настоящему полезно"
+      subtitle="Начинаем с одного сценария. Строим — под твою задачу."
     >
       <div className="grid gap-6 lg:grid-cols-5" data-testid="grid-live">
         <Card className="glass rounded-2xl p-5 lg:col-span-2" data-testid="card-live-controls">
           <div className="text-sm font-medium" data-testid="text-live-controls-title">
-            Scenarios
+            Сценарии
           </div>
           <div className="mt-1 text-xs text-muted-foreground" data-testid="text-live-controls-subtitle">
-            Creates a session and loads context.
+            Выберите кейс для демонстрации.
           </div>
 
           <div className="mt-5 grid gap-2" data-testid="grid-live-buttons">
@@ -792,7 +774,7 @@ function LiveScenarios() {
                 disabled={busy}
                 data-testid={`button-scenario-${b.key}`}
               >
-                <span>{b.label}</span>
+                <span className="text-xs sm:text-sm truncate">{b.label}</span>
                 <ArrowRight className="h-4 w-4" />
               </Button>
             ))}
@@ -802,20 +784,23 @@ function LiveScenarios() {
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="text-xs text-muted-foreground" data-testid="text-live-session-label">
-                  sessionId
+                  ID Сессии
                 </div>
-                <div className="mt-1 font-mono text-sm" data-testid="text-live-session-id">
+                <div className="mt-1 font-mono text-xs sm:text-sm" data-testid="text-live-session-id">
                   {session?.sessionId ?? "—"}
                 </div>
               </div>
               <div className="rounded-full border border-border/70 bg-white/5 px-3 py-1 text-xs text-muted-foreground" data-testid="status-live">
-                {busy ? "Loading…" : session ? "Ready" : "Idle"}
+                {busy ? "Загрузка..." : session ? "Готов" : "Ожидание"}
               </div>
             </div>
             <div className="mt-3 text-xs leading-relaxed text-muted-foreground" data-testid="text-live-prompt">
               {session?.prompt ??
-                "Choose a scenario to generate a context prompt for the live avatar."}
+                "Выберите сценарий, чтобы подготовить контекст для аватара."}
             </div>
+          </div>
+          <div className="mt-6">
+            <PrimaryCTA href="#pilot" label="Хочу такое решение" testId="button-scenarios-continue" />
           </div>
         </Card>
 
@@ -823,10 +808,10 @@ function LiveScenarios() {
           <div className="p-5">
             <div className="flex items-center justify-between">
               <div className="text-sm font-medium" data-testid="text-live-embed-title">
-                Live avatar embed
+                Визуализация аватара
               </div>
               <div className="text-xs text-muted-foreground" data-testid="text-live-embed-note">
-                Placeholder iframe
+                Живой формат
               </div>
             </div>
           </div>
@@ -835,17 +820,16 @@ function LiveScenarios() {
               className="flex aspect-video items-center justify-center rounded-xl border border-border/70 bg-white/3"
               data-testid="iframe-live-placeholder"
             >
-              <div className="max-w-md text-center">
+              <div className="max-w-md text-center p-4">
                 <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-border/70 bg-white/5 px-3 py-1 text-xs text-muted-foreground">
                   <Video className="h-3.5 w-3.5 text-[hsl(var(--accent))]" />
-                  <span>Live runtime goes here</span>
+                  <span>Цифровой двойник</span>
                 </div>
-                <div className="font-serif text-2xl tracking-[-0.02em]" data-testid="text-live-placeholder-title">
-                  Avatar: {selected.toUpperCase()}
+                <div className="font-serif text-xl sm:text-2xl tracking-[-0.02em]" data-testid="text-live-placeholder-title">
+                  Контекст: {buttons.find(b => b.key === selected)?.label}
                 </div>
                 <div className="mt-2 text-sm leading-relaxed text-muted-foreground" data-testid="text-live-placeholder-desc">
-                  Embed your avatar provider in an iframe and feed it the session
-                  context prompt.
+                  В реальном продукте здесь будет видеопоток аватара, который говорит вашими словами.
                 </div>
               </div>
             </div>
@@ -860,23 +844,23 @@ function Pilot() {
   return (
     <SectionShell
       id="pilot"
-      eyebrow="Screen 8 · Pilot"
-      title="Pilot: fast validation, premium output"
-      subtitle="A fixed-scope pilot to prove the narrative, the AI demo, and the live scenario flow."
+      eyebrow="Экран 8 · Пилот"
+      title="Ты не покупаешь платформу."
+      subtitle="Ты запускаешь решение — под свою задачу."
     >
       <Card className="glass glow-ring rounded-2xl p-6" data-testid="card-pilot">
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <div className="font-serif text-2xl" data-testid="text-pilot-title">
-              What you get
+              Что входит
             </div>
             <ul className="mt-4 space-y-3" data-testid="list-pilot-items">
               {[
-                "One-page scroll narrative (9 sections)",
-                "AI text demo intents (click-to-answer)",
-                "4 live avatar scenarios with session context",
-                "Polished visual system: typography, spacing, motion",
-                "Ready for Zoom demos and handoffs",
+                "1 цифровое представительство (хаб)",
+                "1–2 ассистента (текст или видео)",
+                "1 конкретная цель — которую решаем вместе",
+                "Полная настройка и запуск «под ключ»",
+                "Индивидуальный стиль и tone of voice",
               ].map((x, i) => (
                 <li key={x} className="flex items-start gap-3" data-testid={`row-pilot-item-${i}`}>
                   <div className="mt-1 rounded-full border border-border/70 bg-white/5 p-1 text-[hsl(var(--accent))]">
@@ -893,28 +877,28 @@ function Pilot() {
           <div>
             <div className="rounded-2xl border border-border/70 bg-white/4 p-5" data-testid="card-pilot-price">
               <div className="text-xs text-muted-foreground" data-testid="text-pilot-price-label">
-                Fixed pilot price
+                Стоимость пилота
               </div>
               <div className="mt-2 font-serif text-4xl tracking-[-0.02em]" data-testid="text-pilot-price">
                 $2,500
               </div>
               <div className="mt-2 text-sm text-muted-foreground" data-testid="text-pilot-price-note">
-                Simple scope. Clear outcome.
+                Одноразовая настройка и запуск.
               </div>
 
               <div className="mt-5">
                 <a href="#contact" data-testid="button-scroll-contact">
-                  <Button className="h-11 w-full rounded-xl">Contact</Button>
+                  <Button className="h-11 w-full rounded-xl">Обсудить запуск</Button>
                 </a>
               </div>
             </div>
 
             <div className="mt-4 rounded-2xl border border-border/70 bg-white/4 p-5" data-testid="card-pilot-timeline">
               <div className="text-sm font-medium" data-testid="text-pilot-timeline-title">
-                Timeline
+                Результат
               </div>
-              <div className="mt-2 text-sm text-muted-foreground" data-testid="text-pilot-timeline-desc">
-                Typically delivered in 5–7 days depending on review speed.
+              <div className="mt-2 text-xs leading-relaxed text-muted-foreground" data-testid="text-pilot-timeline-desc">
+                Если работает — масштабируем. Если нет — ты хотя бы перестал объяснять вручную.
               </div>
             </div>
           </div>
@@ -931,29 +915,30 @@ function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
 
   const submit = async () => {
+    if (!name || !contact) return;
     setStatus("sending");
-    await new Promise((r) => setTimeout(r, 550));
+    await new Promise((r) => setTimeout(r, 800));
     setStatus("sent");
   };
 
   return (
     <SectionShell
       id="contact"
-      eyebrow="Screen 9 · Contact"
-      title="Let’s schedule a pilot call"
-      subtitle="Share your name and contact, and we’ll follow up with next steps."
+      eyebrow="Экран 9 · Контакт"
+      title="Созвонимся?"
+      subtitle="Напиши, и мы обсудим, подойдёт ли хаб под твою задачу. Без спама. Без воронок. Просто живой разговор."
     >
       <div className="grid gap-6 lg:grid-cols-5" data-testid="grid-contact">
         <Card className="glass glow-ring rounded-2xl p-6 lg:col-span-3" data-testid="card-contact-form">
           <div className="grid gap-4">
             <div>
               <div className="text-sm font-medium" data-testid="text-contact-name-label">
-                Name
+                Имя *
               </div>
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Your name"
+                placeholder="Твоё имя"
                 className="mt-2 h-11 rounded-xl border-border/70 bg-white/5"
                 data-testid="input-name"
               />
@@ -961,12 +946,12 @@ function Contact() {
 
             <div>
               <div className="text-sm font-medium" data-testid="text-contact-contact-label">
-                Contact
+                Email или Telegram *
               </div>
               <Input
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
-                placeholder="Email, Telegram, WhatsApp, etc."
+                placeholder="@username или email"
                 className="mt-2 h-11 rounded-xl border-border/70 bg-white/5"
                 data-testid="input-contact"
               />
@@ -974,12 +959,12 @@ function Contact() {
 
             <div>
               <div className="text-sm font-medium" data-testid="text-contact-message-label">
-                Message
+                Что хочешь автоматизировать? (необязательно)
               </div>
               <Textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="A couple of lines about what you want to demo"
+                placeholder="Опиши свою задачу в паре слов"
                 className="mt-2 min-h-28 rounded-xl border-border/70 bg-white/5"
                 data-testid="input-message"
               />
@@ -988,16 +973,18 @@ function Contact() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button
                 onClick={submit}
-                className="h-11 rounded-xl"
-                disabled={status !== "idle"}
+                className="h-11 rounded-xl px-8"
+                disabled={status !== "idle" || !name || !contact}
                 data-testid="button-submit-lead"
               >
-                {status === "sending" ? "Sending…" : status === "sent" ? "Sent" : "Send"}
+                {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено" : "Отправить"}
               </Button>
               <div className="text-sm text-muted-foreground" data-testid="status-lead">
-                {status === "sent"
-                  ? "Thanks—message received. We’ll reply shortly."
-                  : "No spam. Just a reply and next steps."}
+                {status === "sent" ? (
+                  <span className="text-[hsl(var(--accent))]">Спасибо, {name}! Мы свяжемся с тобой через {contact} — без формальностей.</span>
+                ) : (
+                  "Никакого спама. Только живой разговор."
+                )}
               </div>
             </div>
           </div>
@@ -1005,11 +992,10 @@ function Contact() {
 
         <Card className="glass rounded-2xl p-6 lg:col-span-2" data-testid="card-contact-aside">
           <div className="font-serif text-xl" data-testid="text-contact-aside-title">
-            What happens next
+            Что дальше
           </div>
           <div className="mt-3 text-sm leading-relaxed text-muted-foreground" data-testid="text-contact-aside-desc">
-            We’ll confirm your context, pick the best scenario for your audience,
-            and schedule a 25-minute call to walk through the demo and pilot.
+            Мы изучим твой запрос и предложим удобное время для звонка, чтобы обсудить внедрение хаба в твои процессы.
           </div>
 
           <div className="mt-6 rounded-xl border border-border/70 bg-white/4 p-4" data-testid="card-contact-bullets">
@@ -1019,10 +1005,10 @@ function Contact() {
               </div>
               <div>
                 <div className="text-sm font-medium" data-testid="text-contact-bullets-title">
-                  Quick call, clear scope
+                  Быстрый старт
                 </div>
                 <div className="mt-1 text-xs leading-relaxed text-muted-foreground" data-testid="text-contact-bullets-desc">
-                  If it’s a fit, we start immediately and deliver within a week.
+                  Если задача понятна — запускаем пилот в течение недели.
                 </div>
               </div>
             </div>
@@ -1032,6 +1018,7 @@ function Contact() {
     </SectionShell>
   );
 }
+
 
 function Footer() {
   return (
