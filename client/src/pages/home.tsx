@@ -261,46 +261,6 @@ function Hero() {
                 testId="button-scroll-how"
               />
             </motion.div>
-
-            <motion.div
-              variants={item}
-              className="mt-10 flex justify-center"
-              data-testid="grid-hero-metrics"
-            >
-              {[
-                {
-                  icon: <BadgeCheck className="h-4 w-4" />,
-                  k: "Автоматизация касаний",
-                  v: "24/7 без пауз",
-                },
-              ].map((m) => (
-                <div
-                  key={m.k}
-                  className="glass glow-ring rounded-2xl p-4 max-w-sm w-full"
-                  data-testid={`card-hero-metric-${m.k.replaceAll(" ", "-").toLowerCase()}`}
-                >
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="text-[hsl(var(--accent))]">{m.icon}</span>
-                    <span className="font-medium">{m.k}</span>
-                  </div>
-                  <div
-                    className="mt-2 text-sm text-muted-foreground"
-                    data-testid={`text-hero-metric-${m.k.replaceAll(" ", "-").toLowerCase()}`}
-                  >
-                    {m.v}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-
-            <a
-              href="#problem"
-              className="mt-10 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
-              data-testid="link-scroll-problem"
-            >
-              <ChevronDown className="h-4 w-4" />
-              <span>Листай дальше</span>
-            </a>
           </motion.div>
         </div>
       </div>
