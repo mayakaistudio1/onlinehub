@@ -90,14 +90,21 @@ function Hero() {
         >
           <motion.div 
             variants={item}
-            className="relative mx-auto mb-8"
+            className="relative mx-auto mb-10"
           >
-            {/* Glow effect */}
-            <div className="absolute inset-0 h-28 w-28 mx-auto rounded-full bg-gradient-to-br from-pink-400 via-purple-400 to-cyan-400 blur-2xl opacity-40 animate-pulse" />
-            {/* Main orb */}
-            <div className="relative h-28 w-28 mx-auto rounded-full bg-gradient-to-br from-pink-500 via-fuchsia-400 to-cyan-400 shadow-2xl shadow-pink-500/30 animate-[pulse_3s_ease-in-out_infinite]">
-              <div className="absolute inset-1 rounded-full bg-gradient-to-br from-pink-400/80 via-purple-300/60 to-cyan-300/80 backdrop-blur-sm" />
-              <div className="absolute top-3 left-4 h-4 w-4 rounded-full bg-white/40 blur-sm" />
+            {/* Search bar style container */}
+            <div className="relative inline-flex items-center gap-4 rounded-full bg-white/80 backdrop-blur-xl px-5 py-4 shadow-xl shadow-black/[0.08] border border-white/50">
+              {/* Glow effect behind orb */}
+              <div className="absolute left-4 h-12 w-12 rounded-full bg-gradient-to-br from-pink-400 via-purple-400 to-cyan-400 blur-xl opacity-50" />
+              {/* Gradient orb */}
+              <div className="relative h-12 w-12 shrink-0 rounded-full bg-gradient-to-br from-pink-500 via-fuchsia-400 to-cyan-400 shadow-lg shadow-pink-500/20 animate-[pulse_3s_ease-in-out_infinite]">
+                <div className="absolute inset-0.5 rounded-full bg-gradient-to-br from-pink-400/80 via-purple-300/60 to-cyan-300/80" />
+                <div className="absolute top-1.5 left-2 h-2 w-2 rounded-full bg-white/50 blur-[2px]" />
+              </div>
+              {/* Divider */}
+              <div className="h-8 w-px bg-slate-300" />
+              {/* Text */}
+              <span className="text-xl font-light text-slate-400 tracking-wide pr-2">WOW Page Live...</span>
             </div>
           </motion.div>
 
