@@ -112,7 +112,7 @@ function Hero() {
             className="font-serif text-[2.5rem] leading-[1.1] tracking-[-0.03em] text-balance sm:text-6xl"
             data-testid="text-hero-title"
           >
-            Твоя идея заслуживает лучшего знакомства
+            Онлайн-представительство нового поколения
           </motion.h1>
 
           <motion.p
@@ -120,7 +120,7 @@ function Hero() {
             className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
             data-testid="text-hero-subtitle"
           >
-            Онлайн-представительство нового поколения: 24/7 объясняет за тебя, отвечает на вопросы, ведёт к действию и при этом создаёт ВАУ-эффект.
+            24/7 объясняет за тебя, отвечает на вопросы, ведёт к действию и при этом создаёт ВАУ-эффект.
           </motion.p>
 
           <motion.div variants={item} className="mt-10">
