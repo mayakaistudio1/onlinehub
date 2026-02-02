@@ -67,7 +67,7 @@ function SectionShell({
     <section
       id={id}
       className={cn(
-        "relative scroll-mt-24 py-16 sm:py-20 lg:py-24",
+        "relative flex min-h-screen items-center justify-center overflow-hidden py-16 snap-start",
         className,
       )}
       data-testid={`section-${id}`}
@@ -201,7 +201,7 @@ function useMockLiveContext() {
 function Hero() {
   return (
     <section
-      className="relative overflow-hidden py-18 sm:py-22"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden py-16 snap-start"
       data-testid="section-hero"
     >
       <div
