@@ -156,7 +156,7 @@ function WhyItMatters() {
       <div className="absolute top-1/4 -left-20 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50" />
       <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-cyan-100 rounded-full blur-3xl opacity-50" />
 
-      <div className="relative mx-auto w-full max-w-2xl">
+      <div className="relative mx-auto w-full max-w-2xl text-center">
         <LazyMotion features={domAnimation}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -164,29 +164,30 @@ function WhyItMatters() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="text-center mb-12">
-              <h2 className="font-serif text-4xl leading-tight tracking-[-0.02em] sm:text-5xl">
-                Почему просто сайта больше недостаточно?
-              </h2>
-              <div className="mt-8 space-y-6 text-xl text-muted-foreground leading-relaxed">
-                <p>
-                  Сегодня важно не просто показать информацию.
-                  Важно, чтобы человека провели, ответили на вопросы и помогли разобраться.
-                </p>
-                <p>
-                  Обычный сайт этого не делает.
-                  Он ждёт, что гость сам всё поймёт.
-                </p>
-                <p className="text-foreground font-medium">
-                  Живое онлайн-представительство работает иначе:
-                  оно общается, объясняет и помогает сделать следующий шаг — сразу, в одном месте.
-                </p>
-              </div>
+            <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-5xl mb-6">
+              Почему просто сайта больше недостаточно?
+            </h2>
+            
+            <div className="space-y-8 text-lg sm:text-xl text-muted-foreground leading-relaxed">
+              <p>
+                Сегодня важно не просто показать информацию.<br />
+                Важно, чтобы человека провели, ответили на вопросы и помогли разобраться.
+              </p>
+              
+              <p>
+                Обычный сайт этого не делает.<br />
+                Он ждёт, что гость сам всё поймёт.
+              </p>
+              
+              <p className="text-foreground font-medium text-xl sm:text-2xl pt-4">
+                Живое онлайн-представительство работает иначе:<br className="hidden sm:block" />
+                оно общается, объясняет и помогает сделать следующий шаг — сразу, в одном месте.
+              </p>
             </div>
 
-            <div className="mt-12 text-center">
+            <div className="mt-16">
               <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
-                <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-blue-500/10 transition-all hover:scale-105">
+                <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-blue-500/10 transition-all hover:scale-105 active:scale-95">
                   Смотреть демо
                   <ArrowRight className="h-5 w-5" />
                 </Button>
