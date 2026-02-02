@@ -264,7 +264,7 @@ function Hero() {
 
             <motion.div
               variants={item}
-              className="mt-10 grid gap-4 sm:grid-cols-2"
+              className="mt-10 flex justify-center"
               data-testid="grid-hero-metrics"
             >
               {[
@@ -273,15 +273,10 @@ function Hero() {
                   k: "Автоматизация касаний",
                   v: "24/7 без пауз",
                 },
-                {
-                  icon: <Cpu className="h-4 w-4" />,
-                  k: "Умный ассистент",
-                  v: "Понимает контекст",
-                },
               ].map((m) => (
                 <div
                   key={m.k}
-                  className="glass glow-ring rounded-2xl p-4"
+                  className="glass glow-ring rounded-2xl p-4 max-w-sm w-full"
                   data-testid={`card-hero-metric-${m.k.replaceAll(" ", "-").toLowerCase()}`}
                 >
                   <div className="flex items-center gap-2 text-sm">
