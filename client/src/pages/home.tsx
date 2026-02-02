@@ -2,10 +2,24 @@ import { useState } from "react";
 import { LazyMotion, domAnimation, motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
+  Briefcase,
   Check,
   ChevronDown,
+  ChevronLeft,
+  Clock,
+  ExternalLink,
+  Globe,
+  GraduationCap,
+  Heart,
+  MapPin,
   MessageSquareText,
+  Phone,
+  Star,
+  TrendingUp,
+  Users,
   Video,
+  X,
+  Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -333,35 +347,133 @@ function TextDemo() {
 }
 
 
-const SCENARIO_CONFIGS: Record<LiveScenario, { title: string; description: string; avatarImage?: string }> = {
+type ScenarioConfig = {
+  title: string;
+  description: string;
+  avatarImage: string;
+  businessCard: {
+    category: string;
+    businessName: string;
+    tagline: string;
+    avatarName: string;
+    highlights: { icon: React.ReactNode; text: string }[];
+    whyWorks: string[];
+    links: { label: string; url: string }[];
+  };
+};
+
+const SCENARIO_CONFIGS: Record<LiveScenario, ScenarioConfig> = {
   sales: {
     title: "Продажи и партнёрства",
     description: "Ассистент отвечает на вопросы, отбирает лидов и греет интерес — ещё до первого звонка.",
     avatarImage: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
+    businessCard: {
+      category: "IT-консалтинг",
+      businessName: "TechPro Solutions",
+      tagline: "Цифровая трансформация для вашего бизнеса",
+      avatarName: "Алексей",
+      highlights: [
+        { icon: <TrendingUp className="w-4 h-4" />, text: "Рост конверсии до 40%" },
+        { icon: <Clock className="w-4 h-4" />, text: "Ответ за 30 секунд" },
+        { icon: <Star className="w-4 h-4" />, text: "50+ успешных проектов" },
+      ],
+      whyWorks: [
+        "Квалификация лидов 24/7",
+        "Персональный подход к каждому",
+        "Интеграция с CRM",
+      ],
+      links: [
+        { label: "Портфолио", url: "#" },
+        { label: "Кейсы", url: "#" },
+      ],
+    },
   },
   projects: {
     title: "Презентации проектов", 
     description: "Идеи, которые раньше требовали встречи — теперь объясняются сами.",
     avatarImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
+    businessCard: {
+      category: "Архитектура и дизайн",
+      businessName: "Студия АРТ",
+      tagline: "Создаём пространства, которые вдохновляют",
+      avatarName: "Мария",
+      highlights: [
+        { icon: <Briefcase className="w-4 h-4" />, text: "120+ реализованных проектов" },
+        { icon: <Star className="w-4 h-4" />, text: "Победитель Design Awards" },
+        { icon: <Globe className="w-4 h-4" />, text: "Проекты в 5 странах" },
+      ],
+      whyWorks: [
+        "Визуализация проекта в реальном времени",
+        "Ответы на все вопросы инвесторов",
+        "Интерактивное портфолио",
+      ],
+      links: [
+        { label: "Галерея работ", url: "#" },
+        { label: "Награды", url: "#" },
+      ],
+    },
   },
   team: {
     title: "Команда и сообщество",
     description: "Единая подача для новых сотрудников и участников. Без лишних сообщений.",
     avatarImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
+    businessCard: {
+      category: "HR Tech",
+      businessName: "HR Hub",
+      tagline: "Лучшие таланты для лучших команд",
+      avatarName: "Дмитрий",
+      highlights: [
+        { icon: <Users className="w-4 h-4" />, text: "500+ сотрудников в команде" },
+        { icon: <Heart className="w-4 h-4" />, text: "Дружелюбная культура" },
+        { icon: <Zap className="w-4 h-4" />, text: "Гибкий график работы" },
+      ],
+      whyWorks: [
+        "Онбординг без менеджеров",
+        "Ответы на вопросы о культуре",
+        "Знакомство с командой",
+      ],
+      links: [
+        { label: "Вакансии", url: "#" },
+        { label: "О компании", url: "#" },
+      ],
+    },
   },
   expert: {
     title: "Первое касание",
     description: "Сильное впечатление с первой секунды. Даже если ты не онлайн.",
     avatarImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800",
+    businessCard: {
+      category: "Медицинский консультант",
+      businessName: "Доктор Иванов",
+      tagline: "Забота о здоровье на первом месте",
+      avatarName: "Андрей",
+      highlights: [
+        { icon: <GraduationCap className="w-4 h-4" />, text: "20+ лет опыта" },
+        { icon: <Clock className="w-4 h-4" />, text: "Приём: 9:00–18:00" },
+        { icon: <MapPin className="w-4 h-4" />, text: "Москва, ЦАО" },
+      ],
+      whyWorks: [
+        "Предварительная консультация",
+        "Запись на приём онлайн",
+        "Ответы на частые вопросы",
+      ],
+      links: [
+        { label: "Услуги", url: "#" },
+        { label: "Отзывы", url: "#" },
+      ],
+    },
   },
 };
 
 function LiveScenarios() {
   const [selected, setSelected] = useState<LiveScenario>("sales");
+  const [isCardOpen, setIsCardOpen] = useState(false);
   const [isCallOpen, setIsCallOpen] = useState(false);
+  const [isChatMode, setIsChatMode] = useState(false);
 
   const scenarios: LiveScenario[] = ["sales", "projects", "team", "expert"];
   const currentConfig = SCENARIO_CONFIGS[selected];
+  const { businessCard } = currentConfig;
 
   return (
     <section
@@ -382,7 +494,7 @@ function LiveScenarios() {
                 Примеры визиток
               </h2>
               <p className="mt-3 text-muted-foreground">
-                Свайпай, чтобы посмотреть разные сценарии
+                Нажми, чтобы открыть визитку
               </p>
             </div>
 
@@ -411,7 +523,8 @@ function LiveScenarios() {
                 transition={{ duration: 0.3 }}
               >
                 <Card 
-                  className="relative overflow-hidden rounded-3xl border-0 shadow-2xl shadow-black/10 aspect-[3/4]"
+                  className="relative overflow-hidden rounded-3xl border-0 shadow-2xl shadow-black/10 aspect-[3/4] cursor-pointer"
+                  onClick={() => setIsCardOpen(true)}
                   data-testid="card-scenario"
                 >
                   <img 
@@ -423,20 +536,26 @@ function LiveScenarios() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                   
                   <div className="absolute inset-x-0 bottom-0 p-6">
+                    <div className="text-blue-400 text-xs font-medium uppercase tracking-wider mb-2">
+                      {businessCard.category}
+                    </div>
                     <h3 className="text-white font-serif text-2xl tracking-tight" data-testid="text-scenario-title">
-                      {currentConfig.title}
+                      {businessCard.businessName}
                     </h3>
-                    <p className="text-white/80 text-sm mt-2 leading-relaxed" data-testid="text-scenario-desc">
-                      {currentConfig.description}
+                    <p className="text-white/70 text-sm mt-1">
+                      {businessCard.tagline}
                     </p>
                     
                     <button
-                      onClick={() => setIsCallOpen(true)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsCardOpen(true);
+                      }}
                       className="mt-5 w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-black rounded-full font-semibold transition-all hover:bg-white/90 shadow-lg"
                       data-testid="button-start-demo"
                     >
-                      <Video className="w-5 h-5" />
                       Открыть визитку
+                      <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
                 </Card>
@@ -455,13 +574,151 @@ function LiveScenarios() {
         </LazyMotion>
       </div>
 
+      <AnimatePresence>
+        {isCardOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-white overflow-y-auto"
+            data-testid="modal-business-card"
+          >
+            <div className="min-h-full">
+              <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-lg border-b border-slate-100">
+                <div className="flex items-center justify-between px-4 py-3">
+                  <button
+                    onClick={() => setIsCardOpen(false)}
+                    className="flex items-center gap-1 text-blue-500 font-medium"
+                    data-testid="button-back"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                    Назад
+                  </button>
+                  <button
+                    onClick={() => setIsCardOpen(false)}
+                    className="p-2 rounded-full hover:bg-slate-100"
+                    data-testid="button-close-card"
+                  >
+                    <X className="w-5 h-5 text-slate-500" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="px-6 py-6">
+                <div className="text-blue-500 text-xs font-semibold uppercase tracking-wider mb-2">
+                  {businessCard.category}
+                </div>
+                <h1 className="font-serif text-3xl font-bold tracking-tight">
+                  {businessCard.businessName}
+                </h1>
+                <p className="text-muted-foreground mt-1">
+                  {businessCard.tagline}
+                </p>
+
+                <div className="mt-6 p-4 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-2xl">
+                  <div className="flex items-center gap-2 text-slate-600 text-sm font-medium mb-3">
+                    <TrendingUp className="w-4 h-4" />
+                    Ключевые показатели
+                  </div>
+                  <div className="space-y-3">
+                    {businessCard.highlights.map((h, i) => (
+                      <div key={i} className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                          {h.icon}
+                        </div>
+                        <span className="text-sm font-medium">{h.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-5 p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl">
+                  <div className="flex items-center gap-2 text-emerald-700 text-sm font-medium mb-3">
+                    <Check className="w-4 h-4" />
+                    Почему это работает
+                  </div>
+                  <div className="space-y-2">
+                    {businessCard.whyWorks.map((item, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-sm text-slate-700">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-5 flex gap-3">
+                  {businessCard.links.map((link, i) => (
+                    <a
+                      key={i}
+                      href={link.url}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-sm font-medium transition-colors"
+                      data-testid={`link-${link.label}`}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+
+                <div className="mt-8 p-4 bg-gradient-to-r from-violet-50 via-purple-50 to-fuchsia-50 rounded-2xl border border-purple-100">
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <img
+                        src={currentConfig.avatarImage}
+                        alt={businessCard.avatarName}
+                        className="w-14 h-14 rounded-full object-cover ring-2 ring-white shadow-md"
+                      />
+                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold">{businessCard.avatarName}</div>
+                      <div className="text-xs text-green-600 font-medium">онлайн</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 p-3 bg-white/70 rounded-xl text-sm text-slate-600">
+                    "Привет! Я {businessCard.avatarName}. Помогу разобраться — что хочешь узнать?"
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    <button
+                      onClick={() => {
+                        setIsChatMode(true);
+                        setIsCallOpen(true);
+                      }}
+                      className="flex items-center justify-center gap-2 px-4 py-3.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow transition-all"
+                      data-testid="button-chat"
+                    >
+                      <MessageSquareText className="w-5 h-5" />
+                      Чат
+                    </button>
+                    <button
+                      onClick={() => {
+                        setIsChatMode(false);
+                        setIsCallOpen(true);
+                      }}
+                      className="flex items-center justify-center gap-2 px-4 py-3.5 bg-gradient-to-r from-blue-500 to-violet-500 rounded-xl font-semibold text-white shadow-md hover:shadow-lg transition-all"
+                      data-testid="button-video-call"
+                    >
+                      <Video className="w-5 h-5" />
+                      Позвонить
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <LiveAvatarChat
         isOpen={isCallOpen}
         onClose={() => setIsCallOpen(false)}
         scenario={{
           key: selected,
-          title: currentConfig.title,
-          description: currentConfig.description,
+          title: businessCard.businessName,
+          description: businessCard.tagline,
           avatarImage: currentConfig.avatarImage,
         }}
         language="ru"
