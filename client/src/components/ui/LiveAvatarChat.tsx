@@ -86,7 +86,9 @@ export function LiveAvatarChat({
   const [inputText, setInputText] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
+  const [remainingSeconds, setRemainingSeconds] = useState(60);
   const sessionStartTimeRef = useRef<number>(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioContainerRef = useRef<HTMLDivElement>(null);
@@ -104,6 +106,35 @@ export function LiveAvatarChat({
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // Timer countdown for connected state
+  useEffect(() => {
+    if (sessionState === "connected") {
+      setRemainingSeconds(60);
+      timerRef.current = setInterval(() => {
+        setRemainingSeconds((prev) => {
+          if (prev <= 1) {
+            if (timerRef.current) clearInterval(timerRef.current);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } else {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      setRemainingSeconds(60);
+    }
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [sessionState]);
 
   const telegramLink = `https://t.me/${TELEGRAM_USERNAME}`;
 
@@ -409,6 +440,13 @@ export function LiveAvatarChat({
     }
   }, [onClose]);
 
+  // Auto-end call when timer reaches 0
+  useEffect(() => {
+    if (remainingSeconds === 0 && sessionState === "connected") {
+      stopSession(false);
+    }
+  }, [remainingSeconds, sessionState, stopSession]);
+
   const toggleMute = useCallback(async () => {
     if (isAvatarSpeaking) return;
     
@@ -650,6 +688,17 @@ export function LiveAvatarChat({
                 data-testid="video-avatar"
               />
               
+              {/* Timer Display */}
+              <div className="absolute top-20 left-1/2 transform -translate-x-1/2 z-10">
+                <div className={cn(
+                  "px-4 py-2 rounded-full backdrop-blur-md font-mono text-lg font-semibold",
+                  remainingSeconds <= 10 
+                    ? "bg-red-500/80 text-white" 
+                    : "bg-black/40 text-white/90"
+                )}>
+                  {Math.floor(remainingSeconds / 60)}:{(remainingSeconds % 60).toString().padStart(2, '0')}
+                </div>
+              </div>
               
               {/* Mute/End buttons Overlay */}
               <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-4 z-10">
