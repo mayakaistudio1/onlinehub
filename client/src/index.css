@@ -46,68 +46,69 @@
 }
 
 :root {
-  --background: 224 40% 4%;
-  --foreground: 210 20% 96%;
+  --background: 0 0% 98%;
+  --foreground: 0 0% 10%;
 
-  --card: 222 35% 7%;
-  --card-foreground: 210 20% 96%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
 
-  --popover: 222 35% 7%;
-  --popover-foreground: 210 20% 96%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 10%;
 
-  --primary: 210 20% 96%;
-  --primary-foreground: 224 40% 6%;
+  --primary: 0 0% 10%;
+  --primary-foreground: 0 0% 98%;
 
-  --secondary: 221 26% 13%;
-  --secondary-foreground: 210 20% 96%;
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 10%;
 
-  --muted: 221 20% 12%;
-  --muted-foreground: 215 14% 70%;
+  --muted: 0 0% 95%;
+  --muted-foreground: 0 0% 45%;
 
-  --accent: 193 95% 55%;
-  --accent-foreground: 224 40% 6%;
+  --accent: 210 100% 50%;
+  --accent-foreground: 0 0% 98%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
 
-  --border: 220 18% 18%;
-  --input: 220 18% 20%;
-  --ring: 193 95% 55%;
+  --border: 0 0% 90%;
+  --input: 0 0% 92%;
+  --ring: 210 100% 50%;
 
   --radius: 16px;
 
-  --shadow-glow: 0 0 0 1px hsl(193 95% 55% / 0.08), 0 18px 60px hsl(193 95% 55% / 0.10);
-  --shadow-soft: 0 20px 60px hsl(224 60% 2% / 0.55);
+  --shadow-glow: 0 0 0 1px hsl(210 100% 50% / 0.06), 0 12px 40px hsl(210 100% 50% / 0.08);
+  --shadow-soft: 0 8px 32px hsl(0 0% 0% / 0.06);
+  --shadow-card: 0 2px 12px hsl(0 0% 0% / 0.04);
 }
 
 .dark {
-  --background: 224 40% 4%;
-  --foreground: 210 20% 96%;
+  --background: 0 0% 98%;
+  --foreground: 0 0% 10%;
 
-  --card: 222 35% 7%;
-  --card-foreground: 210 20% 96%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
 
-  --popover: 222 35% 7%;
-  --popover-foreground: 210 20% 96%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 10%;
 
-  --primary: 210 20% 96%;
-  --primary-foreground: 224 40% 6%;
+  --primary: 0 0% 10%;
+  --primary-foreground: 0 0% 98%;
 
-  --secondary: 221 26% 13%;
-  --secondary-foreground: 210 20% 96%;
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 10%;
 
-  --muted: 221 20% 12%;
-  --muted-foreground: 215 14% 70%;
+  --muted: 0 0% 95%;
+  --muted-foreground: 0 0% 45%;
 
-  --accent: 193 95% 55%;
-  --accent-foreground: 224 40% 6%;
+  --accent: 210 100% 50%;
+  --accent-foreground: 0 0% 98%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
 
-  --border: 220 18% 18%;
-  --input: 220 18% 20%;
-  --ring: 193 95% 55%;
+  --border: 0 0% 90%;
+  --input: 0 0% 92%;
+  --ring: 210 100% 50%;
 }
 
 @layer base {
@@ -130,29 +131,29 @@
 
   .grid-fade {
     background-image:
-      radial-gradient(1200px 600px at 12% 6%, hsl(193 95% 55% / 0.13), transparent 55%),
-      radial-gradient(900px 460px at 92% 18%, hsl(260 95% 70% / 0.10), transparent 58%),
-      radial-gradient(900px 600px at 55% 92%, hsl(210 95% 60% / 0.08), transparent 52%),
-      linear-gradient(to bottom, hsl(224 40% 4% / 0.2), hsl(224 40% 4% / 0.9));
+      radial-gradient(1200px 600px at 12% 6%, hsl(210 100% 50% / 0.04), transparent 55%),
+      radial-gradient(900px 460px at 92% 18%, hsl(260 95% 70% / 0.03), transparent 58%),
+      radial-gradient(900px 600px at 55% 92%, hsl(210 95% 60% / 0.03), transparent 52%),
+      linear-gradient(to bottom, hsl(0 0% 98% / 0.5), hsl(0 0% 98% / 1));
   }
 
   .noise {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
     background-size: 220px 220px;
     mix-blend-mode: overlay;
-    opacity: 0.55;
+    opacity: 0.3;
     pointer-events: none;
   }
 
   .glass {
     background: linear-gradient(
       180deg,
-      hsl(222 35% 10% / 0.7),
-      hsl(222 35% 7% / 0.55)
+      hsl(0 0% 100% / 0.8),
+      hsl(0 0% 100% / 0.6)
     );
-    border: 1px solid hsl(220 18% 22% / 0.9);
-    box-shadow: var(--shadow-soft);
-    backdrop-filter: blur(14px);
+    border: 1px solid hsl(0 0% 88%);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(12px);
   }
 
   .glow-ring {

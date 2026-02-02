@@ -67,7 +67,7 @@ function SectionShell({
     <section
       id={id}
       className={cn(
-        "relative flex min-h-screen items-center justify-center overflow-hidden py-16 snap-start",
+        "relative flex min-h-screen items-center justify-center overflow-hidden py-12 snap-start",
         className,
       )}
       data-testid={`section-${id}`}
@@ -76,7 +76,7 @@ function SectionShell({
         <div className="mx-auto max-w-3xl">
           {eyebrow ? (
             <div
-              className="mb-4 inline-flex items-center gap-2 rounded-full border border-border/80 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-muted-foreground"
+              className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium tracking-wide text-muted-foreground"
               data-testid={`text-eyebrow-${id}`}
             >
               <Sparkles className="h-3.5 w-3.5 text-[hsl(var(--accent))]" />
@@ -117,7 +117,7 @@ function Pill({
 }) {
   return (
     <div
-      className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-white/5 px-3 py-1 text-xs text-muted-foreground"
+      className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium text-muted-foreground"
       data-testid={`pill-${label.replaceAll(" ", "-").toLowerCase()}`}
     >
       <span className="text-[hsl(var(--accent))]">{icon}</span>
@@ -160,7 +160,7 @@ function SecondaryCTA({
     <a href={href} className="inline-flex" data-testid={testId}>
       <Button
         variant="secondary"
-        className="h-11 rounded-full bg-white/5 px-5 text-foreground hover:bg-white/10"
+        className="h-11 rounded-full bg-muted px-5 text-foreground hover:bg-secondary"
       >
         {label}
       </Button>
@@ -201,7 +201,7 @@ function useMockLiveContext() {
 function Hero() {
   return (
     <section
-      className="relative flex min-h-screen items-center justify-center overflow-hidden py-16 snap-start"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden py-8 snap-start"
       data-testid="section-hero"
     >
       <div
@@ -214,8 +214,8 @@ function Hero() {
       />
 
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl border border-border/80 bg-white/3 p-6 shadow-[var(--shadow-soft)] sm:p-10 lg:p-14">
-          <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-white/10" />
+        <div className="relative rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-card)] sm:p-10 lg:p-14">
+          <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-black/[0.03]" />
 
           <LazyMotion features={domAnimation}>
             <motion.div
@@ -307,7 +307,7 @@ function Problem() {
             data-testid={`card-problem-${idx}`}
           >
             <div className="flex items-start gap-3">
-              <div className="mt-0.5 rounded-xl border border-border/70 bg-white/5 p-2 text-[hsl(var(--accent))]">
+              <div className="mt-0.5 rounded-xl border border-border bg-muted p-2 text-[hsl(var(--accent))]">
                 <Layers className="h-4 w-4" />
               </div>
               <div>
@@ -370,7 +370,7 @@ function Solution() {
             data-testid={`card-solution-${idx}`}
           >
             <div className="flex items-center gap-2">
-              <div className="rounded-xl border border-border/70 bg-white/5 p-2 text-[hsl(var(--accent))]">
+              <div className="rounded-xl border border-border bg-muted p-2 text-[hsl(var(--accent))]">
                 <Sparkles className="h-4 w-4" />
               </div>
               <div
@@ -441,7 +441,7 @@ function HowItWorks() {
               >
                 {s.n}
               </div>
-              <div className="rounded-full border border-border/70 bg-white/5 px-2 py-1 text-xs text-[hsl(var(--accent))]">
+              <div className="rounded-full border border-border bg-muted px-2 py-1 text-xs text-[hsl(var(--accent))]">
                 <Check className="h-3.5 w-3.5" />
               </div>
             </div>
@@ -517,7 +517,7 @@ function TextDemo() {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="rounded-xl border border-border/70 bg-white/5 p-2 text-[hsl(var(--accent))]">
+              <div className="rounded-xl border border-border bg-muted p-2 text-[hsl(var(--accent))]">
                 <MessageSquareText className="h-4 w-4" />
               </div>
               <div>
@@ -551,8 +551,8 @@ function TextDemo() {
                   className={cn(
                     "max-w-[92%] rounded-2xl border px-4 py-3 text-sm leading-relaxed",
                     msg.role === "user"
-                      ? "border-border/70 bg-white/6"
-                      : "border-border/70 bg-white/4",
+                      ? "border-border bg-muted"
+                      : "border-border bg-card",
                   )}
                   data-testid={`text-chat-message-${idx}`}
                 >
@@ -565,7 +565,7 @@ function TextDemo() {
                 className="flex justify-start"
                 data-testid="row-chat-loading"
               >
-                <div className="rounded-2xl border border-border/70 bg-white/4 px-4 py-3 text-sm text-muted-foreground">
+                <div className="rounded-2xl border border-border bg-card px-4 py-3 text-sm text-muted-foreground">
                   Печатает...
                 </div>
               </div>
@@ -590,7 +590,7 @@ function TextDemo() {
           <div className="mt-5 grid gap-3" data-testid="grid-chat-buttons">
             <Button
               variant="secondary"
-              className="h-11 justify-between rounded-xl bg-white/5 text-foreground hover:bg-white/10"
+              className="h-11 justify-between rounded-xl bg-muted text-foreground hover:bg-secondary"
               onClick={() => ask("what")}
               disabled={loading !== null}
               data-testid="button-intent-what"
@@ -600,7 +600,7 @@ function TextDemo() {
             </Button>
             <Button
               variant="secondary"
-              className="h-11 justify-between rounded-xl bg-white/5 text-foreground hover:bg-white/10"
+              className="h-11 justify-between rounded-xl bg-muted text-foreground hover:bg-secondary"
               onClick={() => ask("who")}
               disabled={loading !== null}
               data-testid="button-intent-who"
@@ -610,7 +610,7 @@ function TextDemo() {
             </Button>
             <Button
               variant="secondary"
-              className="h-11 justify-between rounded-xl bg-white/5 text-foreground hover:bg-white/10"
+              className="h-11 justify-between rounded-xl bg-muted text-foreground hover:bg-secondary"
               onClick={() => ask("where")}
               disabled={loading !== null}
               data-testid="button-intent-where"
@@ -621,11 +621,11 @@ function TextDemo() {
           </div>
 
           <div
-            className="mt-6 rounded-xl border border-border/70 bg-white/4 p-4"
+            className="mt-6 rounded-xl border border-border bg-muted p-4"
             data-testid="card-chat-note"
           >
             <div className="flex items-start gap-3">
-              <div className="mt-0.5 rounded-lg border border-border/70 bg-white/5 p-2 text-[hsl(var(--accent))]">
+              <div className="mt-0.5 rounded-lg border border-border bg-card p-2 text-[hsl(var(--accent))]">
                 <FlaskConical className="h-4 w-4" />
               </div>
               <div>
@@ -718,8 +718,8 @@ function LiveScenarios() {
                 key={b.key}
                 variant="secondary"
                 className={cn(
-                  "h-11 justify-between rounded-xl bg-white/5 text-foreground hover:bg-white/10",
-                  selected === b.key && "ring-1 ring-[hsl(var(--accent))]/40",
+                  "h-11 justify-between rounded-xl bg-muted text-foreground hover:bg-secondary",
+                  selected === b.key && "ring-2 ring-[hsl(var(--accent))]",
                 )}
                 onClick={() => createSession(b.key)}
                 disabled={busy}
@@ -731,7 +731,7 @@ function LiveScenarios() {
             ))}
           </div>
 
-          <div className="mt-6 rounded-xl border border-border/70 bg-white/4 p-4" data-testid="card-live-meta">
+          <div className="mt-6 rounded-xl border border-border bg-muted p-4" data-testid="card-live-meta">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="text-xs text-muted-foreground" data-testid="text-live-session-label">
@@ -741,7 +741,7 @@ function LiveScenarios() {
                   {session?.sessionId ?? "—"}
                 </div>
               </div>
-              <div className="rounded-full border border-border/70 bg-white/5 px-3 py-1 text-xs text-muted-foreground" data-testid="status-live">
+              <div className="rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground" data-testid="status-live">
                 {busy ? "Загрузка..." : session ? "Готов" : "Ожидание"}
               </div>
             </div>
@@ -766,13 +766,13 @@ function LiveScenarios() {
               </div>
             </div>
           </div>
-          <div className="border-t border-border/70 bg-[hsl(var(--background))]/30 p-5">
+          <div className="border-t border-border bg-muted/30 p-5">
             <div
-              className="flex aspect-video items-center justify-center rounded-xl border border-border/70 bg-white/3"
+              className="flex aspect-video items-center justify-center rounded-xl border border-border bg-card"
               data-testid="iframe-live-placeholder"
             >
               <div className="max-w-md text-center p-4">
-                <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-border/70 bg-white/5 px-3 py-1 text-xs text-muted-foreground">
+                <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs text-muted-foreground">
                   <Video className="h-3.5 w-3.5 text-[hsl(var(--accent))]" />
                   <span>Цифровой двойник</span>
                 </div>
@@ -814,7 +814,7 @@ function Pilot() {
                 "Индивидуальный стиль и tone of voice",
               ].map((x, i) => (
                 <li key={x} className="flex items-start gap-3" data-testid={`row-pilot-item-${i}`}>
-                  <div className="mt-1 rounded-full border border-border/70 bg-white/5 p-1 text-[hsl(var(--accent))]">
+                  <div className="mt-1 rounded-full border border-border bg-muted p-1 text-[hsl(var(--accent))]">
                     <Check className="h-3.5 w-3.5" />
                   </div>
                   <div className="text-sm text-muted-foreground" data-testid={`text-pilot-item-${i}`}>
@@ -826,7 +826,7 @@ function Pilot() {
           </div>
 
           <div>
-            <div className="rounded-2xl border border-border/70 bg-white/4 p-5" data-testid="card-pilot-price">
+            <div className="rounded-2xl border border-border bg-muted p-5" data-testid="card-pilot-price">
               <div className="text-xs text-muted-foreground" data-testid="text-pilot-price-label">
                 Стоимость пилота
               </div>
@@ -844,7 +844,7 @@ function Pilot() {
               </div>
             </div>
 
-            <div className="mt-4 rounded-2xl border border-border/70 bg-white/4 p-5" data-testid="card-pilot-timeline">
+            <div className="mt-4 rounded-2xl border border-border bg-muted p-5" data-testid="card-pilot-timeline">
               <div className="text-sm font-medium" data-testid="text-pilot-timeline-title">
                 Результат
               </div>
@@ -890,7 +890,7 @@ function Contact() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Твоё имя"
-                className="mt-2 h-11 rounded-xl border-border/70 bg-white/5"
+                className="mt-2 h-11 rounded-xl border-border bg-card"
                 data-testid="input-name"
               />
             </div>
@@ -903,7 +903,7 @@ function Contact() {
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
                 placeholder="@username или email"
-                className="mt-2 h-11 rounded-xl border-border/70 bg-white/5"
+                className="mt-2 h-11 rounded-xl border-border bg-card"
                 data-testid="input-contact"
               />
             </div>
@@ -916,7 +916,7 @@ function Contact() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Опиши свою задачу в паре слов"
-                className="mt-2 min-h-28 rounded-xl border-border/70 bg-white/5"
+                className="mt-2 min-h-28 rounded-xl border-border bg-card"
                 data-testid="input-message"
               />
             </div>
@@ -949,9 +949,9 @@ function Contact() {
             Мы изучим твой запрос и предложим удобное время для звонка, чтобы обсудить внедрение хаба в твои процессы.
           </div>
 
-          <div className="mt-6 rounded-xl border border-border/70 bg-white/4 p-4" data-testid="card-contact-bullets">
+          <div className="mt-6 rounded-xl border border-border bg-muted p-4" data-testid="card-contact-bullets">
             <div className="flex items-start gap-3">
-              <div className="mt-0.5 rounded-lg border border-border/70 bg-white/5 p-2 text-[hsl(var(--accent))]">
+              <div className="mt-0.5 rounded-lg border border-border bg-card p-2 text-[hsl(var(--accent))]">
                 <Calendar className="h-4 w-4" />
               </div>
               <div>
@@ -973,7 +973,7 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border/70 py-10" data-testid="footer">
+    <footer className="border-t border-border py-10" data-testid="footer">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="text-sm text-muted-foreground" data-testid="text-footer-left">
