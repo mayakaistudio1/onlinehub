@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, motion } from "framer-motion";
 import {
   ArrowRight,
   BadgeCheck,
@@ -217,23 +217,24 @@ function Hero() {
         <div className="relative rounded-3xl border border-border/80 bg-white/3 p-6 shadow-[var(--shadow-soft)] sm:p-10 lg:p-14">
           <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-white/10" />
 
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="relative"
-          >
-            <motion.div variants={item} className="flex flex-wrap gap-2">
-              <Pill
-                icon={<Star className="h-3.5 w-3.5" />}
-                label="Живое представительство"
-              />
-              <Pill
-                icon={<MessageSquareText className="h-3.5 w-3.5" />}
-                label="AI диалог"
-              />
-              <Pill icon={<Video className="h-3.5 w-3.5" />} label="Цифровой двойник" />
-            </motion.div>
+          <LazyMotion features={domAnimation}>
+            <motion.div
+              variants={container}
+              initial="hidden"
+              animate="show"
+              className="relative"
+            >
+              <motion.div variants={item} className="flex flex-wrap gap-2">
+                <Pill
+                  icon={<Star className="h-3.5 w-3.5" />}
+                  label="Живое представительство"
+                />
+                <Pill
+                  icon={<MessageSquareText className="h-3.5 w-3.5" />}
+                  label="AI диалог"
+                />
+                <Pill icon={<Video className="h-3.5 w-3.5" />} label="Цифровой двойник" />
+              </motion.div>
 
             <motion.h1
               variants={item}
@@ -262,6 +263,7 @@ function Hero() {
               />
             </motion.div>
           </motion.div>
+          </LazyMotion>
         </div>
       </div>
     </section>
