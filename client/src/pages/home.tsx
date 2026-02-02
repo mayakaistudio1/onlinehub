@@ -661,48 +661,75 @@ function LiveScenarios() {
                   ))}
                 </div>
 
-                <div className="mt-8 p-4 bg-gradient-to-r from-violet-50 via-purple-50 to-fuchsia-50 rounded-2xl border border-purple-100">
+                <div className="mt-8 p-5 bg-gradient-to-r from-violet-50 via-purple-50 to-fuchsia-50 rounded-2xl border border-purple-100 shadow-sm">
                   <div className="flex items-center gap-4">
                     <div className="relative">
                       <img
                         src={currentConfig.avatarImage}
                         alt={businessCard.avatarName}
-                        className="w-14 h-14 rounded-full object-cover ring-2 ring-white shadow-md"
+                        className="w-16 h-16 rounded-full object-cover ring-2 ring-white shadow-md"
                       />
                       <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
                     </div>
                     <div className="flex-1">
-                      <div className="font-semibold">{businessCard.avatarName}</div>
-                      <div className="text-xs text-green-600 font-medium">онлайн</div>
+                      <div className="font-semibold text-lg">{businessCard.avatarName}</div>
+                      <div className="text-xs text-green-600 font-semibold uppercase tracking-wider">в сети</div>
                     </div>
                   </div>
 
-                  <div className="mt-4 p-3 bg-white/70 rounded-xl text-sm text-slate-600">
-                    "Привет! Я {businessCard.avatarName}. Помогу разобраться — что хочешь узнать?"
+                  <div className="mt-5 relative">
+                    <div className="absolute -top-6 left-4 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-white/80" />
+                    <div className="p-4 bg-white/80 backdrop-blur-sm rounded-2xl text-sm leading-relaxed text-slate-700 shadow-sm border border-white/50">
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                      >
+                        {`Привет! Я ${businessCard.avatarName}. Помогу разобраться — что хочешь узнать?`}
+                      </motion.span>
+                    </div>
                   </div>
 
-                  <div className="mt-4 grid grid-cols-2 gap-3">
-                    <button
-                      onClick={() => {
-                        setIsChatMode(true);
-                        setIsCallOpen(true);
-                      }}
-                      className="flex items-center justify-center gap-2 px-4 py-3.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow transition-all"
-                      data-testid="button-chat"
-                    >
-                      <MessageSquareText className="w-5 h-5" />
-                      Чат
-                    </button>
+                  <div className="mt-6 space-y-3">
+                    <div className="relative group">
+                      <Input
+                        placeholder="Напиши вопрос здесь..."
+                        className="h-14 pl-5 pr-12 rounded-2xl border-white bg-white/90 shadow-inner focus-visible:ring-purple-400 transition-all text-base"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            setIsChatMode(true);
+                            setIsCallOpen(true);
+                          }
+                        }}
+                        data-testid="input-scenario-chat"
+                      />
+                      <button
+                        onClick={() => {
+                          setIsChatMode(true);
+                          setIsCallOpen(true);
+                        }}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-gradient-to-r from-violet-500 to-purple-500 rounded-xl text-white shadow-md hover:scale-105 transition-transform"
+                      >
+                        <ArrowRight className="w-5 h-5" />
+                      </button>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-purple-200 to-transparent" />
+                      <span className="text-[10px] font-bold text-purple-400 uppercase tracking-widest">или</span>
+                      <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-purple-200 to-transparent" />
+                    </div>
+
                     <button
                       onClick={() => {
                         setIsChatMode(false);
                         setIsCallOpen(true);
                       }}
-                      className="flex items-center justify-center gap-2 px-4 py-3.5 bg-gradient-to-r from-blue-500 to-violet-500 rounded-xl font-semibold text-white shadow-md hover:shadow-lg transition-all"
+                      className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-slate-900 text-white rounded-2xl font-bold shadow-xl hover:bg-slate-800 active:scale-[0.98] transition-all"
                       data-testid="button-video-call"
                     >
                       <Video className="w-5 h-5" />
-                      Позвонить
+                      Позвонить аватару
                     </button>
                   </div>
                 </div>
