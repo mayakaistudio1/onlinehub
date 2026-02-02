@@ -103,7 +103,7 @@ function Hero() {
               {/* Divider */}
               <div className="h-8 w-px bg-slate-300" />
               {/* Text */}
-              <span className="text-xl tracking-wide pr-2 text-[#1f2022] font-light bg-[#e3bfbf05]">WOW Page Live...</span>
+              <span className="tracking-wide pr-2 text-[#1f2022] bg-[#e3bfbf05] font-medium text-center text-[22px]">WOW Page Live...</span>
             </div>
           </motion.div>
 
