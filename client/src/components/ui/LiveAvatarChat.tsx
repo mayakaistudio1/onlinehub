@@ -107,7 +107,7 @@ export function LiveAvatarChat({
   const telegramLink = `https://t.me/${TELEGRAM_USERNAME}`;
 
   const sendTextMessage = useCallback(async (text: string) => {
-    if (!text.trim() || !sessionDataRef.current?.sessionToken || isSending) return;
+    if (!text.trim() || isSending) return;
 
     try {
       setIsSending(true);
@@ -115,17 +115,29 @@ export function LiveAvatarChat({
       setMessages(prev => [...prev, userMessage]);
       setInputText("");
 
-      const response = await fetch("/api/liveavatar/event", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          session_token: sessionDataRef.current.sessionToken,
-          event_type: "text_message",
-          data: { text }
-        }),
-      });
+      if (sessionDataRef.current?.sessionToken) {
+        const response = await fetch("/api/liveavatar/event", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            session_token: sessionDataRef.current.sessionToken,
+            event_type: "text_message",
+            data: { text }
+          }),
+        });
 
-      if (!response.ok) throw new Error("Failed to send message");
+        if (!response.ok) throw new Error("Failed to send message");
+      } else {
+        // Handle message when session is not yet active (e.g. echo or queue)
+        setTimeout(() => {
+          const assistantMessage: Message = { 
+            id: Date.now().toString() + Math.random(), 
+            role: "assistant", 
+            text: "Я получу ваше сообщение, как только мы установим соединение. Нажмите «Enable Microphone», чтобы начать общение голосом и видео." 
+          };
+          setMessages(prev => [...prev, assistantMessage]);
+        }, 1000);
+      }
       
     } catch (err) {
       console.error("Error sending text message:", err);
@@ -490,46 +502,113 @@ export function LiveAvatarChat({
           </button>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center relative pt-20">
+        <div className="flex-1 flex flex-col items-center justify-center relative pt-20 overflow-hidden">
           {sessionState === "idle" && (
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="text-center px-6 w-full max-w-md"
+              className="flex flex-col md:flex-row items-stretch justify-center gap-6 px-6 w-full max-w-5xl h-[calc(100dvh-160px)]"
             >
-              {scenario.avatarImage ? (
-                <div className="w-48 h-48 mx-auto mb-6 rounded-2xl overflow-hidden border-4 border-white/20">
-                  <img 
-                    src={scenario.avatarImage} 
-                    alt={scenario.title}
-                    className="w-full h-full object-cover"
+              {/* LEFT: AVATAR INFO & CALL BUTTON */}
+              <div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-white/5 rounded-3xl border border-white/10">
+                {scenario.avatarImage ? (
+                  <div className="w-40 h-40 mx-auto mb-6 rounded-2xl overflow-hidden border-4 border-white/20">
+                    <img 
+                      src={scenario.avatarImage} 
+                      alt={scenario.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                    <Video className="w-12 h-12 text-white" />
+                  </div>
+                )}
+                
+                <h2 className="text-white text-2xl font-bold mb-3">
+                  {scenario.title}
+                </h2>
+                <p className="text-white/70 text-sm mb-8 leading-relaxed max-w-sm">
+                  {scenario.description}
+                </p>
+                
+                <p className="text-white/60 text-sm mb-4">
+                  {TEXTS.duringCall.allowMic}
+                </p>
+                
+                <button
+                  onClick={startSession}
+                  className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-full font-semibold flex items-center gap-3 mx-auto transition-all shadow-lg shadow-cyan-500/30"
+                  data-testid="button-start-call"
+                >
+                  <Mic className="w-5 h-5" />
+                  {TEXTS.duringCall.enableMic}
+                </button>
+              </div>
+
+              {/* RIGHT: TEXT CHAT (ALWAYS VISIBLE) */}
+              <div className="w-full md:w-80 lg:w-96 flex flex-col rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 overflow-hidden">
+                <div className="p-4 border-b border-white/10">
+                  <h4 className="text-white font-medium text-sm flex items-center gap-2">
+                    <MessageCircle className="w-4 h-4 text-blue-400" />
+                    Текстовый диалог
+                  </h4>
+                </div>
+                
+                <div 
+                  ref={scrollRef}
+                  className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-hide"
+                >
+                  {messages.length === 0 && (
+                    <div className="h-full flex items-center justify-center text-center p-4">
+                      <p className="text-white/30 text-xs italic">
+                        Вы можете начать переписку еще до начала видеозвонка
+                      </p>
+                    </div>
+                  )}
+                  {messages.map(msg => (
+                    <div 
+                      key={msg.id}
+                      className={cn(
+                        "flex flex-col max-w-[85%]",
+                        msg.role === "user" ? "ml-auto items-end" : "items-start"
+                      )}
+                    >
+                      <div className={cn(
+                        "px-3 py-2 rounded-2xl text-sm leading-relaxed",
+                        msg.role === "user" 
+                          ? "bg-blue-600 text-white rounded-tr-none" 
+                          : "bg-white/10 text-white rounded-tl-none"
+                      )}>
+                        {msg.text}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    sendTextMessage(inputText);
+                  }}
+                  className="p-3 bg-black/20 flex gap-2"
+                >
+                  <input
+                    type="text"
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    placeholder="Написать..."
+                    className="flex-1 bg-white/10 border-none rounded-full px-4 py-2 text-sm text-white focus:ring-1 focus:ring-blue-500 outline-none"
                   />
-                </div>
-              ) : (
-                <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                  <Video className="w-12 h-12 text-white" />
-                </div>
-              )}
-              
-              <h2 className="text-white text-2xl font-bold mb-3">
-                {scenario.title}
-              </h2>
-              <p className="text-white/70 text-sm mb-8 leading-relaxed">
-                {scenario.description}
-              </p>
-              
-              <p className="text-white/60 text-sm mb-4">
-                {TEXTS.duringCall.allowMic}
-              </p>
-              
-              <button
-                onClick={startSession}
-                className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-full font-semibold flex items-center gap-3 mx-auto transition-all shadow-lg shadow-cyan-500/30"
-                data-testid="button-start-call"
-              >
-                <Mic className="w-5 h-5" />
-                {TEXTS.duringCall.enableMic}
-              </button>
+                  <button
+                    type="submit"
+                    disabled={!inputText.trim() || isSending}
+                    className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white disabled:opacity-50 transition-opacity"
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                </form>
+              </div>
             </motion.div>
           )}
 
