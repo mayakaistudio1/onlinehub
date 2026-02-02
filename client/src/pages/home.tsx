@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { LazyMotion, domAnimation, motion } from "framer-motion";
+import { LazyMotion, domAnimation, motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   BadgeCheck,
@@ -732,8 +732,8 @@ function LiveScenarios() {
       title="Начинаем с одного сценария"
       subtitle="Строим — под твою задачу."
     >
-      <div className="grid gap-6 lg:grid-cols-5" data-testid="grid-live">
-        <Card className="glass rounded-2xl p-5 lg:col-span-2" data-testid="card-live-controls">
+      <div className="mx-auto max-w-2xl" data-testid="grid-live">
+        <Card className="glass rounded-2xl p-5" data-testid="card-live-controls">
           <div className="text-sm font-medium" data-testid="text-live-controls-title">
             Сценарии
           </div>
@@ -741,94 +741,72 @@ function LiveScenarios() {
             Выберите кейс для демонстрации.
           </div>
 
-          <div className="mt-5 grid gap-2" data-testid="grid-live-buttons">
+          <div className="mt-5 space-y-3" data-testid="grid-live-buttons">
             {buttons.map((b) => (
-              <Button
-                key={b.key}
-                variant="secondary"
-                className={cn(
-                  "h-11 justify-between rounded-xl bg-muted text-foreground hover:bg-secondary",
-                  selected === b.key && showAvatarCard && "ring-2 ring-[hsl(var(--accent))]",
-                )}
-                onClick={() => handleSelectScenario(b.key)}
-                data-testid={`button-scenario-${b.key}`}
-              >
-                <span className="text-xs sm:text-sm truncate">{b.label}</span>
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              <div key={b.key} className="space-y-3">
+                <Button
+                  variant="secondary"
+                  className={cn(
+                    "h-11 w-full justify-between rounded-xl bg-muted text-foreground hover:bg-secondary transition-all",
+                    selected === b.key && showAvatarCard && "ring-2 ring-[hsl(var(--accent))] bg-secondary",
+                  )}
+                  onClick={() => handleSelectScenario(b.key)}
+                  data-testid={`button-scenario-${b.key}`}
+                >
+                  <span className="text-xs sm:text-sm truncate">{b.label}</span>
+                  <ArrowRight className={cn("h-4 w-4 transition-transform", selected === b.key && showAvatarCard && "rotate-90")} />
+                </Button>
+
+                <AnimatePresence>
+                  {selected === b.key && showAvatarCard && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <Card className="glass glow-ring relative overflow-hidden rounded-2xl p-0 min-h-[300px]" data-testid="card-live-embed">
+                        <div className="absolute inset-0">
+                          <div className="w-full h-full bg-slate-900">
+                            <img 
+                              src={currentConfig.avatarImage} 
+                              alt={currentConfig.title}
+                              className="w-full h-full object-cover opacity-80"
+                            />
+                          </div>
+                          
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-6 flex flex-col justify-end">
+                            <div className="flex items-end justify-between gap-4">
+                              <div className="flex-1">
+                                <h3 className="text-white font-serif text-xl tracking-tight" data-testid="text-avatar-title">
+                                  {currentConfig.title}
+                                </h3>
+                                <p className="text-white/80 text-xs mt-2 max-w-md leading-relaxed" data-testid="text-avatar-desc">
+                                  {currentConfig.description}
+                                </p>
+                              </div>
+                              <button
+                                onClick={handleStartCall}
+                                className="flex items-center gap-2 px-5 py-2.5 bg-[#0080FF] hover:bg-[#0070E0] text-white rounded-full text-xs font-semibold transition-all shadow-lg shadow-blue-500/25 whitespace-nowrap mb-1"
+                                data-testid="button-chat-now"
+                              >
+                                Chat now
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ))}
           </div>
 
-          <div className="mt-6">
+          <div className="mt-8 flex justify-center">
             <PrimaryCTA href="#pilot" label="Хочу такое решение" testId="button-scenarios-continue" />
           </div>
-        </Card>
-
-        <Card className="glass glow-ring relative overflow-hidden rounded-2xl p-0 lg:col-span-3 min-h-[400px]" data-testid="card-live-embed">
-          {showAvatarCard ? (
-            <div className="absolute inset-0">
-              <div className="w-full h-full bg-slate-900">
-                <img 
-                  src={currentConfig.avatarImage} 
-                  alt={currentConfig.title}
-                  className="w-full h-full object-cover opacity-80"
-                />
-              </div>
-              
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-6 flex flex-col justify-end">
-                <div className="flex items-end justify-between gap-4">
-                  <div className="flex-1">
-                    <h3 className="text-white font-serif text-2xl tracking-tight" data-testid="text-avatar-title">
-                      {currentConfig.title}
-                    </h3>
-                    <p className="text-white/80 text-sm mt-2 max-w-md leading-relaxed" data-testid="text-avatar-desc">
-                      {currentConfig.description}
-                    </p>
-                  </div>
-                  <button
-                    onClick={handleStartCall}
-                    className="flex items-center gap-2 px-6 py-3 bg-[#0080FF] hover:bg-[#0070E0] text-white rounded-full text-sm font-semibold transition-all shadow-lg shadow-blue-500/25 whitespace-nowrap mb-1"
-                    data-testid="button-chat-now"
-                  >
-                    Chat now
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <>
-              <div className="p-5">
-                <div className="flex items-center justify-between">
-                  <div className="text-sm font-medium" data-testid="text-live-embed-title">
-                    Визуализация аватара
-                  </div>
-                  <div className="text-xs text-muted-foreground" data-testid="text-live-embed-note">
-                    Живой формат
-                  </div>
-                </div>
-              </div>
-              <div className="border-t border-border bg-muted/30 p-5">
-                <div
-                  className="flex aspect-video items-center justify-center rounded-xl border border-border bg-card"
-                  data-testid="iframe-live-placeholder"
-                >
-                  <div className="max-w-md text-center p-4">
-                    <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs text-muted-foreground">
-                      <Video className="h-3.5 w-3.5 text-[hsl(var(--accent))]" />
-                      <span>Цифровой двойник</span>
-                    </div>
-                    <div className="font-serif text-xl sm:text-2xl tracking-[-0.02em]" data-testid="text-live-placeholder-title">
-                      Выберите сценарий
-                    </div>
-                    <div className="mt-2 text-sm leading-relaxed text-muted-foreground" data-testid="text-live-placeholder-desc">
-                      Нажмите на один из сценариев слева, чтобы увидеть карточку аватара.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
         </Card>
       </div>
 
