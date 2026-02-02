@@ -101,18 +101,18 @@ function Hero() {
 
           <motion.h1
             variants={item}
-            className="font-serif text-[2.5rem] leading-[1.1] tracking-[-0.03em] text-balance sm:text-5xl"
+            className="font-serif text-[2.5rem] leading-[1.1] tracking-[-0.03em] text-balance sm:text-6xl"
             data-testid="text-hero-title"
           >
-            {APP_TITLE}
+            Твоя идея заслуживает лучшего знакомства
           </motion.h1>
 
           <motion.p
             variants={item}
-            className="mx-auto mt-5 max-w-sm text-lg leading-relaxed text-muted-foreground"
+            className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
             data-testid="text-hero-subtitle"
           >
-            AI-ассистент, который общается с гостями и представляет тебя — 24/7
+            Онлайн-представительство нового поколения: 24/7 объясняет за тебя, отвечает на вопросы, ведёт к действию и при этом создаёт ВАУ-эффект.
           </motion.p>
 
           <motion.div variants={item} className="mt-10">
@@ -140,11 +140,15 @@ function Hero() {
 function WhyItMatters() {
   return (
     <section
-      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start"
+      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start overflow-hidden"
       id="why"
       data-testid="section-why"
     >
-      <div className="mx-auto w-full max-w-lg">
+      {/* Background accents */}
+      <div className="absolute top-1/4 -left-20 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50" />
+      <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-cyan-100 rounded-full blur-3xl opacity-50" />
+
+      <div className="relative mx-auto w-full max-w-2xl">
         <LazyMotion features={domAnimation}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -152,37 +156,80 @@ function WhyItMatters() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] text-center sm:text-4xl">
-              Зачем это нужно?
-            </h2>
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-4xl leading-tight tracking-[-0.02em] sm:text-5xl">
+                Это не просто визитка
+              </h2>
+              <p className="mt-4 text-xl text-muted-foreground">
+                Это ваш цифровой двойник с ВАУ-эффектом
+              </p>
+            </div>
             
-            <div className="mt-10 space-y-6">
-              <div className="rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 p-6 border border-red-100">
-                <div className="text-lg font-medium text-red-900 mb-2">Проблема</div>
-                <p className="text-muted-foreground leading-relaxed">
-                  Ты постоянно объясняешь одно и то же. Клиентам, партнёрам, команде. Это отнимает время и энергию.
-                </p>
-              </div>
+            <div className="grid gap-8 sm:grid-cols-2">
+              <motion.div 
+                whileHover={{ y: -5 }}
+                className="group rounded-3xl bg-white p-8 shadow-xl shadow-black/[0.03] border border-slate-100 transition-all hover:shadow-blue-500/10"
+              >
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-red-50 text-red-500">
+                  <X className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Обычный подход</h3>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-300" />
+                    Статичный текст, который скучно читать
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-300" />
+                    Вы теряете лидов, пока спите
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-300" />
+                    Нужно постоянно быть на связи
+                  </li>
+                </ul>
+              </motion.div>
               
-              <div className="flex justify-center">
-                <ArrowRight className="h-6 w-6 text-muted-foreground rotate-90" />
-              </div>
-              
-              <div className="rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 p-6 border border-green-100">
-                <div className="text-lg font-medium text-green-900 mb-2">Решение</div>
-                <p className="text-muted-foreground leading-relaxed">
-                  AI-ассистент говорит за тебя. Отвечает на вопросы, объясняет суть и ведёт к действию — круглосуточно.
-                </p>
-              </div>
+              <motion.div 
+                whileHover={{ y: -5 }}
+                className="group rounded-3xl bg-gradient-to-br from-blue-600 to-cyan-500 p-8 shadow-xl shadow-blue-500/20 text-white transition-all hover:scale-[1.02]"
+              >
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20">
+                  <Zap className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Живое представительство</h3>
+                <ul className="space-y-3 text-blue-50">
+                  <li className="flex items-start gap-2">
+                    <Check className="h-5 w-5 shrink-0 text-cyan-300" />
+                    Аватар, который говорит и увлекает
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="h-5 w-5 shrink-0 text-cyan-300" />
+                    Квалификация и продажи 24/7
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="h-5 w-5 shrink-0 text-cyan-300" />
+                    Свобода заниматься творчеством
+                  </li>
+                </ul>
+              </motion.div>
             </div>
 
-            <div className="mt-12 text-center">
-              <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
-                <Button className="h-12 gap-2 rounded-full px-6 shadow-md">
-                  Смотреть демо
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </a>
+            <div className="mt-16 text-center">
+              <p className="text-sm font-medium uppercase tracking-widest text-muted-foreground mb-8">Идеально подходит для:</p>
+              <div className="flex flex-wrap justify-center gap-4">
+                {[
+                  { icon: <Users className="w-4 h-4" />, label: "Экспертов" },
+                  { icon: <Briefcase className="w-4 h-4" />, label: "Бизнеса" },
+                  { icon: <Globe className="w-4 h-4" />, label: "Команд" },
+                  { icon: <Star className="w-4 h-4" />, label: "Блогеров" },
+                ].map((tag, i) => (
+                  <span key={i} className="flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
+                    {tag.icon}
+                    {tag.label}
+                  </span>
+                ))}
+              </div>
             </div>
           </motion.div>
         </LazyMotion>
