@@ -399,14 +399,15 @@ export function LiveAvatarChat({
       audioElementsRef.current.forEach((audioEl) => audioEl.remove());
       audioElementsRef.current.clear();
       
-      setSessionState(showEnded ? "ended" : "idle");
+      setSessionState("idle");
+      onClose();
       setAudioUnlocked(false);
       setShowUnlockPrompt(false);
       setIsAvatarSpeaking(false);
       setIsMuted(true);
       sessionStartTimeRef.current = 0;
     }
-  }, []);
+  }, [onClose]);
 
   const toggleMute = useCallback(async () => {
     if (isAvatarSpeaking) return;
