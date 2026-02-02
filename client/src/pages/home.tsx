@@ -264,7 +264,7 @@ function Hero() {
 
             <motion.div
               variants={item}
-              className="mt-10 grid gap-4 sm:grid-cols-3"
+              className="mt-10 grid gap-4 sm:grid-cols-2"
               data-testid="grid-hero-metrics"
             >
               {[
@@ -277,11 +277,6 @@ function Hero() {
                   icon: <Cpu className="h-4 w-4" />,
                   k: "Умный ассистент",
                   v: "Понимает контекст",
-                },
-                {
-                  icon: <Calendar className="h-4 w-4" />,
-                  k: "Готов к запуску",
-                  v: "Пилот за 7 дней",
                 },
               ].map((m) => (
                 <div
