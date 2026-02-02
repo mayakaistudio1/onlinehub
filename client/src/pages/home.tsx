@@ -80,7 +80,6 @@ function Hero() {
         className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-50/80 via-white to-white"
         aria-hidden
       />
-
       <LazyMotion features={domAnimation}>
         <motion.div
           variants={container}
@@ -104,7 +103,7 @@ function Hero() {
               {/* Divider */}
               <div className="h-8 w-px bg-slate-300" />
               {/* Text */}
-              <span className="text-xl font-light text-slate-400 tracking-wide pr-2">WOW Page Live...</span>
+              <span className="text-xl tracking-wide pr-2 text-[#1f2022] font-light bg-[#e3bfbf05]">WOW Page Live...</span>
             </div>
           </motion.div>
 
