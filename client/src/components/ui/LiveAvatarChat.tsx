@@ -626,6 +626,7 @@ export function LiveAvatarChat({
                 data-testid="video-avatar"
               />
               
+              
               {/* Mute/End buttons Overlay */}
               <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-4 z-10">
                 <button
@@ -709,6 +710,9 @@ export function LiveAvatarChat({
         )}
 
         {/* CONTROL BUTTONS (во время звонка) - REMOVED AS THEY ARE NOW OVERLAYED ON VIDEO */}
+        
+        {/* Hidden audio container - always mounted for audio track attachment */}
+        <div ref={audioContainerRef} className="hidden" />
       </motion.div>
     </AnimatePresence>
   );
