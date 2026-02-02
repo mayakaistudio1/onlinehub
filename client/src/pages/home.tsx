@@ -296,7 +296,6 @@ function Problem() {
       id="problem"
       eyebrow="Экран 2 · Проблема"
       title="Почему это вообще нужно?"
-      subtitle="Твоё время — самый дорогой ресурс. Хватит тратить его на повторяющиеся объяснения."
     >
       <div className="grid gap-4 sm:grid-cols-2" data-testid="grid-problems">
         {problems.map((p, idx) => (
