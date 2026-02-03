@@ -30,6 +30,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { LiveAvatarChat } from "@/components/ui/LiveAvatarChat";
+import { useLanguage } from '@/lib/LanguageContext';
 
 type ChatIntent = "what" | "who" | "where";
 
@@ -47,8 +48,6 @@ type LiveSession = {
   prompt: string;
 };
 
-const APP_TITLE = "Твоё живое онлайн-представительство";
-
 const container = {
   hidden: { opacity: 0, y: 10 },
   show: { opacity: 1, y: 0, transition: { staggerChildren: 0.06 } },
@@ -59,22 +58,9 @@ const item = {
   show: { opacity: 1, y: 0 },
 };
 
-function useMockChatResponse() {
-  return (intent: ChatIntent) => {
-    switch (intent) {
-      case "what":
-        return "Это твоё живое онлайн-представительство. Ассистент, который объясняет твоё дело, общается с гостями и помогает им понять, чем ты занимаешься. Всё — автоматически, в твоём стиле и 24/7.";
-      case "who":
-        return "Тем, кто устал объяснять одно и то же. Тем, кто работает с клиентами, партнёрами, инвесторами, командой. Тем, кому важно первое впечатление и ясная подача.";
-      case "where":
-        return "Для презентации проектов, онбординга, продаж, общения с сообществом. В любом случае, где важны слова — теперь за тебя говорит ассистент.";
-      default:
-        return "";
-    }
-  };
-}
-
 function Hero() {
+  const { t } = useLanguage();
+  
   return (
     <section
       className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden px-5 py-10 snap-start"
@@ -95,19 +81,14 @@ function Hero() {
             variants={item}
             className="relative mx-auto mb-8"
           >
-            {/* Search bar style container */}
             <div className="relative inline-flex items-center gap-3 rounded-full bg-white/80 backdrop-blur-xl px-4 py-3 shadow-lg shadow-black/[0.06] border border-white/50">
-              {/* Glow effect behind orb */}
               <div className="absolute left-3.5 h-10 w-10 rounded-full bg-gradient-to-br from-pink-400 via-purple-400 to-cyan-400 blur-xl opacity-40" />
-              {/* Gradient orb */}
               <div className="relative h-10 w-10 shrink-0 rounded-full bg-gradient-to-br from-pink-500 via-fuchsia-400 to-cyan-400 shadow-lg shadow-pink-500/20 animate-[pulse_3s_ease-in-out_infinite]">
                 <div className="absolute inset-0.5 rounded-full bg-gradient-to-br from-pink-400/80 via-purple-300/60 to-cyan-300/80" />
                 <div className="absolute top-1 left-1.5 h-1.5 w-1.5 rounded-full bg-white/50 blur-[2px]" />
               </div>
-              {/* Divider */}
               <div className="h-6 w-px bg-slate-300" />
-              {/* Text */}
-              <span className="tracking-wide pr-1 text-slate-800 font-medium text-lg">WOW Page Live...</span>
+              <span className="tracking-wide pr-1 text-slate-800 font-medium text-lg">{t.hero.orbText}</span>
             </div>
           </motion.div>
 
@@ -116,7 +97,7 @@ function Hero() {
             className="font-serif text-[2rem] leading-[1.15] tracking-[-0.03em] text-balance"
             data-testid="text-hero-title"
           >
-            Онлайн-представительство нового поколения
+            {t.hero.title}
           </motion.h1>
 
           <motion.p
@@ -124,13 +105,13 @@ function Hero() {
             className="mx-auto mt-4 text-base leading-relaxed text-muted-foreground"
             data-testid="text-hero-subtitle"
           >
-            Место, где твою идею действительно понимают.
+            {t.hero.subtitle}
           </motion.p>
 
           <motion.div variants={item} className="mt-8">
             <a href="#demo" className="inline-flex" data-testid="button-scroll-demo">
               <Button className="h-12 gap-2 rounded-full px-6 text-sm font-semibold shadow-md shadow-black/10">
-                Попробовать
+                {t.hero.cta}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </a>
@@ -141,7 +122,7 @@ function Hero() {
             className="mt-8 flex items-center justify-center gap-1.5 text-xs text-muted-foreground"
           >
             <ChevronDown className="h-3.5 w-3.5 animate-bounce" />
-            <span>Листай вниз</span>
+            <span>{t.hero.scrollHint}</span>
           </motion.div>
         </motion.div>
       </LazyMotion>
@@ -149,28 +130,9 @@ function Hero() {
   );
 }
 
-const comparisonData = {
-  problem: {
-    title: "Обычный сайт",
-    items: [
-      "Показывает информацию",
-      "Ждёт, что человек сам разберётся",
-      "Оставляет вопросы без ответа",
-      "Не ведёт дальше",
-    ],
-  },
-  solution: {
-    title: "Живое онлайн-представительство",
-    items: [
-      "Начинает диалог сразу",
-      "Отвечает на вопросы",
-      "Помогает понять суть",
-      "Показывает следующий шаг",
-    ],
-  },
-};
-
 function WhyItMatters() {
+  const { t } = useLanguage();
+  
   return (
     <section
       className="relative min-h-[100dvh] flex items-center justify-center px-5 py-8 snap-start overflow-hidden"
@@ -187,24 +149,23 @@ function WhyItMatters() {
             className="text-center mb-6"
           >
             <h2 className="font-serif text-2xl leading-tight tracking-[-0.02em]">
-              Почему просто сайта уже недостаточно
+              {t.why.title}
             </h2>
             <p className="mt-2 text-muted-foreground text-sm">
-              Сайт показывает. Представительство — общается.
+              {t.why.subtitle}
             </p>
           </motion.div>
 
           <div className="space-y-3">
-            {/* Обычный сайт */}
             <div className="p-4 bg-slate-50 rounded-2xl">
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-slate-400">
                   <X className="w-4 h-4" />
                 </div>
-                <span className="font-medium text-slate-600 text-sm">{comparisonData.problem.title}</span>
+                <span className="font-medium text-slate-600 text-sm">{t.why.regularSite.title}</span>
               </div>
               <div className="space-y-1.5 text-slate-500 text-xs">
-                {comparisonData.problem.items.map((text, i) => (
+                {t.why.regularSite.points.map((text, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <div className="w-1 h-1 rounded-full bg-slate-300" />
                     {text}
@@ -213,16 +174,15 @@ function WhyItMatters() {
               </div>
             </div>
 
-            {/* Живое онлайн-представительство */}
             <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100">
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
                   <Zap className="w-4 h-4" />
                 </div>
-                <span className="font-medium text-blue-900 text-sm">{comparisonData.solution.title}</span>
+                <span className="font-medium text-blue-900 text-sm">{t.why.livePresence.title}</span>
               </div>
               <div className="space-y-1.5 text-blue-800 text-xs font-medium">
-                {comparisonData.solution.items.map((text, i) => (
+                {t.why.livePresence.points.map((text, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <Check className="w-3.5 h-3.5 text-blue-500" />
                     {text}
@@ -233,14 +193,14 @@ function WhyItMatters() {
           </div>
 
           <div className="mt-6 text-center">
-            <p className="text-slate-500 text-xs">Это не «ещё один сайт».</p>
-            <p className="text-foreground font-serif text-lg font-bold mt-1">Это формат общения.</p>
+            <p className="text-slate-500 text-xs">{t.why.anchor[0]}</p>
+            <p className="text-foreground font-serif text-lg font-bold mt-1">{t.why.anchor[1]}</p>
           </div>
 
           <div className="mt-6 text-center">
             <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
               <Button className="h-12 gap-2 rounded-full px-6 text-sm font-semibold shadow-md bg-blue-600 hover:bg-blue-700">
-                Смотреть демо
+                {t.why.cta}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </a>
@@ -252,25 +212,28 @@ function WhyItMatters() {
 }
 
 function TextDemo() {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: "m1",
-      role: "assistant",
-      text: "Привет! Я — консультант сервиса. Расскажу, как работает онлайн-представительство. Что тебя интересует?",
-    },
-  ]);
+  const { t } = useLanguage();
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState<ChatIntent | null>(null);
-  const respond = useMockChatResponse();
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    if (!initialized) {
+      setMessages([
+        {
+          id: "m1",
+          role: "assistant",
+          text: t.demo.greeting,
+        },
+      ]);
+      setInitialized(true);
+    }
+  }, [t.demo.greeting, initialized]);
 
   const ask = async (intent: ChatIntent) => {
     setLoading(intent);
 
-    const userText =
-      intent === "what"
-        ? "Что это такое?"
-        : intent === "who"
-          ? "Кому подойдёт?"
-          : "Где можно применить?";
+    const userText = t.demo.questions[intent === "what" ? 0 : intent === "who" ? 1 : 2];
 
     setMessages((m) => [
       ...m,
@@ -279,9 +242,15 @@ function TextDemo() {
 
     await new Promise((r) => setTimeout(r, 600));
 
+    const answer = intent === "what" 
+      ? t.demo.answers.what 
+      : intent === "who" 
+        ? t.demo.answers.who 
+        : t.demo.answers.where;
+
     setMessages((m) => [
       ...m,
-      { id: `a-${Date.now()}`, role: "assistant", text: respond(intent) },
+      { id: `a-${Date.now()}`, role: "assistant", text: answer },
     ]);
 
     setLoading(null);
@@ -303,10 +272,10 @@ function TextDemo() {
           >
             <div className="text-center mb-5">
               <h2 className="font-serif text-2xl leading-tight tracking-[-0.02em]">
-                Как это работает
+                {t.demo.title}
               </h2>
               <p className="mt-2 text-muted-foreground text-sm">
-                Попробуй задать вопрос
+                {t.demo.subtitle}
               </p>
             </div>
 
@@ -338,7 +307,7 @@ function TextDemo() {
                   {loading ? (
                     <div className="flex justify-start" data-testid="row-chat-loading">
                       <div className="bg-slate-100 rounded-xl rounded-bl-sm px-3 py-2 text-xs text-muted-foreground">
-                        <span className="animate-pulse">Печатает...</span>
+                        <span className="animate-pulse">...</span>
                       </div>
                     </div>
                   ) : null}
@@ -353,7 +322,7 @@ function TextDemo() {
                     className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
                     data-testid="button-intent-what"
                   >
-                    Что это?
+                    {t.demo.questions[0]}
                   </button>
                   <button
                     onClick={() => ask("who")}
@@ -361,7 +330,7 @@ function TextDemo() {
                     className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
                     data-testid="button-intent-who"
                   >
-                    Кому подойдёт?
+                    {t.demo.questions[1]}
                   </button>
                   <button
                     onClick={() => ask("where")}
@@ -369,7 +338,7 @@ function TextDemo() {
                     className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
                     data-testid="button-intent-where"
                   >
-                    Где применить?
+                    {t.demo.questions[2]}
                   </button>
                 </div>
               </div>
@@ -378,7 +347,7 @@ function TextDemo() {
             <div className="mt-5 text-center">
               <a href="#scenarios" className="inline-flex" data-testid="button-demo-continue">
                 <Button className="h-11 gap-2 rounded-full px-5 text-sm shadow-md">
-                  Смотреть примеры
+                  {t.scenarios.title}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </a>
@@ -406,108 +375,61 @@ type ScenarioConfig = {
   };
 };
 
-const SCENARIO_CONFIGS: Record<LiveScenario, ScenarioConfig> = {
-  sales: {
-    title: "Продажи и партнёрства",
-    description: "Ассистент отвечает на вопросы, отбирает лидов и греет интерес — ещё до первого звонка.",
-    avatarImage: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
-    businessCard: {
-      category: "IT-консалтинг",
-      businessName: "TechPro Solutions",
-      tagline: "Цифровая трансформация для вашего бизнеса",
-      avatarName: "Alex",
-      highlights: [
-        { icon: <TrendingUp className="w-4 h-4" />, text: "Рост конверсии до 40%" },
-        { icon: <Clock className="w-4 h-4" />, text: "Ответ за 30 секунд" },
-        { icon: <Star className="w-4 h-4" />, text: "50+ успешных проектов" },
-      ],
-      whyWorks: [
-        "Квалификация лидов 24/7",
-        "Персональный подход к каждому",
-        "Интеграция с CRM",
-      ],
-      links: [
-        { label: "Портфолио", url: "#" },
-        { label: "Кейсы", url: "#" },
-      ],
-    },
-  },
-  projects: {
-    title: "Презентации проектов", 
-    description: "Идеи, которые раньше требовали встречи — теперь объясняются сами.",
-    avatarImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
-    businessCard: {
-      category: "Архитектура и дизайн",
-      businessName: "ART Studio",
-      tagline: "Создаём пространства, которые вдохновляют",
-      avatarName: "Maria",
-      highlights: [
-        { icon: <Briefcase className="w-4 h-4" />, text: "120+ реализованных проектов" },
-        { icon: <Star className="w-4 h-4" />, text: "Победитель Design Awards" },
-        { icon: <Globe className="w-4 h-4" />, text: "Проекты в 5 странах" },
-      ],
-      whyWorks: [
-        "Визуализация проекта в реальном времени",
-        "Ответы на все вопросы инвесторов",
-        "Интерактивное портфолио",
-      ],
-      links: [
-        { label: "Галерея работ", url: "#" },
-        { label: "Награды", url: "#" },
-      ],
-    },
-  },
-  team: {
-    title: "Команда и сообщество",
-    description: "Единая подача для новых сотрудников и участников. Без лишних сообщений.",
-    avatarImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
-    businessCard: {
-      category: "HR Tech",
-      businessName: "HR Hub",
-      tagline: "Лучшие таланты для лучших команд",
-      avatarName: "David",
-      highlights: [
-        { icon: <Users className="w-4 h-4" />, text: "500+ сотрудников в команде" },
-        { icon: <Heart className="w-4 h-4" />, text: "Дружелюбная культура" },
-        { icon: <Zap className="w-4 h-4" />, text: "Гибкий график работы" },
-      ],
-      whyWorks: [
-        "Онбординг без менеджеров",
-        "Ответы на вопросы о культуре",
-        "Знакомство с командой",
-      ],
-      links: [
-        { label: "Вакансии", url: "#" },
-        { label: "О компании", url: "#" },
-      ],
-    },
-  },
-  expert: {
-    title: "Первое касание",
-    description: "Сильное впечатление с первой секунды. Даже если ты не онлайн.",
-    avatarImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800",
-    businessCard: {
-      category: "Медицинский консультант",
-      businessName: "Dr. Andrew Miller",
-      tagline: "Забота о здоровье на первом месте",
-      avatarName: "Andrew",
-      highlights: [
-        { icon: <GraduationCap className="w-4 h-4" />, text: "20+ лет опыта" },
-        { icon: <Clock className="w-4 h-4" />, text: "Приём: 9:00–18:00" },
-        { icon: <MapPin className="w-4 h-4" />, text: "Москва, ЦАО" },
-      ],
-      whyWorks: [
-        "Предварительная консультация",
-        "Запись на приём онлайн",
-        "Ответы на частые вопросы",
-      ],
-      links: [
-        { label: "Услуги", url: "#" },
-        { label: "Отзывы", url: "#" },
-      ],
-    },
-  },
+const AVATAR_IMAGES: Record<LiveScenario, string> = {
+  sales: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
+  projects: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
+  team: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
+  expert: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800",
 };
+
+const HIGHLIGHT_ICONS: Record<LiveScenario, React.ReactNode[]> = {
+  sales: [
+    <TrendingUp className="w-4 h-4" key="sales-1" />,
+    <Clock className="w-4 h-4" key="sales-2" />,
+    <Star className="w-4 h-4" key="sales-3" />,
+  ],
+  projects: [
+    <Briefcase className="w-4 h-4" key="projects-1" />,
+    <Star className="w-4 h-4" key="projects-2" />,
+    <Globe className="w-4 h-4" key="projects-3" />,
+  ],
+  team: [
+    <Users className="w-4 h-4" key="team-1" />,
+    <Heart className="w-4 h-4" key="team-2" />,
+    <Zap className="w-4 h-4" key="team-3" />,
+  ],
+  expert: [
+    <GraduationCap className="w-4 h-4" key="expert-1" />,
+    <Clock className="w-4 h-4" key="expert-2" />,
+    <MapPin className="w-4 h-4" key="expert-3" />,
+  ],
+};
+
+function getScenarioConfig(t: ReturnType<typeof useLanguage>['t'], scenario: LiveScenario): ScenarioConfig {
+  const cardData = t.scenarios.cards[scenario];
+  const icons = HIGHLIGHT_ICONS[scenario];
+  
+  return {
+    title: cardData.title,
+    description: cardData.description,
+    avatarImage: AVATAR_IMAGES[scenario],
+    businessCard: {
+      category: cardData.category,
+      businessName: cardData.businessName,
+      tagline: cardData.tagline,
+      avatarName: t.scenarios.avatarNames[scenario],
+      highlights: cardData.highlights.map((text, i) => ({
+        icon: icons[i],
+        text,
+      })),
+      whyWorks: cardData.whyWorks,
+      links: cardData.links.map((label) => ({
+        label,
+        url: "#",
+      })),
+    },
+  };
+}
 
 function TypewriterText({ text }: { text: string }) {
   const [displayedText, setDisplayedText] = useState("");
@@ -527,6 +449,7 @@ function TypewriterText({ text }: { text: string }) {
 }
 
 function LiveScenarios() {
+  const { t, language } = useLanguage();
   const [selected, setSelected] = useState<LiveScenario>("sales");
   const [isCardOpen, setIsCardOpen] = useState(false);
   const [isCallOpen, setIsCallOpen] = useState(false);
@@ -536,7 +459,7 @@ function LiveScenarios() {
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const scenarios: LiveScenario[] = ["sales", "projects", "team", "expert"];
-  const currentConfig = SCENARIO_CONFIGS[selected];
+  const currentConfig = getScenarioConfig(t, selected);
   const { businessCard } = currentConfig;
 
   useEffect(() => {
@@ -561,16 +484,17 @@ function LiveScenarios() {
     setMessages(prev => [...prev, userMsg]);
     setInputValue("");
 
-    // Mock response logic
     setTimeout(() => {
       const assistantMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        text: "Отличный вопрос! Я с удовольствием расскажу подробнее. Для этого лучше всего созвониться в видео-формате, где я смогу показать всё наглядно. Нажми кнопку 'Позвонить аватару' ниже!"
+        text: t.scenarios.chatGreeting.replace("{name}", businessCard.avatarName)
       };
       setMessages(prev => [...prev, assistantMsg]);
     }, 1000);
   };
+
+  const chatGreetingText = t.scenarios.chatGreeting.replace("{name}", businessCard.avatarName);
 
   return (
     <section
@@ -586,12 +510,12 @@ function LiveScenarios() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="text-center mb-4">
+            <div className="text-center mb-5">
               <h2 className="font-serif text-2xl leading-tight tracking-[-0.02em]">
-                Сценарии использования
+                {t.scenarios.title}
               </h2>
               <p className="mt-2 text-muted-foreground text-sm">
-                Один формат — разные задачи
+                {t.scenarios.subtitle}
               </p>
             </div>
 
@@ -677,7 +601,7 @@ function LiveScenarios() {
                       className="mt-4 w-full flex items-center justify-center gap-2 px-5 py-3 bg-white text-black rounded-full text-sm font-semibold transition-all hover:bg-white/90 shadow-lg"
                       data-testid="button-start-demo"
                     >
-                      Открыть визитку
+                      {currentConfig.title}
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
@@ -688,7 +612,7 @@ function LiveScenarios() {
             <div className="mt-4 text-center">
               <a href="#contact" className="inline-flex" data-testid="button-scenarios-continue">
                 <Button variant="ghost" className="text-muted-foreground hover:text-foreground text-sm">
-                  Хочу такое решение
+                  {t.contact.form.submit}
                   <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                 </Button>
               </a>
@@ -715,7 +639,6 @@ function LiveScenarios() {
                     data-testid="button-back"
                   >
                     <ChevronLeft className="w-5 h-5" />
-                    Назад
                   </button>
                   <button
                     onClick={() => setIsCardOpen(false)}
@@ -741,7 +664,6 @@ function LiveScenarios() {
                 <div className="mt-6 p-4 bg-gradient-to-br from-slate-50 to-slate-100/50 rounded-2xl">
                   <div className="flex items-center gap-2 text-slate-600 text-sm font-medium mb-3">
                     <TrendingUp className="w-4 h-4" />
-                    Ключевые показатели
                   </div>
                   <div className="space-y-3">
                     {businessCard.highlights.map((h, i) => (
@@ -758,7 +680,7 @@ function LiveScenarios() {
                 <div className="mt-5 p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl">
                   <div className="flex items-center gap-2 text-emerald-700 text-sm font-medium mb-3">
                     <Check className="w-4 h-4" />
-                    Почему это работает
+                    {t.scenarios.whyWorks}
                   </div>
                   <div className="space-y-2">
                     {businessCard.whyWorks.map((item, i) => (
@@ -793,7 +715,7 @@ function LiveScenarios() {
                   data-testid="button-video-call"
                 >
                   <Video className="w-5 h-5" />
-                  Пообщаться вживую
+                  {t.scenarios.videoCall}
                 </button>
 
                 <div className="mt-6 p-4 bg-slate-50 rounded-2xl">
@@ -808,7 +730,7 @@ function LiveScenarios() {
                     </div>
                     <div className="flex-1">
                       <div className="font-medium text-sm">{businessCard.avatarName}</div>
-                      <div className="text-[10px] text-green-600 font-medium uppercase tracking-wider">в сети</div>
+                      <div className="text-[10px] text-green-600 font-medium uppercase tracking-wider">{t.scenarios.online}</div>
                     </div>
                   </div>
 
@@ -816,7 +738,7 @@ function LiveScenarios() {
                     <div className="flex-1 p-3 overflow-y-auto space-y-2">
                       {messages.length === 0 ? (
                         <div className="text-xs leading-relaxed text-slate-600">
-                          <TypewriterText text={`Привет! Я ${businessCard.avatarName}. Помогу разобраться — что хочешь узнать?`} />
+                          <TypewriterText text={chatGreetingText} />
                         </div>
                       ) : (
                         <>
@@ -850,7 +772,7 @@ function LiveScenarios() {
                         <Input
                           value={inputValue}
                           onChange={(e) => setInputValue(e.target.value)}
-                          placeholder="Напиши вопрос..."
+                          placeholder={t.scenarios.chatPlaceholder}
                           className="h-10 pl-3 pr-9 rounded-lg border-slate-200 bg-white text-xs"
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
@@ -884,13 +806,14 @@ function LiveScenarios() {
           description: businessCard.tagline,
           avatarImage: currentConfig.avatarImage,
         }}
-        language="ru"
+        language={language}
       />
     </section>
   );
 }
 
 function ContactSection() {
+  const { t } = useLanguage();
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
@@ -916,44 +839,40 @@ function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            {/* Header */}
             <div className="text-center mb-6">
               <h2 className="font-serif text-2xl leading-tight tracking-[-0.02em] text-slate-900">
-                Запускаем твоё живое онлайн-представительство
+                {t.contact.title}
               </h2>
               <p className="mt-3 text-slate-400 text-sm">
-                Через 48 часов — формат, который работает за тебя.
+                {t.contact.trigger}
               </p>
             </div>
 
-            {/* What you get */}
             <div className="mb-5 py-4 px-5 bg-slate-50 rounded-2xl">
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">Что ты получаешь</p>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3"></p>
               <div className="space-y-1.5 text-slate-600 text-sm">
-                <p>— живое онлайн-представительство</p>
-                <p>— ассистентов под твою задачу</p>
-                <p>— понятный первый шаг для посетителей</p>
+                {t.contact.benefits.map((benefit, i) => (
+                  <p key={i}>{benefit}</p>
+                ))}
               </div>
             </div>
 
-            {/* FOMO */}
             <p className="text-center text-xs text-violet-500 mb-5">
-              Количество запусков ограничено. Работаем с теми, кто первый.
+              {t.contact.fomo}
             </p>
 
-            {/* Form */}
             <div className="space-y-2.5">
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Твоё имя"
+                placeholder={t.contact.form.name}
                 className="h-12 rounded-xl bg-slate-50 border-0 px-4 text-sm placeholder:text-slate-400 focus-visible:ring-1 focus-visible:ring-slate-200"
                 data-testid="input-name"
               />
               <Input
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
-                placeholder="Telegram или email"
+                placeholder={t.contact.form.contact}
                 className="h-12 rounded-xl bg-slate-50 border-0 px-4 text-sm placeholder:text-slate-400 focus-visible:ring-1 focus-visible:ring-slate-200"
                 data-testid="input-contact"
               />
@@ -963,7 +882,7 @@ function ContactSection() {
                 disabled={status !== "idle" || !name || !contact}
                 data-testid="button-submit-lead"
               >
-                {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено!" : "Обсудить запуск"}
+                {status === "sending" ? "..." : status === "sent" ? t.contact.form.sent : t.contact.form.submit}
               </Button>
             </div>
             
@@ -973,13 +892,12 @@ function ContactSection() {
                 animate={{ opacity: 1 }} 
                 className="mt-3 text-center text-sm text-green-600"
               >
-                Спасибо, {name}! Свяжемся через {contact}
+                {t.contact.form.sent}
               </motion.p>
             )}
 
-            {/* Microtext */}
             <p className="mt-5 text-center text-[10px] text-slate-400">
-              Без спама. Без воронок. Просто разговор.
+              {t.contact.footer}
             </p>
           </motion.div>
         </LazyMotion>
@@ -990,11 +908,13 @@ function ContactSection() {
 
 
 function Footer() {
+  const { t } = useLanguage();
+  
   return (
     <footer className="border-t border-slate-100 py-8 px-6" data-testid="footer">
       <div className="mx-auto max-w-lg text-center">
         <div className="text-sm text-muted-foreground" data-testid="text-footer">
-          {APP_TITLE}
+          {t.hero.title}
         </div>
       </div>
     </footer>
