@@ -980,11 +980,6 @@ function ContactSection() {
               </div>
             </div>
 
-            {/* Process line */}
-            <p className="mt-8 text-slate-400 text-xs sm:text-sm uppercase tracking-wider">
-              Запуск → первый эффект → масштабирование
-            </p>
-
             {/* FOMO line */}
             <p className="mt-6 text-blue-500/80 text-sm font-medium max-w-[300px] sm:max-w-none">
               Сейчас мы запускаем ограниченное количество таких представительств и работаем с теми, кто заходит первым.
