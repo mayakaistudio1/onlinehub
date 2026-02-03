@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { LazyMotion, domAnimation, motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
+  ArrowLeft,
   Briefcase,
   Check,
   ChevronDown,
@@ -16,6 +17,7 @@ import {
   MapPin,
   MessageCircle,
   MessageSquareText,
+  Mic,
   MoveRight,
   Phone,
   Star,
@@ -1030,7 +1032,105 @@ function Footer() {
   );
 }
 
+function FloatingLiveButton({ onClick }: { onClick: () => void }) {
+  const { t } = useLanguage();
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  useEffect(() => {
+    const hasSeenTooltip = localStorage.getItem('wow-live-tooltip-seen');
+    if (!hasSeenTooltip) {
+      setShowTooltip(true);
+      const timer = setTimeout(() => {
+        setShowTooltip(false);
+        localStorage.setItem('wow-live-tooltip-seen', 'true');
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  return (
+    <div className="fixed bottom-6 right-4 z-50" data-testid="floating-live-button-container">
+      <AnimatePresence>
+        {showTooltip && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.9 }}
+            className="absolute bottom-16 right-0 bg-slate-900 text-white text-xs px-3 py-2 rounded-lg shadow-lg whitespace-nowrap"
+          >
+            {t.howItWorks?.cards?.dialog?.title || "Поговорить вживую"}
+            <div className="absolute -bottom-1 right-5 w-2 h-2 bg-slate-900 rotate-45" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <motion.button
+        onClick={onClick}
+        className="w-14 h-14 rounded-full bg-gradient-to-br from-pink-500 via-fuchsia-500 to-purple-600 shadow-lg shadow-fuchsia-500/30 flex items-center justify-center text-white hover:scale-105 active:scale-95 transition-transform"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        data-testid="button-floating-live"
+      >
+        <Mic className="w-6 h-6" />
+      </motion.button>
+    </div>
+  );
+}
+
+function WowLivePage({ isOpen, onClose, language }: { isOpen: boolean; onClose: () => void; language: string }) {
+  if (!isOpen) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex flex-col"
+      data-testid="wow-live-page"
+    >
+      <div className="flex-1 flex items-center justify-center">
+        <LiveAvatarChat
+          isOpen={true}
+          onClose={onClose}
+          scenario={{
+            key: "wow-live",
+            title: "WOW Live",
+            description: "Live Avatar Chat",
+          }}
+          language={language}
+        />
+      </div>
+      <div className="p-4 pb-8">
+        <Button
+          variant="ghost"
+          onClick={onClose}
+          className="w-full text-white/80 hover:text-white hover:bg-white/10"
+          data-testid="button-back-to-presentation"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Вернуться в презентацию
+        </Button>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function HomePage() {
+  const { language } = useLanguage();
+  const [isLiveOpen, setIsLiveOpen] = useState(false);
+  const scrollPositionRef = useRef(0);
+
+  const openLive = () => {
+    scrollPositionRef.current = window.scrollY;
+    setIsLiveOpen(true);
+  };
+
+  const closeLive = () => {
+    setIsLiveOpen(false);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollPositionRef.current);
+    });
+  };
+
   return (
     <div className="min-h-dvh" data-testid="page-home">
       <Hero />
@@ -1040,6 +1140,20 @@ export default function HomePage() {
       <TextDemo />
       <ContactSection />
       <Footer />
+      
+      {!isLiveOpen && (
+        <FloatingLiveButton onClick={openLive} />
+      )}
+      
+      <AnimatePresence>
+        {isLiveOpen && (
+          <WowLivePage
+            isOpen={isLiveOpen}
+            onClose={closeLive}
+            language={language}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

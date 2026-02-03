@@ -11,13 +11,31 @@ const CONTEXT_IDS: Record<string, string | undefined> = {
   projects: process.env.LIVEAVATAR_CONTEXT_ID_PROJECTS,
   team: process.env.LIVEAVATAR_CONTEXT_ID_TEAM,
   expert: process.env.LIVEAVATAR_CONTEXT_ID_EXPERT,
+  "wow-live": process.env.LIVEAVATAR_CONTEXT_ID_WOW_LIVE || "ff6ea605-fd86-449c-8b22-ecb41bd4b27e",
 };
+
+const WOW_LIVE_AVATAR_ID = "a173664e-ac0a-472d-9812-10e77968b7e8";
+const WOW_LIVE_VOICE_ID = "b952f553-f7f3-4e52-8625-86b4c415384f";
 
 function getContextIdForDirection(direction?: string): string {
   if (direction && CONTEXT_IDS[direction]) {
     return CONTEXT_IDS[direction]!;
   }
   return LIVEAVATAR_CONTEXT_ID;
+}
+
+function getAvatarIdForDirection(direction?: string): string {
+  if (direction === "wow-live") {
+    return WOW_LIVE_AVATAR_ID;
+  }
+  return LIVEAVATAR_AVATAR_ID;
+}
+
+function getVoiceIdForDirection(direction?: string): string {
+  if (direction === "wow-live") {
+    return WOW_LIVE_VOICE_ID;
+  }
+  return LIVEAVATAR_VOICE_ID;
 }
 
 export async function getSessionToken(
@@ -29,12 +47,14 @@ export async function getSessionToken(
   }
 
   const contextId = getContextIdForDirection(direction);
+  const avatarId = getAvatarIdForDirection(direction);
+  const voiceId = getVoiceIdForDirection(direction);
 
   const payload = {
     mode: "FULL",
-    avatar_id: LIVEAVATAR_AVATAR_ID,
+    avatar_id: avatarId,
     avatar_persona: {
-      voice_id: LIVEAVATAR_VOICE_ID,
+      voice_id: voiceId,
       context_id: contextId,
       language
     }
