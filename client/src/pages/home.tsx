@@ -941,11 +941,15 @@ function ContactSection() {
 
   return (
     <section
-      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start bg-gradient-to-b from-slate-50 to-white"
+      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start bg-gradient-to-b from-slate-50 to-white overflow-hidden"
       id="contact"
       data-testid="section-contact"
     >
-      <div className="mx-auto w-full max-w-lg">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-60 -mr-48 -mt-24" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-50 rounded-full blur-3xl opacity-60 -ml-48 -mb-24" />
+
+      <div className="relative mx-auto w-full max-w-2xl">
         <LazyMotion features={domAnimation}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -953,69 +957,106 @@ function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="text-center mb-8">
-              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
-                Запустим пилот?
+            <div className="text-center mb-10">
+              <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-blue-50 text-blue-600 text-sm font-semibold tracking-wide border border-blue-100 shadow-sm">
+                Хочешь уже через 48 часов иметь своё живое онлайн-представительство?
+              </div>
+              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-5xl">
+                Запустим твоё онлайн-представительство?
               </h2>
-              <p className="mt-3 text-muted-foreground">
-                Настройка под ключ — $2,500
-              </p>
             </div>
 
-            <Card className="rounded-3xl border-0 shadow-xl shadow-black/5 p-6" data-testid="card-contact">
-              <div className="space-y-4">
-                <div className="space-y-4 mb-6">
-                  {[
-                    "Цифровое представительство",
-                    "1–2 AI-ассистента",
-                    "Индивидуальный стиль",
-                    "Запуск за неделю",
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3" data-testid={`feature-${i}`}>
-                      <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center">
-                        <Check className="h-3.5 w-3.5 text-green-600" />
-                      </div>
-                      <span className="text-sm">{item}</span>
-                    </div>
-                  ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <p className="text-slate-600 leading-relaxed">
+                    Мы запускаем цифровое онлайн-представительство нового уровня.
+                    Не сайт и не визитку — а формат, который встречает людей, общается и объясняет твой бизнес.
+                  </p>
+                  <p className="text-slate-600 leading-relaxed">
+                    Ассистенты знают твой контекст, понимают задачу и помогают посетителям сделать следующий шаг — сразу.
+                  </p>
                 </div>
 
-                <div className="border-t border-slate-100 pt-6">
-                  <div className="space-y-4">
-                    <Input
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Твоё имя"
-                      className="h-12 rounded-xl border-slate-200 bg-slate-50"
-                      data-testid="input-name"
-                    />
-                    <Input
-                      value={contact}
-                      onChange={(e) => setContact(e.target.value)}
-                      placeholder="Telegram или email"
-                      className="h-12 rounded-xl border-slate-200 bg-slate-50"
-                      data-testid="input-contact"
-                    />
-                    <Button
-                      onClick={submit}
-                      className="h-12 w-full rounded-xl"
-                      disabled={status !== "idle" || !name || !contact}
-                      data-testid="button-submit-lead"
-                    >
-                      {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено!" : "Обсудить запуск"}
-                    </Button>
+                <div className="pt-4 border-t border-slate-100">
+                  <h3 className="font-semibold text-slate-900 mb-3 text-sm uppercase tracking-wider">Где это работает лучше всего:</h3>
+                  <div className="space-y-2">
+                    {[
+                      "первого контакта",
+                      "презентации проектов",
+                      "онбординга клиентов и партнёров",
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-2 text-slate-600 text-sm">
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                        {item}
+                      </div>
+                    ))}
                   </div>
-                  
-                  {status === "sent" && (
-                    <p className="mt-4 text-center text-sm text-green-600" data-testid="status-success">
-                      Спасибо, {name}! Свяжемся через {contact}
-                    </p>
-                  )}
                 </div>
               </div>
+
+              <div className="space-y-6">
+                <div className="p-5 bg-white/50 backdrop-blur-sm rounded-2xl border border-slate-100 shadow-sm">
+                  <h3 className="font-semibold text-slate-900 mb-2 text-sm uppercase tracking-wider">Как мы работаем:</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    Мы запускаем пилот и ведём тебя к результату. Сначала — одна конкретная задача. Потом — масштабирование.
+                  </p>
+                </div>
+
+                <div className="p-5 bg-blue-50/50 backdrop-blur-sm rounded-2xl border border-blue-100 shadow-sm">
+                  <div className="flex items-center gap-2 text-blue-700 text-sm font-bold mb-2 uppercase tracking-wider">
+                    <Zap className="w-4 h-4" />
+                    FOMO
+                  </div>
+                  <p className="text-blue-900/80 text-sm leading-relaxed font-medium">
+                    Сейчас мы открываем ограниченное количество запусков и собираем первые онлайн-представительства вручную.
+                  </p>
+                  <p className="mt-3 text-blue-900 text-sm font-bold leading-relaxed italic">
+                    Если хочешь войти в круг первых и быть на шаг впереди — лучше написать сейчас.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <Card className="rounded-3xl border-0 shadow-2xl shadow-black/5 p-8 bg-white/80 backdrop-blur-xl border border-white/50" data-testid="card-contact">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Твоё имя"
+                  className="h-14 rounded-2xl border-slate-200 bg-white shadow-sm focus:ring-blue-500"
+                  data-testid="input-name"
+                />
+                <Input
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                  placeholder="Telegram или email"
+                  className="h-14 rounded-2xl border-slate-200 bg-white shadow-sm focus:ring-blue-500"
+                  data-testid="input-contact"
+                />
+              </div>
+              <Button
+                onClick={submit}
+                className="mt-4 h-14 w-full rounded-2xl text-lg font-bold shadow-lg shadow-blue-500/20 bg-blue-600 hover:bg-blue-700 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                disabled={status !== "idle" || !name || !contact}
+                data-testid="button-submit-lead"
+              >
+                {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено!" : "Обсудить запуск"}
+              </Button>
+              
+              {status === "sent" && (
+                <motion.p 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 text-center text-sm text-green-600 font-medium" 
+                  data-testid="status-success"
+                >
+                  Спасибо, {name}! Мы скоро свяжемся с тобой.
+                </motion.p>
+              )}
             </Card>
 
-            <p className="mt-6 text-center text-xs text-muted-foreground">
+            <p className="mt-8 text-center text-sm text-muted-foreground font-medium">
               Без спама. Без воронок. Просто разговор.
             </p>
           </motion.div>
