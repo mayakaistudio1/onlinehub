@@ -59,6 +59,7 @@ interface LiveAvatarChatProps {
   scenario: ScenarioConfig;
   language?: string;
   className?: string;
+  autoStart?: boolean;
 }
 
 type SessionState = "idle" | "connecting" | "waiting_avatar" | "connected" | "error" | "ended";
@@ -75,6 +76,7 @@ export function LiveAvatarChat({
   scenario,
   language = "ru",
   className,
+  autoStart = false,
 }: LiveAvatarChatProps) {
   const [sessionState, setSessionState] = useState<SessionState>("idle");
   const [isMuted, setIsMuted] = useState(true);
@@ -266,6 +268,15 @@ export function LiveAvatarChat({
       setSessionState("error");
     }
   }, [language, scenario.key, sessionState]);
+
+  // Auto-start session if autoStart prop is true
+  const autoStartRef = useRef(false);
+  useEffect(() => {
+    if (autoStart && isOpen && sessionState === "idle" && !autoStartRef.current) {
+      autoStartRef.current = true;
+      startSession();
+    }
+  }, [autoStart, isOpen, sessionState, startSession]);
 
   const handleTrackSubscribed = useCallback(
     (track: RemoteTrack, publication: RemoteTrackPublication, participant: RemoteParticipant) => {

@@ -258,6 +258,7 @@ export function WowLiveScreen({ isOpen, onClose, language }: WowLiveScreenProps)
                   description: "Live Avatar Chat",
                 }}
                 language={language}
+                autoStart={true}
               />
             </div>
           </div>
