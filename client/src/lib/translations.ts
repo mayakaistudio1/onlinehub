@@ -71,6 +71,11 @@ export const translations = {
       tryChat: "Попробовать чат",
       switchToLive: "Live звонок"
     },
+    liveBar: {
+      title: "Live консультант",
+      online: "онлайн",
+      subtitle: "Нажмите для живого общения"
+    },
     scenarios: {
       title: "Сценарии использования",
       subtitle: "Один формат — разные задачи",
@@ -247,6 +252,11 @@ export const translations = {
       inputPlaceholder: "Ask anything...",
       tryChat: "Try Chat",
       switchToLive: "Live call"
+    },
+    liveBar: {
+      title: "Live consultant",
+      online: "online",
+      subtitle: "Tap for live conversation"
     },
     scenarios: {
       title: "Use Cases",
@@ -425,6 +435,11 @@ export const translations = {
       tryChat: "Chat ausprobieren",
       switchToLive: "Live-Anruf"
     },
+    liveBar: {
+      title: "Live-Berater",
+      online: "online",
+      subtitle: "Tippen für Live-Gespräch"
+    },
     scenarios: {
       title: "Anwendungsfälle",
       subtitle: "Ein Format — verschiedene Aufgaben",
@@ -601,6 +616,11 @@ export const translations = {
       inputPlaceholder: "Pregunta lo que quieras...",
       tryChat: "Probar chat",
       switchToLive: "Llamada en vivo"
+    },
+    liveBar: {
+      title: "Consultor en vivo",
+      online: "en línea",
+      subtitle: "Toca para conversación en vivo"
     },
     scenarios: {
       title: "Casos de uso",

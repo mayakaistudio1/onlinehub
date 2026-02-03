@@ -1087,10 +1087,7 @@ export default function HomePage() {
       <Footer />
       
       {!isLiveOpen && !isChatOpen && (
-        <>
-          <FloatingLiveButton onClick={openLive} />
-          <ChatPreviewBar onOpenChat={openChat} />
-        </>
+        <ChatPreviewBar onOpenChat={openLive} />
       )}
       
       <AnimatePresence>
