@@ -312,10 +312,10 @@ function TextDemo() {
           >
             <div className="text-center mb-8">
               <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
-                Спроси консультанта
+                WOW Page Live
               </h2>
               <p className="mt-3 text-muted-foreground">
-                Это демо — так будет общаться твой ассистент
+                Посмотри, как твоё представительство общается в реальности
               </p>
             </div>
 
