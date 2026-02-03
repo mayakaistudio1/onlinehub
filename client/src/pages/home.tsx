@@ -941,88 +941,93 @@ function ContactSection() {
 
   return (
     <section
-      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start bg-gradient-to-b from-slate-50 to-white"
+      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-20 snap-start bg-white"
       id="contact"
       data-testid="section-contact"
     >
       <div className="mx-auto w-full max-w-lg">
         <LazyMotion features={domAnimation}>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col items-center text-center"
           >
-            <div className="text-center mb-10">
-              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
-                Запускаем твоё живое онлайн-представительство
-              </h2>
-              <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
-                Уже через 48 часов у тебя будет формат,<br className="hidden sm:block" />
-                который встречает людей и объясняет твой бизнес за тебя.
-              </p>
+            {/* Title */}
+            <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl text-slate-900">
+              Запускаем твоё живое онлайн-представительство
+            </h2>
+            
+            {/* Trigger */}
+            <p className="mt-4 text-slate-500 text-sm sm:text-base max-w-[280px] sm:max-w-none">
+              Уже через 48 часов у тебя будет формат, который встречает людей и объясняет твой бизнес за тебя.
+            </p>
+
+            {/* Description */}
+            <div className="mt-12 space-y-1 text-slate-600 text-sm sm:text-base">
+              <p>Это не сайт и не визитка.</p>
+              <p>Это цифровое представительство с ассистентами, которые знают твой контекст и ведут диалог.</p>
             </div>
 
-            <div className="space-y-6 mb-8">
-              <p className="text-slate-600 text-center leading-relaxed">
-                Это не сайт и не визитка.<br />
-                Это цифровое представительство с ассистентами,<br className="hidden sm:block" />
-                которые знают твой контекст и ведут диалог.
-              </p>
-
-              <div className="p-5 bg-white/60 backdrop-blur-sm rounded-2xl border border-slate-100">
-                <p className="text-sm font-semibold text-slate-900 mb-3">Что ты получаешь:</p>
-                <div className="space-y-2 text-slate-600 text-sm">
-                  <p>— живое онлайн-представительство</p>
-                  <p>— ассистентов под твою задачу</p>
-                  <p>— понятный первый шаг для посетителей</p>
-                </div>
+            {/* What you get block */}
+            <div className="mt-10 w-full p-8 bg-slate-50/50 rounded-[32px] text-left">
+              <p className="text-sm font-semibold text-slate-900 mb-4">Что ты получаешь:</p>
+              <div className="space-y-3 text-slate-600 text-sm sm:text-base">
+                <p>— живое онлайн-представительство</p>
+                <p>— ассистентов под твою задачу</p>
+                <p>— понятный первый шаг для посетителей</p>
               </div>
-
-              <p className="text-center text-slate-500 text-sm">
-                Запуск → первый эффект → масштабирование.
-              </p>
-
-              <p className="text-center text-blue-600 text-sm font-medium">
-                Сейчас мы запускаем ограниченное количество таких представительств<br className="hidden sm:block" />
-                и работаем с теми, кто заходит первым.
-              </p>
             </div>
 
-            <Card className="rounded-3xl border-0 shadow-xl shadow-black/5 p-6" data-testid="card-contact">
-              <div className="space-y-4">
-                <Input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Твоё имя"
-                  className="h-12 rounded-xl border-slate-200 bg-slate-50"
-                  data-testid="input-name"
-                />
-                <Input
-                  value={contact}
-                  onChange={(e) => setContact(e.target.value)}
-                  placeholder="Telegram или email"
-                  className="h-12 rounded-xl border-slate-200 bg-slate-50"
-                  data-testid="input-contact"
-                />
-                <Button
-                  onClick={submit}
-                  className="h-12 w-full rounded-xl"
-                  disabled={status !== "idle" || !name || !contact}
-                  data-testid="button-submit-lead"
+            {/* Process line */}
+            <p className="mt-8 text-slate-400 text-xs sm:text-sm uppercase tracking-wider">
+              Запуск → первый эффект → масштабирование
+            </p>
+
+            {/* FOMO line */}
+            <p className="mt-6 text-blue-500/80 text-sm font-medium max-w-[300px] sm:max-w-none">
+              Сейчас мы запускаем ограниченное количество таких представительств и работаем с теми, кто заходит первым.
+            </p>
+
+            {/* Form */}
+            <div className="mt-10 w-full space-y-3">
+              <Input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Твоё имя"
+                className="h-14 rounded-2xl border-slate-100 bg-slate-50/50 px-6 focus:bg-white transition-colors border-0 shadow-none focus-visible:ring-1 focus-visible:ring-slate-200"
+                data-testid="input-name"
+              />
+              <Input
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+                placeholder="Telegram или email"
+                className="h-14 rounded-2xl border-slate-100 bg-slate-50/50 px-6 focus:bg-white transition-colors border-0 shadow-none focus-visible:ring-1 focus-visible:ring-slate-200"
+                data-testid="input-contact"
+              />
+              <Button
+                onClick={submit}
+                className="h-14 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-base transition-all active:scale-[0.98]"
+                disabled={status !== "idle" || !name || !contact}
+                data-testid="button-submit-lead"
+              >
+                {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено!" : "Обсудить запуск"}
+              </Button>
+              
+              {status === "sent" && (
+                <motion.p 
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1 }} 
+                  className="mt-2 text-center text-sm text-green-600"
                 >
-                  {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено!" : "Обсудить запуск"}
-                </Button>
-                
-                {status === "sent" && (
-                  <p className="mt-2 text-center text-sm text-green-600" data-testid="status-success">
-                    Спасибо, {name}! Свяжемся через {contact}
-                  </p>
-                )}
-              </div>
-            </Card>
+                  Спасибо, {name}! Свяжемся через {contact}
+                </motion.p>
+              )}
+            </div>
 
-            <p className="mt-6 text-center text-xs text-muted-foreground">
+            {/* Microtext */}
+            <p className="mt-8 text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest">
               Без спама. Без воронок. Просто разговор.
             </p>
           </motion.div>
