@@ -74,7 +74,13 @@ export const translations = {
     liveBar: {
       title: "Live консультант",
       online: "онлайн",
-      subtitle: "Нажмите для живого общения"
+      subtitle: "Нажмите для общения"
+    },
+    wowLive: {
+      greeting: "Привет! Я live-консультант WOW Page Live.\nМожем пообщаться здесь в чате или перейти в живой видеозвонок. С чего начнём?",
+      consultantOnline: "Live консультант онлайн",
+      startLiveCall: "Начать живое общение",
+      liveCallHint: "Видеозвонок с live-аватаром"
     },
     scenarios: {
       title: "Сценарии использования",
@@ -256,7 +262,13 @@ export const translations = {
     liveBar: {
       title: "Live consultant",
       online: "online",
-      subtitle: "Tap for live conversation"
+      subtitle: "Tap to chat"
+    },
+    wowLive: {
+      greeting: "Hi! I'm your WOW Page Live consultant.\nWe can chat here or switch to a live video call. Where shall we start?",
+      consultantOnline: "Live consultant online",
+      startLiveCall: "Start live call",
+      liveCallHint: "Video call with live avatar"
     },
     scenarios: {
       title: "Use Cases",
@@ -438,7 +450,13 @@ export const translations = {
     liveBar: {
       title: "Live-Berater",
       online: "online",
-      subtitle: "Tippen für Live-Gespräch"
+      subtitle: "Tippen zum Chatten"
+    },
+    wowLive: {
+      greeting: "Hallo! Ich bin Ihr WOW Page Live-Berater.\nWir können hier chatten oder zu einem Live-Videoanruf wechseln. Womit fangen wir an?",
+      consultantOnline: "Live-Berater online",
+      startLiveCall: "Live-Anruf starten",
+      liveCallHint: "Videoanruf mit Live-Avatar"
     },
     scenarios: {
       title: "Anwendungsfälle",
@@ -620,7 +638,13 @@ export const translations = {
     liveBar: {
       title: "Consultor en vivo",
       online: "en línea",
-      subtitle: "Toca para conversación en vivo"
+      subtitle: "Toca para chatear"
+    },
+    wowLive: {
+      greeting: "¡Hola! Soy tu consultor de WOW Page Live.\nPodemos chatear aquí o pasar a una videollamada en vivo. ¿Por dónde empezamos?",
+      consultantOnline: "Consultor en vivo online",
+      startLiveCall: "Iniciar llamada en vivo",
+      liveCallHint: "Videollamada con avatar en vivo"
     },
     scenarios: {
       title: "Casos de uso",

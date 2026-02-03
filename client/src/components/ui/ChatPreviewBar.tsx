@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Video } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
 
 interface ChatPreviewBarProps {
@@ -14,37 +14,38 @@ export function ChatPreviewBar({ onOpenChat }: ChatPreviewBarProps) {
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.5, duration: 0.4 }}
-      className="fixed bottom-4 left-4 right-4 z-40"
+      className="fixed bottom-4 left-4 right-4 z-40 pb-[env(safe-area-inset-bottom)]"
       data-testid="live-consultant-bar"
     >
       <button
         onClick={onOpenChat}
-        className="w-full max-w-md mx-auto flex items-center gap-3 px-4 py-3 rounded-2xl bg-white/80 backdrop-blur-xl border border-white/50 shadow-lg shadow-black/10 hover:bg-white/90 hover:shadow-xl transition-all duration-300"
+        className="w-full max-w-[520px] mx-auto flex items-center gap-3 px-5 py-4 rounded-[20px] bg-white/75 backdrop-blur-[14px] border border-white/40 shadow-lg shadow-black/8 hover:bg-white/85 hover:shadow-xl transition-all duration-300"
         data-testid="button-live-consultant"
       >
         <div className="relative shrink-0">
-          <div className="w-11 h-11 rounded-full bg-gradient-to-br from-pink-500 via-fuchsia-500 to-purple-600 flex items-center justify-center shadow-lg shadow-fuchsia-500/30">
-            <Video className="w-5 h-5 text-white" />
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 via-fuchsia-400 to-cyan-400 shadow-lg shadow-pink-500/20 animate-[pulse_3s_ease-in-out_infinite]">
+            <div className="absolute inset-0.5 rounded-full bg-gradient-to-br from-pink-400/80 via-purple-300/60 to-cyan-300/80" />
+            <div className="absolute top-1 left-1.5 h-1.5 w-1.5 rounded-full bg-white/50 blur-[2px]" />
           </div>
-          <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 rounded-full border-2 border-white animate-pulse" />
-        </div>
-        
-        <div className="flex-1 text-left">
-          <div className="flex items-center gap-2">
-            <span className="font-semibold text-slate-800 text-sm">
-              {t.liveBar?.title || "Live консультант"}
-            </span>
-            <span className="text-[10px] font-medium text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full">
+          <div className="absolute -bottom-0.5 -right-0.5 flex items-center gap-1 bg-white rounded-full pl-1 pr-1.5 py-0.5 shadow-sm">
+            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+            <span className="text-[9px] font-medium text-slate-600">
               {t.liveBar?.online || "онлайн"}
             </span>
           </div>
+        </div>
+        
+        <div className="flex-1 text-left ml-1">
+          <span className="font-semibold text-slate-800 text-[15px]">
+            {t.liveBar?.title || "Live консультант"}
+          </span>
           <p className="text-xs text-slate-500 mt-0.5">
-            {t.liveBar?.subtitle || "Нажмите для живого общения"}
+            {t.liveBar?.subtitle || "Нажмите для общения"}
           </p>
         </div>
 
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center shrink-0 shadow-md">
-          <Video className="w-4 h-4 text-white" />
+        <div className="w-11 h-11 rounded-full bg-slate-900 flex items-center justify-center shrink-0 shadow-md hover:bg-slate-800 transition-colors">
+          <ArrowRight className="w-5 h-5 text-white" />
         </div>
       </button>
     </motion.div>

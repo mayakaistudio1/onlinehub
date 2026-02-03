@@ -34,6 +34,7 @@ import { cn } from "@/lib/utils";
 import { LiveAvatarChat } from "@/components/ui/LiveAvatarChat";
 import { ChatModal } from "@/components/ui/ChatModal";
 import { ChatPreviewBar } from "@/components/ui/ChatPreviewBar";
+import { WowLiveScreen } from "@/components/ui/WowLiveScreen";
 import { useLanguage } from '@/lib/LanguageContext';
 
 type ChatIntent = "what" | "who" | "where";
@@ -1090,21 +1091,10 @@ export default function HomePage() {
         <ChatPreviewBar onOpenChat={openLive} />
       )}
       
-      <AnimatePresence>
-        {isLiveOpen && (
-          <WowLivePage
-            isOpen={isLiveOpen}
-            onClose={closeLive}
-            language={language}
-          />
-        )}
-      </AnimatePresence>
-
-      <ChatModal 
-        isOpen={isChatOpen} 
-        onClose={closeChat}
-        onSwitchToLiveAvatar={openLive}
-        initialMessage={initialChatMessage}
+      <WowLiveScreen
+        isOpen={isLiveOpen}
+        onClose={closeLive}
+        language={language}
       />
     </div>
   );
