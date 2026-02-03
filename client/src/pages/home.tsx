@@ -1035,9 +1035,9 @@ export default function HomePage() {
     <div className="min-h-dvh" data-testid="page-home">
       <Hero />
       <HowItWorks />
+      <LiveScenarios />
       <WhyItMatters />
       <TextDemo />
-      <LiveScenarios />
       <ContactSection />
       <Footer />
     </div>
