@@ -66,7 +66,8 @@ export const translations = {
         what: "Это твоё живое онлайн-представительство. Ассистент, который объясняет твоё дело так, как ты бы сам — но в любое время.",
         who: "Тем, кто устал объяснять одно и то же. Экспертам, командам, бизнесам с уникальным продуктом.",
         where: "Для презентации проектов, онбординга новых сотрудников, первого касания с клиентами, продаж и партнёрств."
-      }
+      },
+      inputPlaceholder: "Спроси что угодно..."
     },
     scenarios: {
       title: "Сценарии использования",
@@ -240,7 +241,8 @@ export const translations = {
         what: "This is your live online presence. An assistant that explains your business the way you would — but anytime.",
         who: "For those tired of explaining the same thing. Experts, teams, businesses with unique products.",
         where: "For project presentations, onboarding new employees, first touch with clients, sales and partnerships."
-      }
+      },
+      inputPlaceholder: "Ask anything..."
     },
     scenarios: {
       title: "Use Cases",
@@ -414,7 +416,8 @@ export const translations = {
         what: "Das ist Ihre Live-Online-Präsenz. Ein Assistent, der Ihr Geschäft erklärt, wie Sie es tun würden — aber jederzeit.",
         who: "Für alle, die es leid sind, immer dasselbe zu erklären. Experten, Teams, Unternehmen mit einzigartigen Produkten.",
         where: "Für Projektpräsentationen, Onboarding neuer Mitarbeiter, Erstkontakt mit Kunden, Vertrieb und Partnerschaften."
-      }
+      },
+      inputPlaceholder: "Frag was du willst..."
     },
     scenarios: {
       title: "Anwendungsfälle",
@@ -588,7 +591,8 @@ export const translations = {
         what: "Esta es tu presencia online en vivo. Un asistente que explica tu negocio como tú lo harías — pero en cualquier momento.",
         who: "Para quienes están cansados de explicar lo mismo. Expertos, equipos, negocios con productos únicos.",
         where: "Para presentaciones de proyectos, onboarding de nuevos empleados, primer contacto con clientes, ventas y alianzas."
-      }
+      },
+      inputPlaceholder: "Pregunta lo que quieras..."
     },
     scenarios: {
       title: "Casos de uso",

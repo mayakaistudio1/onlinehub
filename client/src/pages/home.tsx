@@ -325,8 +325,10 @@ function WhyItMatters() {
 function TextDemo() {
   const { t } = useLanguage();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [loading, setLoading] = useState<ChatIntent | null>(null);
+  const [loading, setLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!initialized) {
@@ -341,30 +343,68 @@ function TextDemo() {
     }
   }, [t.demo.greeting, initialized]);
 
-  const ask = async (intent: ChatIntent) => {
-    setLoading(intent);
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-    const userText = t.demo.questions[intent === "what" ? 0 : intent === "who" ? 1 : 2];
+  const sendMessage = async (text: string) => {
+    if (!text.trim() || loading) return;
+    
+    setLoading(true);
+    setInputValue("");
 
-    setMessages((m) => [
-      ...m,
-      { id: `u-${Date.now()}`, role: "user", text: userText },
-    ]);
+    const userMessage: ChatMessage = {
+      id: `u-${Date.now()}`,
+      role: "user",
+      text: text.trim(),
+    };
 
-    await new Promise((r) => setTimeout(r, 600));
+    setMessages((m) => [...m, userMessage]);
 
-    const answer = intent === "what" 
-      ? t.demo.answers.what 
-      : intent === "who" 
-        ? t.demo.answers.who 
-        : t.demo.answers.where;
+    try {
+      const history = messages
+        .filter((m) => m.id !== "m1")
+        .map((m) => ({
+          role: m.role,
+          content: m.text,
+        }));
 
-    setMessages((m) => [
-      ...m,
-      { id: `a-${Date.now()}`, role: "assistant", text: answer },
-    ]);
+      const response = await fetch("/api/demo/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: text.trim(),
+          history,
+        }),
+      });
 
-    setLoading(null);
+      const data = await response.json();
+
+      if (data.reply) {
+        setMessages((m) => [
+          ...m,
+          { id: `a-${Date.now()}`, role: "assistant", text: data.reply },
+        ]);
+      }
+    } catch (error) {
+      console.error("Chat error:", error);
+      setMessages((m) => [
+        ...m,
+        { id: `a-${Date.now()}`, role: "assistant", text: "Sorry, something went wrong. Please try again." },
+      ]);
+    }
+
+    setLoading(false);
+  };
+
+  const handleQuickQuestion = (intent: ChatIntent) => {
+    const questionIndex = intent === "what" ? 0 : intent === "who" ? 1 : 2;
+    sendMessage(t.demo.questions[questionIndex]);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    sendMessage(inputValue);
   };
 
   return (
@@ -422,36 +462,56 @@ function TextDemo() {
                       </div>
                     </div>
                   ) : null}
+                  <div ref={messagesEndRef} />
                 </div>
               </div>
 
               <div className="p-3 bg-slate-50 border-t border-slate-100" data-testid="grid-chat-buttons">
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1.5 mb-2">
                   <button
-                    onClick={() => ask("what")}
-                    disabled={loading !== null}
+                    onClick={() => handleQuickQuestion("what")}
+                    disabled={loading}
                     className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
                     data-testid="button-intent-what"
                   >
                     {t.demo.questions[0]}
                   </button>
                   <button
-                    onClick={() => ask("who")}
-                    disabled={loading !== null}
+                    onClick={() => handleQuickQuestion("who")}
+                    disabled={loading}
                     className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
                     data-testid="button-intent-who"
                   >
                     {t.demo.questions[1]}
                   </button>
                   <button
-                    onClick={() => ask("where")}
-                    disabled={loading !== null}
+                    onClick={() => handleQuickQuestion("where")}
+                    disabled={loading}
                     className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
                     data-testid="button-intent-where"
                   >
                     {t.demo.questions[2]}
                   </button>
                 </div>
+                <form onSubmit={handleSubmit} className="flex gap-2">
+                  <Input
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder={t.demo.inputPlaceholder || "Ask anything..."}
+                    className="flex-1 h-9 text-sm rounded-full border-slate-200"
+                    disabled={loading}
+                    data-testid="input-chat"
+                  />
+                  <Button
+                    type="submit"
+                    size="sm"
+                    className="h-9 px-4 rounded-full"
+                    disabled={loading || !inputValue.trim()}
+                    data-testid="button-chat-send"
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </form>
               </div>
             </Card>
 
