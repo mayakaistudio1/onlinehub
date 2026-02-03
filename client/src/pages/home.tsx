@@ -312,7 +312,7 @@ function TextDemo() {
           >
             <div className="text-center mb-8">
               <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
-                Демо-ассистент
+                Как это работает
               </h2>
               <p className="mt-3 text-muted-foreground">
                 Посмотри, как твоё представительство общается в реальности
