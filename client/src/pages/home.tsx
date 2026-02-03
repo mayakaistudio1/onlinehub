@@ -955,9 +955,6 @@ function ContactSection() {
           >
             <div className="text-center mb-8">
               <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">Хочешь уже через 48 часов иметь своё живое онлайн-представительство?</h2>
-              <p className="mt-3 text-muted-foreground">
-                Настройка под ключ — $2,500
-              </p>
             </div>
 
             <Card className="rounded-3xl border-0 shadow-xl shadow-black/5 p-6" data-testid="card-contact">
