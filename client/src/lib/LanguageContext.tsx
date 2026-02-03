@@ -14,6 +14,16 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const STORAGE_KEY = 'wow-page-language';
 
 function detectLanguage(): Language {
+  const tg = (window as { Telegram?: { WebApp?: { initDataUnsafe?: { user?: { language_code?: string } } } } }).Telegram;
+  const tgLangCode = tg?.WebApp?.initDataUnsafe?.user?.language_code;
+  if (tgLangCode) {
+    const tgLang = tgLangCode.slice(0, 2).toLowerCase();
+    if (tgLang === 'ru') return 'ru';
+    if (tgLang === 'de') return 'de';
+    if (tgLang === 'es') return 'es';
+    return 'en';
+  }
+
   const stored = localStorage.getItem(STORAGE_KEY) as Language | null;
   if (stored && ['ru', 'en', 'de', 'es'].includes(stored)) {
     return stored;
