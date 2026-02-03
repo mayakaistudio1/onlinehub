@@ -12,9 +12,9 @@ const languages: { code: Language; label: string; flag: string }[] = [
 
 export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
-  const { isTelegram } = useTelegram();
+  const { isTelegramContext } = useTelegram();
 
-  if (isTelegram) {
+  if (isTelegramContext) {
     return null;
   }
 

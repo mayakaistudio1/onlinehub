@@ -73,6 +73,7 @@ interface TelegramContextType {
   webApp: TelegramWebApp | null;
   user: TelegramUser | null;
   isTelegram: boolean;
+  isTelegramContext: boolean;
   isReady: boolean;
   colorScheme: "light" | "dark";
 }
@@ -81,6 +82,7 @@ const TelegramContext = createContext<TelegramContextType>({
   webApp: null,
   user: null,
   isTelegram: false,
+  isTelegramContext: false,
   isReady: false,
   colorScheme: "light",
 });
@@ -108,10 +110,13 @@ export function TelegramProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const isTelegramContext = !!window.Telegram?.WebApp;
+  
   const value: TelegramContextType = {
     webApp,
     user: webApp?.initDataUnsafe?.user || null,
     isTelegram: !!webApp && !!webApp.initData,
+    isTelegramContext,
     isReady,
     colorScheme: webApp?.colorScheme || "light",
   };
