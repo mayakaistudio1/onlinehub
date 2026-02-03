@@ -77,7 +77,7 @@ function useMockChatResponse() {
 function Hero() {
   return (
     <section
-      className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden px-6 py-12 snap-start"
+      className="relative flex min-h-[100dvh] flex-col justify-center overflow-hidden px-5 py-10 snap-start"
       data-testid="section-hero"
     >
       <div
@@ -89,31 +89,31 @@ function Hero() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="relative mx-auto w-full max-w-lg text-center"
+          className="relative mx-auto w-full max-w-sm text-center"
         >
           <motion.div 
             variants={item}
-            className="relative mx-auto mb-10"
+            className="relative mx-auto mb-8"
           >
             {/* Search bar style container */}
-            <div className="relative inline-flex items-center gap-4 rounded-full bg-white/80 backdrop-blur-xl px-5 py-4 shadow-xl shadow-black/[0.08] border border-white/50">
+            <div className="relative inline-flex items-center gap-3 rounded-full bg-white/80 backdrop-blur-xl px-4 py-3 shadow-lg shadow-black/[0.06] border border-white/50">
               {/* Glow effect behind orb */}
-              <div className="absolute left-4 h-12 w-12 rounded-full bg-gradient-to-br from-pink-400 via-purple-400 to-cyan-400 blur-xl opacity-50" />
+              <div className="absolute left-3.5 h-10 w-10 rounded-full bg-gradient-to-br from-pink-400 via-purple-400 to-cyan-400 blur-xl opacity-40" />
               {/* Gradient orb */}
-              <div className="relative h-12 w-12 shrink-0 rounded-full bg-gradient-to-br from-pink-500 via-fuchsia-400 to-cyan-400 shadow-lg shadow-pink-500/20 animate-[pulse_3s_ease-in-out_infinite]">
+              <div className="relative h-10 w-10 shrink-0 rounded-full bg-gradient-to-br from-pink-500 via-fuchsia-400 to-cyan-400 shadow-lg shadow-pink-500/20 animate-[pulse_3s_ease-in-out_infinite]">
                 <div className="absolute inset-0.5 rounded-full bg-gradient-to-br from-pink-400/80 via-purple-300/60 to-cyan-300/80" />
-                <div className="absolute top-1.5 left-2 h-2 w-2 rounded-full bg-white/50 blur-[2px]" />
+                <div className="absolute top-1 left-1.5 h-1.5 w-1.5 rounded-full bg-white/50 blur-[2px]" />
               </div>
               {/* Divider */}
-              <div className="h-8 w-px bg-slate-300" />
+              <div className="h-6 w-px bg-slate-300" />
               {/* Text */}
-              <span className="tracking-wide pr-2 text-[#1f2022] bg-[#e3bfbf05] font-medium text-center text-[22px]">WOW Page Live...</span>
+              <span className="tracking-wide pr-1 text-slate-800 font-medium text-lg">WOW Page Live...</span>
             </div>
           </motion.div>
 
           <motion.h1
             variants={item}
-            className="font-serif text-[2.5rem] leading-[1.1] tracking-[-0.03em] text-balance sm:text-6xl"
+            className="font-serif text-[2rem] leading-[1.15] tracking-[-0.03em] text-balance"
             data-testid="text-hero-title"
           >
             Онлайн-представительство нового поколения
@@ -121,26 +121,26 @@ function Hero() {
 
           <motion.p
             variants={item}
-            className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
+            className="mx-auto mt-4 text-base leading-relaxed text-muted-foreground"
             data-testid="text-hero-subtitle"
           >
             Место, где твою идею действительно понимают.
           </motion.p>
 
-          <motion.div variants={item} className="mt-10">
+          <motion.div variants={item} className="mt-8">
             <a href="#demo" className="inline-flex" data-testid="button-scroll-demo">
-              <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-black/10">
+              <Button className="h-12 gap-2 rounded-full px-6 text-sm font-semibold shadow-md shadow-black/10">
                 Попробовать
-                <ArrowRight className="h-5 w-5" />
+                <ArrowRight className="h-4 w-4" />
               </Button>
             </a>
           </motion.div>
 
           <motion.div 
             variants={item}
-            className="mt-10 flex items-center justify-center gap-2 text-sm text-muted-foreground"
+            className="mt-8 flex items-center justify-center gap-1.5 text-xs text-muted-foreground"
           >
-            <ChevronDown className="h-4 w-4 animate-bounce" />
+            <ChevronDown className="h-3.5 w-3.5 animate-bounce" />
             <span>Листай вниз</span>
           </motion.div>
         </motion.div>
@@ -173,111 +173,78 @@ const comparisonData = {
 function WhyItMatters() {
   return (
     <section
-      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start overflow-hidden"
+      className="relative min-h-[100dvh] flex items-center justify-center px-5 py-8 snap-start overflow-hidden"
       id="why"
       data-testid="section-why"
     >
-      {/* Background accents */}
-      <div className="absolute top-1/4 -left-20 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50" />
-      <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-cyan-100 rounded-full blur-3xl opacity-50" />
-
-      <div className="relative mx-auto w-full max-w-3xl">
+      <div className="relative mx-auto w-full max-w-sm">
         <LazyMotion features={domAnimation}>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-12"
+            className="text-center mb-6"
           >
-            <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-5xl">
+            <h2 className="font-serif text-2xl leading-tight tracking-[-0.02em]">
               Почему просто сайта уже недостаточно
             </h2>
-            <p className="mt-4 text-muted-foreground text-lg sm:text-xl">
+            <p className="mt-2 text-muted-foreground text-sm">
               Сайт показывает. Представительство — общается.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+          <div className="space-y-3">
             {/* Обычный сайт */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <Card className="p-8 h-full border-slate-100 bg-white/50 backdrop-blur-sm rounded-3xl shadow-sm">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
-                    <X className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-serif text-xl font-medium text-slate-900">
-                    {comparisonData.problem.title}
-                  </h3>
+            <div className="p-4 bg-slate-50 rounded-2xl">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-slate-400">
+                  <X className="w-4 h-4" />
                 </div>
-                <ul className="space-y-4">
-                  {comparisonData.problem.items.map((text, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-500 text-base">
-                      <div className="w-1.5 h-1.5 rounded-full bg-slate-200 mt-2.5 shrink-0" />
-                      {text}
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-            </motion.div>
+                <span className="font-medium text-slate-600 text-sm">{comparisonData.problem.title}</span>
+              </div>
+              <div className="space-y-1.5 text-slate-500 text-xs">
+                {comparisonData.problem.items.map((text, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <div className="w-1 h-1 rounded-full bg-slate-300" />
+                    {text}
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {/* Живое онлайн-представительство */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <Card className="p-8 h-full border-blue-100 bg-blue-50/30 backdrop-blur-sm rounded-3xl shadow-sm relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
-                  <Zap className="w-20 h-20 text-blue-500" />
+            <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                  <Zap className="w-4 h-4" />
                 </div>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                    <Zap className="w-5 h-5" />
+                <span className="font-medium text-blue-900 text-sm">{comparisonData.solution.title}</span>
+              </div>
+              <div className="space-y-1.5 text-blue-800 text-xs font-medium">
+                {comparisonData.solution.items.map((text, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-blue-500" />
+                    {text}
                   </div>
-                  <h3 className="font-serif text-xl font-medium text-blue-900">
-                    {comparisonData.solution.title}
-                  </h3>
-                </div>
-                <ul className="space-y-4">
-                  {comparisonData.solution.items.map((text, i) => (
-                    <li key={i} className="flex items-start gap-3 text-blue-900/80 text-base font-medium">
-                      <Check className="w-5 h-5 text-blue-500 mt-0.5 shrink-0" />
-                      {text}
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-            </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-16 text-center space-y-8"
-          >
-            <div className="space-y-1">
-              <p className="text-slate-500 text-lg">Это не «ещё один сайт».</p>
-              <p className="text-foreground font-serif text-2xl sm:text-3xl font-bold">Это формат общения.</p>
-            </div>
+          <div className="mt-6 text-center">
+            <p className="text-slate-500 text-xs">Это не «ещё один сайт».</p>
+            <p className="text-foreground font-serif text-lg font-bold mt-1">Это формат общения.</p>
+          </div>
 
-            <div>
-              <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
-                <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-blue-500/10 transition-all hover:scale-105 active:scale-95 bg-blue-600 hover:bg-blue-700">
-                  Смотреть демо
-                  <ArrowRight className="h-5 w-5" />
-                </Button>
-              </a>
-            </div>
-          </motion.div>
+          <div className="mt-6 text-center">
+            <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
+              <Button className="h-12 gap-2 rounded-full px-6 text-sm font-semibold shadow-md bg-blue-600 hover:bg-blue-700">
+                Смотреть демо
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </a>
+          </div>
         </LazyMotion>
       </div>
     </section>
@@ -322,30 +289,30 @@ function TextDemo() {
 
   return (
     <section
-      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start bg-gradient-to-b from-white to-slate-50"
+      className="relative min-h-[100dvh] flex items-center justify-center px-5 py-8 snap-start bg-white"
       id="demo"
       data-testid="section-demo"
     >
-      <div className="mx-auto w-full max-w-lg">
+      <div className="mx-auto w-full max-w-sm">
         <LazyMotion features={domAnimation}>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="text-center mb-8">
-              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
+            <div className="text-center mb-5">
+              <h2 className="font-serif text-2xl leading-tight tracking-[-0.02em]">
                 Как это работает
               </h2>
-              <p className="mt-3 text-muted-foreground">
-                Посмотри, как твоё представительство общается в реальности
+              <p className="mt-2 text-muted-foreground text-sm">
+                Попробуй задать вопрос
               </p>
             </div>
 
-            <Card className="rounded-3xl border-0 shadow-xl shadow-black/5 overflow-hidden" data-testid="card-chat">
-              <div className="p-4 bg-white min-h-[200px] max-h-[280px] overflow-y-auto" data-testid="list-chat-messages">
-                <div className="space-y-3">
+            <Card className="rounded-2xl border-0 shadow-lg shadow-black/5 overflow-hidden" data-testid="card-chat">
+              <div className="p-3 bg-white min-h-[180px] max-h-[220px] overflow-y-auto" data-testid="list-chat-messages">
+                <div className="space-y-2">
                   {messages.map((msg, idx) => (
                     <div
                       key={msg.id}
@@ -357,10 +324,10 @@ function TextDemo() {
                     >
                       <div
                         className={cn(
-                          "max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed",
+                          "max-w-[85%] rounded-xl px-3 py-2 text-xs leading-relaxed",
                           msg.role === "user"
-                            ? "bg-blue-500 text-white rounded-br-md"
-                            : "bg-slate-100 text-foreground rounded-bl-md",
+                            ? "bg-blue-500 text-white rounded-br-sm"
+                            : "bg-slate-100 text-foreground rounded-bl-sm",
                         )}
                         data-testid={`text-chat-message-${idx}`}
                       >
@@ -370,7 +337,7 @@ function TextDemo() {
                   ))}
                   {loading ? (
                     <div className="flex justify-start" data-testid="row-chat-loading">
-                      <div className="bg-slate-100 rounded-2xl rounded-bl-md px-4 py-2.5 text-sm text-muted-foreground">
+                      <div className="bg-slate-100 rounded-xl rounded-bl-sm px-3 py-2 text-xs text-muted-foreground">
                         <span className="animate-pulse">Печатает...</span>
                       </div>
                     </div>
@@ -378,20 +345,20 @@ function TextDemo() {
                 </div>
               </div>
 
-              <div className="p-4 bg-slate-50 border-t border-slate-100" data-testid="grid-chat-buttons">
-                <div className="flex flex-wrap gap-2">
+              <div className="p-3 bg-slate-50 border-t border-slate-100" data-testid="grid-chat-buttons">
+                <div className="flex flex-wrap gap-1.5">
                   <button
                     onClick={() => ask("what")}
                     disabled={loading !== null}
-                    className="px-4 py-2 rounded-full bg-white border border-slate-200 text-sm hover:bg-slate-100 transition-colors disabled:opacity-50"
+                    className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
                     data-testid="button-intent-what"
                   >
-                    Что это такое?
+                    Что это?
                   </button>
                   <button
                     onClick={() => ask("who")}
                     disabled={loading !== null}
-                    className="px-4 py-2 rounded-full bg-white border border-slate-200 text-sm hover:bg-slate-100 transition-colors disabled:opacity-50"
+                    className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
                     data-testid="button-intent-who"
                   >
                     Кому подойдёт?
@@ -399,7 +366,7 @@ function TextDemo() {
                   <button
                     onClick={() => ask("where")}
                     disabled={loading !== null}
-                    className="px-4 py-2 rounded-full bg-white border border-slate-200 text-sm hover:bg-slate-100 transition-colors disabled:opacity-50"
+                    className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
                     data-testid="button-intent-where"
                   >
                     Где применить?
@@ -408,10 +375,10 @@ function TextDemo() {
               </div>
             </Card>
 
-            <div className="mt-8 text-center">
+            <div className="mt-5 text-center">
               <a href="#scenarios" className="inline-flex" data-testid="button-demo-continue">
-                <Button className="h-12 gap-2 rounded-full px-6 shadow-md">
-                  Смотреть примеры визиток
+                <Button className="h-11 gap-2 rounded-full px-5 text-sm shadow-md">
+                  Смотреть примеры
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </a>
@@ -607,28 +574,28 @@ function LiveScenarios() {
 
   return (
     <section
-      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start"
+      className="relative min-h-[100dvh] flex items-center justify-center px-5 py-8 snap-start"
       id="scenarios"
       data-testid="section-scenarios"
     >
-      <div className="mx-auto w-full max-w-lg">
+      <div className="mx-auto w-full max-w-sm">
         <LazyMotion features={domAnimation}>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="text-center mb-8">
-              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
+            <div className="text-center mb-4">
+              <h2 className="font-serif text-2xl leading-tight tracking-[-0.02em]">
                 Сценарии использования
               </h2>
-              <p className="mt-3 text-muted-foreground">
+              <p className="mt-2 text-muted-foreground text-sm">
                 Один формат — разные задачи
               </p>
             </div>
 
-            <div className="flex items-center justify-between mb-6" data-testid="scenario-navigation">
+            <div className="flex items-center justify-between mb-4" data-testid="scenario-navigation">
               <button
                 onClick={() => {
                   const currentIndex = scenarios.indexOf(selected);
@@ -638,18 +605,18 @@ function LiveScenarios() {
                 className="p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
                 data-testid="button-prev-scenario"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-4 h-4" />
               </button>
 
-              <div className="flex gap-2" data-testid="scenario-tabs">
+              <div className="flex gap-1.5" data-testid="scenario-tabs">
                 {scenarios.map((s) => (
                   <button
                     key={s}
                     onClick={() => setSelected(s)}
                     className={cn(
-                      "w-3 h-3 rounded-full transition-all",
+                      "w-2 h-2 rounded-full transition-all",
                       selected === s 
-                        ? "bg-blue-500 w-8" 
+                        ? "bg-blue-500 w-6" 
                         : "bg-slate-200 hover:bg-slate-300"
                     )}
                     data-testid={`tab-scenario-${s}`}
@@ -666,7 +633,7 @@ function LiveScenarios() {
                 className="p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
                 data-testid="button-next-scenario"
               >
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
 
@@ -679,7 +646,7 @@ function LiveScenarios() {
                 transition={{ duration: 0.3 }}
               >
                 <Card 
-                  className="relative overflow-hidden rounded-3xl border-0 shadow-2xl shadow-black/10 aspect-[3/4] cursor-pointer"
+                  className="relative overflow-hidden rounded-2xl border-0 shadow-xl shadow-black/10 aspect-[4/5] cursor-pointer"
                   onClick={() => setIsCardOpen(true)}
                   data-testid="card-scenario"
                 >
@@ -691,14 +658,14 @@ function LiveScenarios() {
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                   
-                  <div className="absolute inset-x-0 bottom-0 p-6">
-                    <div className="text-blue-400 text-xs font-medium uppercase tracking-wider mb-2">
+                  <div className="absolute inset-x-0 bottom-0 p-5">
+                    <div className="text-blue-400 text-[10px] font-medium uppercase tracking-wider mb-1">
                       {businessCard.category}
                     </div>
-                    <h3 className="text-white font-serif text-2xl tracking-tight" data-testid="text-scenario-title">
+                    <h3 className="text-white font-serif text-xl tracking-tight" data-testid="text-scenario-title">
                       {businessCard.businessName}
                     </h3>
-                    <p className="text-white/70 text-sm mt-1">
+                    <p className="text-white/70 text-xs mt-1">
                       {businessCard.tagline}
                     </p>
                     
@@ -707,22 +674,22 @@ function LiveScenarios() {
                         e.stopPropagation();
                         setIsCardOpen(true);
                       }}
-                      className="mt-5 w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-black rounded-full font-semibold transition-all hover:bg-white/90 shadow-lg"
+                      className="mt-4 w-full flex items-center justify-center gap-2 px-5 py-3 bg-white text-black rounded-full text-sm font-semibold transition-all hover:bg-white/90 shadow-lg"
                       data-testid="button-start-demo"
                     >
                       Открыть визитку
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </Card>
               </motion.div>
             </AnimatePresence>
 
-            <div className="mt-8 text-center">
+            <div className="mt-4 text-center">
               <a href="#contact" className="inline-flex" data-testid="button-scenarios-continue">
-                <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
+                <Button variant="ghost" className="text-muted-foreground hover:text-foreground text-sm">
                   Хочу такое решение
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                 </Button>
               </a>
             </div>
