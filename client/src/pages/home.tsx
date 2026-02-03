@@ -8,11 +8,15 @@ import {
   ChevronLeft,
   Clock,
   ExternalLink,
+  FileText,
   Globe,
   GraduationCap,
+  HelpCircle,
   Heart,
   MapPin,
+  MessageCircle,
   MessageSquareText,
+  MoveRight,
   Phone,
   Star,
   TrendingUp,
@@ -120,12 +124,21 @@ function Hero() {
             className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
             data-testid="text-hero-subtitle"
           >
-            24/7 объясняет за тебя, отвечает на вопросы, ведёт к действию и при этом создаёт ВАУ-эффект.
+            Место, где твою идею действительно понимают.
           </motion.p>
+
+          <motion.div variants={item} className="mt-10">
+            <a href="#demo" className="inline-flex" data-testid="button-scroll-demo">
+              <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-black/10">
+                Попробовать
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+            </a>
+          </motion.div>
 
           <motion.div 
             variants={item}
-            className="mt-16 flex items-center justify-center gap-2 text-sm text-muted-foreground"
+            className="mt-10 flex items-center justify-center gap-2 text-sm text-muted-foreground"
           >
             <ChevronDown className="h-4 w-4 animate-bounce" />
             <span>Листай вниз</span>
@@ -135,6 +148,29 @@ function Hero() {
     </section>
   );
 }
+
+const whyCards = [
+  {
+    icon: FileText,
+    title: "Сайт = информация",
+    text: "Текст и ссылки, без диалога.",
+  },
+  {
+    icon: HelpCircle,
+    title: "Люди остаются с вопросами",
+    text: "И откладывают решение.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Здесь начинается общение",
+    text: "Гость получает ответы сразу.",
+  },
+  {
+    icon: MoveRight,
+    title: "Следующий шаг понятен",
+    text: "Без лишних сообщений и ожиданий.",
+  },
+];
 
 function WhyItMatters() {
   return (
@@ -147,43 +183,76 @@ function WhyItMatters() {
       <div className="absolute top-1/4 -left-20 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50" />
       <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-cyan-100 rounded-full blur-3xl opacity-50" />
 
-      <div className="relative mx-auto w-full max-w-2xl text-center">
+      <div className="relative mx-auto w-full max-w-2xl">
         <LazyMotion features={domAnimation}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
+            className="text-center"
           >
-            <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-5xl mb-6">
-              Почему просто сайта больше недостаточно?
+            <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
+              Почему просто сайта уже недостаточно
             </h2>
-            
-            <div className="space-y-8 text-lg sm:text-xl text-muted-foreground leading-relaxed">
-              <p>
-                Сегодня важно не просто показать информацию.<br />
-                Важно, чтобы человека провели, ответили на вопросы и помогли разобраться.
-              </p>
-              
-              <p>
-                Обычный сайт этого не делает.<br />
-                Он ждёт, что гость сам всё поймёт.
-              </p>
-              
-              <p className="text-foreground font-medium text-xl sm:text-2xl pt-4">
-                Живое онлайн-представительство работает иначе:<br className="hidden sm:block" />
-                оно общается, объясняет и помогает сделать следующий шаг — сразу, в одном месте.
-              </p>
-            </div>
+            <p className="mt-3 text-muted-foreground text-lg">
+              Сайт показывает. Представительство — общается.
+            </p>
+          </motion.div>
 
-            <div className="mt-16 text-center">
-              <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
-                <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-blue-500/10 transition-all hover:scale-105 active:scale-95">
-                  Смотреть демо
-                  <ArrowRight className="h-5 w-5" />
-                </Button>
-              </a>
-            </div>
+          <div className="mt-10 grid grid-cols-2 gap-4">
+            {whyCards.map((card, idx) => (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+              >
+                <Card className="p-5 h-full border-0 bg-white/70 backdrop-blur-sm shadow-lg shadow-black/[0.03] rounded-2xl">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-cyan-50 mb-3">
+                    <card.icon className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <h3 className="font-semibold text-foreground text-sm sm:text-base">
+                    {card.title}
+                  </h3>
+                  <p className="mt-1 text-muted-foreground text-xs sm:text-sm leading-relaxed">
+                    {card.text}
+                  </p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-10 text-center"
+          >
+            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
+              Обычный сайт ждёт, что человек сам разберётся.<br className="hidden sm:block" />
+              Живое онлайн-представительство помогает понять и двигаться дальше — сразу, в одном месте.
+            </p>
+            <p className="mt-6 text-foreground font-semibold text-lg sm:text-xl">
+              Это не «ещё один сайт». Это формат общения.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="mt-10 text-center"
+          >
+            <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
+              <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-blue-500/10 transition-all hover:scale-105 active:scale-95">
+                Смотреть демо
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+            </a>
           </motion.div>
         </LazyMotion>
       </div>
