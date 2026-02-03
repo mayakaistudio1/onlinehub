@@ -92,6 +92,12 @@ export function TelegramProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
     
+    console.log("[Telegram] WebApp available:", !!tg);
+    console.log("[Telegram] initData:", tg?.initData);
+    console.log("[Telegram] initDataUnsafe:", JSON.stringify(tg?.initDataUnsafe, null, 2));
+    console.log("[Telegram] user:", JSON.stringify(tg?.initDataUnsafe?.user, null, 2));
+    console.log("[Telegram] language_code:", tg?.initDataUnsafe?.user?.language_code);
+    
     if (tg && tg.initData) {
       setWebApp(tg);
       tg.ready();
