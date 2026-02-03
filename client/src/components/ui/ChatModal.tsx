@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight, MessageCircle } from "lucide-react";
+import { X, ArrowRight, MessageCircle, Video } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { Input } from "./input";
@@ -15,9 +15,11 @@ type ChatMessage = {
 interface ChatModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSwitchToLiveAvatar?: () => void;
+  initialMessage?: string;
 }
 
-export function ChatModal({ isOpen, onClose }: ChatModalProps) {
+export function ChatModal({ isOpen, onClose, onSwitchToLiveAvatar, initialMessage }: ChatModalProps) {
   const { t } = useLanguage();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
@@ -34,8 +36,11 @@ export function ChatModal({ isOpen, onClose }: ChatModalProps) {
           text: t.demo.greeting,
         },
       ]);
+      if (initialMessage) {
+        setTimeout(() => sendMessage(initialMessage), 500);
+      }
     }
-  }, [isOpen, t.demo.greeting, messages.length]);
+  }, [isOpen, t.demo.greeting, messages.length, initialMessage]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -136,13 +141,28 @@ export function ChatModal({ isOpen, onClose }: ChatModalProps) {
               <p className="text-xs text-green-500">Online</p>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors"
-            data-testid="button-close-chat"
-          >
-            <X className="w-5 h-5 text-slate-600" />
-          </button>
+          <div className="flex items-center gap-2">
+            {onSwitchToLiveAvatar && (
+              <button
+                onClick={() => {
+                  onClose();
+                  onSwitchToLiveAvatar();
+                }}
+                className="flex items-center gap-2 px-3 py-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs font-medium hover:opacity-90 transition-opacity"
+                data-testid="button-switch-to-live"
+              >
+                <Video className="w-4 h-4" />
+                <span className="hidden sm:inline">{t.demo.switchToLive || "Live"}</span>
+              </button>
+            )}
+            <button
+              onClick={onClose}
+              className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors"
+              data-testid="button-close-chat"
+            >
+              <X className="w-5 h-5 text-slate-600" />
+            </button>
+          </div>
         </div>
 
         <div

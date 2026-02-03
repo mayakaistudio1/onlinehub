@@ -68,7 +68,8 @@ export const translations = {
         where: "Для презентации проектов, онбординга новых сотрудников, первого касания с клиентами, продаж и партнёрств."
       },
       inputPlaceholder: "Спроси что угодно...",
-      tryChat: "Попробовать чат"
+      tryChat: "Попробовать чат",
+      switchToLive: "Live звонок"
     },
     scenarios: {
       title: "Сценарии использования",
@@ -244,7 +245,8 @@ export const translations = {
         where: "For project presentations, onboarding new employees, first touch with clients, sales and partnerships."
       },
       inputPlaceholder: "Ask anything...",
-      tryChat: "Try Chat"
+      tryChat: "Try Chat",
+      switchToLive: "Live call"
     },
     scenarios: {
       title: "Use Cases",
@@ -420,7 +422,8 @@ export const translations = {
         where: "Für Projektpräsentationen, Onboarding neuer Mitarbeiter, Erstkontakt mit Kunden, Vertrieb und Partnerschaften."
       },
       inputPlaceholder: "Frag was du willst...",
-      tryChat: "Chat ausprobieren"
+      tryChat: "Chat ausprobieren",
+      switchToLive: "Live-Anruf"
     },
     scenarios: {
       title: "Anwendungsfälle",
@@ -596,7 +599,8 @@ export const translations = {
         where: "Para presentaciones de proyectos, onboarding de nuevos empleados, primer contacto con clientes, ventas y alianzas."
       },
       inputPlaceholder: "Pregunta lo que quieras...",
-      tryChat: "Probar chat"
+      tryChat: "Probar chat",
+      switchToLive: "Llamada en vivo"
     },
     scenarios: {
       title: "Casos de uso",

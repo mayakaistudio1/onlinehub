@@ -33,6 +33,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { LiveAvatarChat } from "@/components/ui/LiveAvatarChat";
 import { ChatModal } from "@/components/ui/ChatModal";
+import { ChatPreviewBar } from "@/components/ui/ChatPreviewBar";
 import { useLanguage } from '@/lib/LanguageContext';
 
 type ChatIntent = "what" | "who" | "where";
@@ -978,7 +979,7 @@ function FloatingLiveButton({ onClick }: { onClick: () => void }) {
   }, []);
 
   return (
-    <div className="fixed bottom-6 right-4 z-50" data-testid="floating-live-button-container">
+    <div className="fixed bottom-28 right-4 z-50" data-testid="floating-live-button-container">
       <AnimatePresence>
         {showTooltip && (
           <motion.div
@@ -1047,6 +1048,7 @@ export default function HomePage() {
   const { language } = useLanguage();
   const [isLiveOpen, setIsLiveOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [initialChatMessage, setInitialChatMessage] = useState<string | undefined>();
   const scrollPositionRef = useRef(0);
 
   const openLive = () => {
@@ -1061,30 +1063,34 @@ export default function HomePage() {
     });
   };
 
-  const openChat = () => {
+  const openChat = (initialMessage?: string) => {
     scrollPositionRef.current = window.scrollY;
+    setInitialChatMessage(initialMessage);
     setIsChatOpen(true);
   };
 
   const closeChat = () => {
     setIsChatOpen(false);
+    setInitialChatMessage(undefined);
     requestAnimationFrame(() => {
       window.scrollTo(0, scrollPositionRef.current);
     });
   };
 
   return (
-    <div className="min-h-dvh" data-testid="page-home">
+    <div className="min-h-dvh pb-28" data-testid="page-home">
       <Hero />
       <HowItWorks />
       <LiveScenarios />
       <WhyItMatters />
-      <TextDemo onOpenChat={openChat} />
       <ContactSection />
       <Footer />
       
       {!isLiveOpen && !isChatOpen && (
-        <FloatingLiveButton onClick={openLive} />
+        <>
+          <FloatingLiveButton onClick={openLive} />
+          <ChatPreviewBar onOpenChat={openChat} />
+        </>
       )}
       
       <AnimatePresence>
@@ -1097,7 +1103,12 @@ export default function HomePage() {
         )}
       </AnimatePresence>
 
-      <ChatModal isOpen={isChatOpen} onClose={closeChat} />
+      <ChatModal 
+        isOpen={isChatOpen} 
+        onClose={closeChat}
+        onSwitchToLiveAvatar={openLive}
+        initialMessage={initialChatMessage}
+      />
     </div>
   );
 }
