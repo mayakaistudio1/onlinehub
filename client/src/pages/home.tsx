@@ -953,60 +953,72 @@ function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="text-center mb-8">
-              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">Хочешь уже через 48 часов иметь своё живое онлайн-представительство?</h2>
+            <div className="text-center mb-10">
+              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
+                Запускаем твоё живое онлайн-представительство
+              </h2>
+              <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
+                Уже через 48 часов у тебя будет формат,<br className="hidden sm:block" />
+                который встречает людей и объясняет твой бизнес за тебя.
+              </p>
+            </div>
+
+            <div className="space-y-6 mb-8">
+              <p className="text-slate-600 text-center leading-relaxed">
+                Это не сайт и не визитка.<br />
+                Это цифровое представительство с ассистентами,<br className="hidden sm:block" />
+                которые знают твой контекст и ведут диалог.
+              </p>
+
+              <div className="p-5 bg-white/60 backdrop-blur-sm rounded-2xl border border-slate-100">
+                <p className="text-sm font-semibold text-slate-900 mb-3">Что ты получаешь:</p>
+                <div className="space-y-2 text-slate-600 text-sm">
+                  <p>— живое онлайн-представительство</p>
+                  <p>— ассистентов под твою задачу</p>
+                  <p>— понятный первый шаг для посетителей</p>
+                </div>
+              </div>
+
+              <p className="text-center text-slate-500 text-sm">
+                Запуск → первый эффект → масштабирование.
+              </p>
+
+              <p className="text-center text-blue-600 text-sm font-medium">
+                Сейчас мы запускаем ограниченное количество таких представительств<br className="hidden sm:block" />
+                и работаем с теми, кто заходит первым.
+              </p>
             </div>
 
             <Card className="rounded-3xl border-0 shadow-xl shadow-black/5 p-6" data-testid="card-contact">
               <div className="space-y-4">
-                <div className="space-y-4 mb-6">
-                  {[
-                    "Цифровое представительство",
-                    "1–2 AI-ассистента",
-                    "Индивидуальный стиль",
-                    "Запуск за неделю",
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3" data-testid={`feature-${i}`}>
-                      <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center">
-                        <Check className="h-3.5 w-3.5 text-green-600" />
-                      </div>
-                      <span className="text-sm">{item}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="border-t border-slate-100 pt-6">
-                  <div className="space-y-4">
-                    <Input
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Твоё имя"
-                      className="h-12 rounded-xl border-slate-200 bg-slate-50"
-                      data-testid="input-name"
-                    />
-                    <Input
-                      value={contact}
-                      onChange={(e) => setContact(e.target.value)}
-                      placeholder="Telegram или email"
-                      className="h-12 rounded-xl border-slate-200 bg-slate-50"
-                      data-testid="input-contact"
-                    />
-                    <Button
-                      onClick={submit}
-                      className="h-12 w-full rounded-xl"
-                      disabled={status !== "idle" || !name || !contact}
-                      data-testid="button-submit-lead"
-                    >
-                      {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено!" : "Обсудить запуск"}
-                    </Button>
-                  </div>
-                  
-                  {status === "sent" && (
-                    <p className="mt-4 text-center text-sm text-green-600" data-testid="status-success">
-                      Спасибо, {name}! Свяжемся через {contact}
-                    </p>
-                  )}
-                </div>
+                <Input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Твоё имя"
+                  className="h-12 rounded-xl border-slate-200 bg-slate-50"
+                  data-testid="input-name"
+                />
+                <Input
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                  placeholder="Telegram или email"
+                  className="h-12 rounded-xl border-slate-200 bg-slate-50"
+                  data-testid="input-contact"
+                />
+                <Button
+                  onClick={submit}
+                  className="h-12 w-full rounded-xl"
+                  disabled={status !== "idle" || !name || !contact}
+                  data-testid="button-submit-lead"
+                >
+                  {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено!" : "Обсудить запуск"}
+                </Button>
+                
+                {status === "sent" && (
+                  <p className="mt-2 text-center text-sm text-green-600" data-testid="status-success">
+                    Спасибо, {name}! Свяжемся через {contact}
+                  </p>
+                )}
               </div>
             </Card>
 
