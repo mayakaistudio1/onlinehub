@@ -415,7 +415,7 @@ const SCENARIO_CONFIGS: Record<LiveScenario, ScenarioConfig> = {
       category: "IT-консалтинг",
       businessName: "TechPro Solutions",
       tagline: "Цифровая трансформация для вашего бизнеса",
-      avatarName: "Алексей",
+      avatarName: "Alex",
       highlights: [
         { icon: <TrendingUp className="w-4 h-4" />, text: "Рост конверсии до 40%" },
         { icon: <Clock className="w-4 h-4" />, text: "Ответ за 30 секунд" },
@@ -438,9 +438,9 @@ const SCENARIO_CONFIGS: Record<LiveScenario, ScenarioConfig> = {
     avatarImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
     businessCard: {
       category: "Архитектура и дизайн",
-      businessName: "Студия АРТ",
+      businessName: "ART Studio",
       tagline: "Создаём пространства, которые вдохновляют",
-      avatarName: "Мария",
+      avatarName: "Maria",
       highlights: [
         { icon: <Briefcase className="w-4 h-4" />, text: "120+ реализованных проектов" },
         { icon: <Star className="w-4 h-4" />, text: "Победитель Design Awards" },
@@ -465,7 +465,7 @@ const SCENARIO_CONFIGS: Record<LiveScenario, ScenarioConfig> = {
       category: "HR Tech",
       businessName: "HR Hub",
       tagline: "Лучшие таланты для лучших команд",
-      avatarName: "Дмитрий",
+      avatarName: "David",
       highlights: [
         { icon: <Users className="w-4 h-4" />, text: "500+ сотрудников в команде" },
         { icon: <Heart className="w-4 h-4" />, text: "Дружелюбная культура" },
@@ -488,9 +488,9 @@ const SCENARIO_CONFIGS: Record<LiveScenario, ScenarioConfig> = {
     avatarImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800",
     businessCard: {
       category: "Медицинский консультант",
-      businessName: "Доктор Иванов",
+      businessName: "Dr. Andrew Miller",
       tagline: "Забота о здоровье на первом месте",
-      avatarName: "Андрей",
+      avatarName: "Andrew",
       highlights: [
         { icon: <GraduationCap className="w-4 h-4" />, text: "20+ лет опыта" },
         { icon: <Clock className="w-4 h-4" />, text: "Приём: 9:00–18:00" },
@@ -784,28 +784,38 @@ function LiveScenarios() {
                   ))}
                 </div>
 
-                <div className="mt-8 p-5 bg-gradient-to-r from-violet-50 via-purple-50 to-fuchsia-50 rounded-2xl border border-purple-100 shadow-sm">
-                  <div className="flex items-center gap-4">
+                <button
+                  onClick={() => {
+                    setIsChatMode(false);
+                    setIsCallOpen(true);
+                  }}
+                  className="mt-5 w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-2xl font-bold shadow-xl hover:from-violet-700 hover:to-purple-700 active:scale-[0.98] transition-all"
+                  data-testid="button-video-call"
+                >
+                  <Video className="w-5 h-5" />
+                  Пообщаться вживую
+                </button>
+
+                <div className="mt-6 p-4 bg-slate-50 rounded-2xl">
+                  <div className="flex items-center gap-3 mb-3">
                     <div className="relative">
                       <img
                         src={currentConfig.avatarImage}
                         alt={businessCard.avatarName}
-                        className="w-16 h-16 rounded-full object-cover ring-2 ring-white shadow-md"
+                        className="w-10 h-10 rounded-full object-cover ring-2 ring-white shadow-sm"
                       />
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
+                      <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
                     </div>
                     <div className="flex-1">
-                      <div className="font-semibold text-lg">{businessCard.avatarName}</div>
-                      <div className="text-xs text-green-600 font-semibold uppercase tracking-wider">в сети</div>
+                      <div className="font-medium text-sm">{businessCard.avatarName}</div>
+                      <div className="text-[10px] text-green-600 font-medium uppercase tracking-wider">в сети</div>
                     </div>
                   </div>
 
-                  <div className="mt-5 relative flex flex-col h-[300px] bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-white/50 overflow-hidden">
-                    <div className="absolute -top-6 left-4 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-white/80" />
-                    
-                    <div className="flex-1 p-4 overflow-y-auto space-y-3">
+                  <div className="relative flex flex-col h-[200px] bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div className="flex-1 p-3 overflow-y-auto space-y-2">
                       {messages.length === 0 ? (
-                        <div className="text-sm leading-relaxed text-slate-700">
+                        <div className="text-xs leading-relaxed text-slate-600">
                           <TypewriterText text={`Привет! Я ${businessCard.avatarName}. Помогу разобраться — что хочешь узнать?`} />
                         </div>
                       ) : (
@@ -820,10 +830,10 @@ function LiveScenarios() {
                             >
                               <div
                                 className={cn(
-                                  "px-3 py-2 rounded-xl max-w-[90%] text-sm",
+                                  "px-2.5 py-1.5 rounded-lg max-w-[90%] text-xs",
                                   msg.role === "user"
                                     ? "bg-blue-500 text-white"
-                                    : "bg-white text-slate-700 border border-slate-100 shadow-sm"
+                                    : "bg-slate-100 text-slate-700"
                                 )}
                               >
                                 {msg.text}
@@ -835,13 +845,13 @@ function LiveScenarios() {
                       )}
                     </div>
 
-                    <div className="p-2 bg-slate-50/50 border-t border-slate-100">
-                      <div className="relative group">
+                    <div className="p-2 bg-slate-50 border-t border-slate-100">
+                      <div className="relative">
                         <Input
                           value={inputValue}
                           onChange={(e) => setInputValue(e.target.value)}
                           placeholder="Напиши вопрос..."
-                          className="h-12 pl-4 pr-10 rounded-xl border-slate-200 bg-white shadow-sm focus-visible:ring-purple-400 transition-all text-sm"
+                          className="h-10 pl-3 pr-9 rounded-lg border-slate-200 bg-white text-xs"
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
                               handleSendMessage();
@@ -851,26 +861,12 @@ function LiveScenarios() {
                         />
                         <button
                           onClick={handleSendMessage}
-                          className="absolute right-1.5 top-1/2 -translate-y-1/2 p-2 bg-gradient-to-r from-violet-500 to-purple-500 rounded-lg text-white shadow-sm hover:scale-105 transition-transform"
+                          className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 bg-violet-500 rounded-md text-white"
                         >
-                          <ArrowRight className="w-4 h-4" />
+                          <ArrowRight className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="mt-4 space-y-3">
-                    <button
-                      onClick={() => {
-                        setIsChatMode(false);
-                        setIsCallOpen(true);
-                      }}
-                      className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-slate-900 text-white rounded-2xl font-bold shadow-xl hover:bg-slate-800 active:scale-[0.98] transition-all"
-                      data-testid="button-video-call"
-                    >
-                      <Video className="w-5 h-5" />
-                      Позвонить аватару
-                    </button>
                   </div>
                 </div>
               </div>
