@@ -320,22 +320,6 @@ function TextDemo() {
             </div>
 
             <Card className="rounded-3xl border-0 shadow-xl shadow-black/5 overflow-hidden" data-testid="card-chat">
-              <div className="bg-gradient-to-r from-blue-500 to-cyan-500 px-5 py-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center">
-                    <MessageSquareText className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-white font-medium" data-testid="text-chat-title">
-                      Консультант сервиса
-                    </div>
-                    <div className="text-white/70 text-xs">
-                      Онлайн
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <div className="p-4 bg-white min-h-[200px] max-h-[280px] overflow-y-auto" data-testid="list-chat-messages">
                 <div className="space-y-3">
                   {messages.map((msg, idx) => (
