@@ -204,23 +204,6 @@ function HowItWorks() {
             {t.howItWorks.anchor}
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: 0.35 }}
-            className="text-center mt-6"
-          >
-            <Button
-              variant="ghost"
-              onClick={scrollToWhy}
-              className="text-sm text-muted-foreground hover:text-slate-800 group"
-              data-testid="button-how-it-works-cta"
-            >
-              {t.howItWorks.cta}
-              <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </motion.div>
         </LazyMotion>
       </div>
     </section>
@@ -626,14 +609,6 @@ function LiveScenarios() {
               </motion.div>
             </AnimatePresence>
 
-            <div className="mt-4 text-center">
-              <a href="#contact" className="inline-flex" data-testid="button-scenarios-continue">
-                <Button variant="ghost" className="text-muted-foreground hover:text-foreground text-sm">
-                  {t.contact.form.submit}
-                  <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-                </Button>
-              </a>
-            </div>
           </motion.div>
         </LazyMotion>
       </div>
