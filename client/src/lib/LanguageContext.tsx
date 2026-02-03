@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Language, translations, getTranslation } from './translations';
+import { useTelegram } from './telegram';
 
 type TranslationType = typeof translations.ru;
 
@@ -13,17 +14,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 const STORAGE_KEY = 'wow-page-language';
 
-function detectLanguage(): Language {
-  const tg = (window as { Telegram?: { WebApp?: { initDataUnsafe?: { user?: { language_code?: string } } } } }).Telegram;
-  const tgLangCode = tg?.WebApp?.initDataUnsafe?.user?.language_code;
-  if (tgLangCode) {
-    const tgLang = tgLangCode.slice(0, 2).toLowerCase();
-    if (tgLang === 'ru') return 'ru';
-    if (tgLang === 'de') return 'de';
-    if (tgLang === 'es') return 'es';
-    return 'en';
-  }
-
+function detectBrowserLanguage(): Language {
   const stored = localStorage.getItem(STORAGE_KEY) as Language | null;
   if (stored && ['ru', 'en', 'de', 'es'].includes(stored)) {
     return stored;
@@ -36,15 +27,37 @@ function detectLanguage(): Language {
   return 'en';
 }
 
+function langCodeToLanguage(langCode: string | undefined): Language | null {
+  if (!langCode) return null;
+  const lang = langCode.slice(0, 2).toLowerCase();
+  if (lang === 'ru') return 'ru';
+  if (lang === 'de') return 'de';
+  if (lang === 'es') return 'es';
+  if (lang === 'en') return 'en';
+  return 'en';
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
+  const { user, isTelegram, isReady } = useTelegram();
   const [language, setLanguageState] = useState<Language>('ru');
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    const detected = detectLanguage();
+    if (!isReady) return;
+    
+    if (isTelegram && user?.language_code) {
+      const tgLang = langCodeToLanguage(user.language_code);
+      if (tgLang) {
+        setLanguageState(tgLang);
+        setIsInitialized(true);
+        return;
+      }
+    }
+    
+    const detected = detectBrowserLanguage();
     setLanguageState(detected);
     setIsInitialized(true);
-  }, []);
+  }, [isReady, isTelegram, user]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
