@@ -621,10 +621,10 @@ function LiveScenarios() {
           >
             <div className="text-center mb-8">
               <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
-                Примеры визиток
+                Сценарии использования
               </h2>
               <p className="mt-3 text-muted-foreground">
-                Нажми, чтобы открыть визитку
+                Один формат — разные задачи
               </p>
             </div>
 
