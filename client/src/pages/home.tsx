@@ -123,15 +123,6 @@ function Hero() {
             24/7 объясняет за тебя, отвечает на вопросы, ведёт к действию и при этом создаёт ВАУ-эффект.
           </motion.p>
 
-          <motion.div variants={item} className="mt-10">
-            <a href="#demo" className="inline-flex" data-testid="button-scroll-demo">
-              <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-black/10">
-                Попробовать
-                <ArrowRight className="h-5 w-5" />
-              </Button>
-            </a>
-          </motion.div>
-
           <motion.div 
             variants={item}
             className="mt-16 flex items-center justify-center gap-2 text-sm text-muted-foreground"
@@ -183,6 +174,15 @@ function WhyItMatters() {
                 Живое онлайн-представительство работает иначе:<br className="hidden sm:block" />
                 оно общается, объясняет и помогает сделать следующий шаг — сразу, в одном месте.
               </p>
+            </div>
+
+            <div className="mt-16 text-center">
+              <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
+                <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-blue-500/10 transition-all hover:scale-105 active:scale-95">
+                  Смотреть демо
+                  <ArrowRight className="h-5 w-5" />
+                </Button>
+              </a>
             </div>
           </motion.div>
         </LazyMotion>
