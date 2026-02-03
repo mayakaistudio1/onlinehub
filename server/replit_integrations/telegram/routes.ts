@@ -96,7 +96,7 @@ export function registerTelegramRoutes(app: Express): void {
 
 Спрашивайте что угодно или откройте приложение для живого демо! 👇`;
 
-        const miniAppUrl = process.env.MINIAPP_URL || (process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : "https://wow-live-page.replit.app");
+        const miniAppUrl = process.env.MINIAPP_URL || "https://yourhub.replit.app";
         
         await sendTelegramMessage(chatId, welcomeMessage, {
           inline_keyboard: [
@@ -110,7 +110,7 @@ export function registerTelegramRoutes(app: Express): void {
         });
       } else {
         const aiResponse = await getAIResponse(userMessage);
-        const miniAppUrl = process.env.MINIAPP_URL || (process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : "https://wow-live-page.replit.app");
+        const miniAppUrl = process.env.MINIAPP_URL || "https://yourhub.replit.app";
 
         await sendTelegramMessage(chatId, aiResponse, {
           inline_keyboard: [
