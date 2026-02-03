@@ -32,6 +32,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { LiveAvatarChat } from "@/components/ui/LiveAvatarChat";
+import { ChatModal } from "@/components/ui/ChatModal";
 import { useLanguage } from '@/lib/LanguageContext';
 
 type ChatIntent = "what" | "who" | "where";
@@ -322,90 +323,8 @@ function WhyItMatters() {
   );
 }
 
-function TextDemo() {
+function TextDemo({ onOpenChat }: { onOpenChat: () => void }) {
   const { t } = useLanguage();
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [initialized, setInitialized] = useState(false);
-  const [inputValue, setInputValue] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!initialized) {
-      setMessages([
-        {
-          id: "m1",
-          role: "assistant",
-          text: t.demo.greeting,
-        },
-      ]);
-      setInitialized(true);
-    }
-  }, [t.demo.greeting, initialized]);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  const sendMessage = async (text: string) => {
-    if (!text.trim() || loading) return;
-    
-    setLoading(true);
-    setInputValue("");
-
-    const userMessage: ChatMessage = {
-      id: `u-${Date.now()}`,
-      role: "user",
-      text: text.trim(),
-    };
-
-    setMessages((m) => [...m, userMessage]);
-
-    try {
-      const history = messages
-        .filter((m) => m.id !== "m1")
-        .map((m) => ({
-          role: m.role,
-          content: m.text,
-        }));
-
-      const response = await fetch("/api/demo/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: text.trim(),
-          history,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.reply) {
-        setMessages((m) => [
-          ...m,
-          { id: `a-${Date.now()}`, role: "assistant", text: data.reply },
-        ]);
-      }
-    } catch (error) {
-      console.error("Chat error:", error);
-      setMessages((m) => [
-        ...m,
-        { id: `a-${Date.now()}`, role: "assistant", text: "Sorry, something went wrong. Please try again." },
-      ]);
-    }
-
-    setLoading(false);
-  };
-
-  const handleQuickQuestion = (intent: ChatIntent) => {
-    const questionIndex = intent === "what" ? 0 : intent === "who" ? 1 : 2;
-    sendMessage(t.demo.questions[questionIndex]);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    sendMessage(inputValue);
-  };
 
   return (
     <section
@@ -421,7 +340,7 @@ function TextDemo() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="text-center mb-5">
+            <div className="text-center mb-6">
               <h2 className="font-serif text-2xl leading-tight tracking-[-0.02em]">
                 {t.demo.title}
               </h2>
@@ -430,94 +349,44 @@ function TextDemo() {
               </p>
             </div>
 
-            <Card className="rounded-2xl border-0 shadow-lg shadow-black/5 overflow-hidden" data-testid="card-chat">
-              <div className="p-3 bg-white min-h-[180px] max-h-[220px] overflow-y-auto" data-testid="list-chat-messages">
-                <div className="space-y-2">
-                  {messages.map((msg, idx) => (
-                    <div
-                      key={msg.id}
-                      className={cn(
-                        "flex",
-                        msg.role === "user" ? "justify-end" : "justify-start",
-                      )}
-                      data-testid={`row-chat-message-${idx}`}
-                    >
-                      <div
-                        className={cn(
-                          "max-w-[85%] rounded-xl px-3 py-2 text-xs leading-relaxed",
-                          msg.role === "user"
-                            ? "bg-blue-500 text-white rounded-br-sm"
-                            : "bg-slate-100 text-foreground rounded-bl-sm",
-                        )}
-                        data-testid={`text-chat-message-${idx}`}
-                      >
-                        {msg.text}
-                      </div>
-                    </div>
-                  ))}
-                  {loading ? (
-                    <div className="flex justify-start" data-testid="row-chat-loading">
-                      <div className="bg-slate-100 rounded-xl rounded-bl-sm px-3 py-2 text-xs text-muted-foreground">
-                        <span className="animate-pulse">...</span>
-                      </div>
-                    </div>
-                  ) : null}
-                  <div ref={messagesEndRef} />
+            <Card className="rounded-2xl border-0 shadow-lg shadow-black/5 overflow-hidden" data-testid="card-chat-preview">
+              <div className="p-5 bg-gradient-to-br from-slate-50 to-white">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shrink-0">
+                    <MessageSquareText className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="bg-white rounded-2xl rounded-bl-md px-4 py-3 shadow-sm border border-slate-100">
+                    <p className="text-sm text-slate-700 leading-relaxed">
+                      {t.demo.greeting}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="p-3 bg-slate-50 border-t border-slate-100" data-testid="grid-chat-buttons">
-                <div className="flex flex-wrap gap-1.5 mb-2">
-                  <button
-                    onClick={() => handleQuickQuestion("what")}
-                    disabled={loading}
-                    className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
-                    data-testid="button-intent-what"
-                  >
-                    {t.demo.questions[0]}
-                  </button>
-                  <button
-                    onClick={() => handleQuickQuestion("who")}
-                    disabled={loading}
-                    className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
-                    data-testid="button-intent-who"
-                  >
-                    {t.demo.questions[1]}
-                  </button>
-                  <button
-                    onClick={() => handleQuickQuestion("where")}
-                    disabled={loading}
-                    className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs hover:bg-slate-100 transition-colors disabled:opacity-50"
-                    data-testid="button-intent-where"
-                  >
-                    {t.demo.questions[2]}
-                  </button>
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {t.demo.questions.map((question, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs text-slate-500"
+                    >
+                      {question}
+                    </span>
+                  ))}
                 </div>
-                <form onSubmit={handleSubmit} className="flex gap-2">
-                  <Input
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder={t.demo.inputPlaceholder || "Ask anything..."}
-                    className="flex-1 h-9 text-sm rounded-full border-slate-200"
-                    disabled={loading}
-                    data-testid="input-chat"
-                  />
-                  <Button
-                    type="submit"
-                    size="sm"
-                    className="h-9 px-4 rounded-full"
-                    disabled={loading || !inputValue.trim()}
-                    data-testid="button-chat-send"
-                  >
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </form>
+
+                <Button
+                  onClick={onOpenChat}
+                  className="w-full h-12 gap-2 rounded-full text-sm font-semibold shadow-md"
+                  data-testid="button-open-chat"
+                >
+                  {t.demo.tryChat || "Попробовать чат"}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
               </div>
             </Card>
 
-            <div className="mt-5 text-center">
+            <div className="mt-6 text-center">
               <a href="#scenarios" className="inline-flex" data-testid="button-demo-continue">
-                <Button className="h-11 gap-2 rounded-full px-5 text-sm shadow-md">
+                <Button variant="ghost" className="h-11 gap-2 text-sm text-muted-foreground hover:text-slate-800">
                   {t.scenarios.title}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
@@ -1177,6 +1046,7 @@ function WowLivePage({ isOpen, onClose, language }: { isOpen: boolean; onClose: 
 export default function HomePage() {
   const { language } = useLanguage();
   const [isLiveOpen, setIsLiveOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const scrollPositionRef = useRef(0);
 
   const openLive = () => {
@@ -1191,17 +1061,29 @@ export default function HomePage() {
     });
   };
 
+  const openChat = () => {
+    scrollPositionRef.current = window.scrollY;
+    setIsChatOpen(true);
+  };
+
+  const closeChat = () => {
+    setIsChatOpen(false);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollPositionRef.current);
+    });
+  };
+
   return (
     <div className="min-h-dvh" data-testid="page-home">
       <Hero />
       <HowItWorks />
       <LiveScenarios />
       <WhyItMatters />
-      <TextDemo />
+      <TextDemo onOpenChat={openChat} />
       <ContactSection />
       <Footer />
       
-      {!isLiveOpen && (
+      {!isLiveOpen && !isChatOpen && (
         <FloatingLiveButton onClick={openLive} />
       )}
       
@@ -1214,6 +1096,8 @@ export default function HomePage() {
           />
         )}
       </AnimatePresence>
+
+      <ChatModal isOpen={isChatOpen} onClose={closeChat} />
     </div>
   );
 }

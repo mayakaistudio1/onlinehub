@@ -67,7 +67,8 @@ export const translations = {
         who: "Тем, кто устал объяснять одно и то же. Экспертам, командам, бизнесам с уникальным продуктом.",
         where: "Для презентации проектов, онбординга новых сотрудников, первого касания с клиентами, продаж и партнёрств."
       },
-      inputPlaceholder: "Спроси что угодно..."
+      inputPlaceholder: "Спроси что угодно...",
+      tryChat: "Попробовать чат"
     },
     scenarios: {
       title: "Сценарии использования",
@@ -242,7 +243,8 @@ export const translations = {
         who: "For those tired of explaining the same thing. Experts, teams, businesses with unique products.",
         where: "For project presentations, onboarding new employees, first touch with clients, sales and partnerships."
       },
-      inputPlaceholder: "Ask anything..."
+      inputPlaceholder: "Ask anything...",
+      tryChat: "Try Chat"
     },
     scenarios: {
       title: "Use Cases",
@@ -417,7 +419,8 @@ export const translations = {
         who: "Für alle, die es leid sind, immer dasselbe zu erklären. Experten, Teams, Unternehmen mit einzigartigen Produkten.",
         where: "Für Projektpräsentationen, Onboarding neuer Mitarbeiter, Erstkontakt mit Kunden, Vertrieb und Partnerschaften."
       },
-      inputPlaceholder: "Frag was du willst..."
+      inputPlaceholder: "Frag was du willst...",
+      tryChat: "Chat ausprobieren"
     },
     scenarios: {
       title: "Anwendungsfälle",
@@ -592,7 +595,8 @@ export const translations = {
         who: "Para quienes están cansados de explicar lo mismo. Expertos, equipos, negocios con productos únicos.",
         where: "Para presentaciones de proyectos, onboarding de nuevos empleados, primer contacto con clientes, ventas y alianzas."
       },
-      inputPlaceholder: "Pregunta lo que quieras..."
+      inputPlaceholder: "Pregunta lo que quieras...",
+      tryChat: "Probar chat"
     },
     scenarios: {
       title: "Casos de uso",
