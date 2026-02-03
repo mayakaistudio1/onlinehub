@@ -149,28 +149,26 @@ function Hero() {
   );
 }
 
-const whyCards = [
-  {
-    icon: FileText,
-    title: "Сайт = информация",
-    text: "Текст и ссылки, без диалога.",
+const comparisonData = {
+  problem: {
+    title: "Обычный сайт",
+    items: [
+      "Показывает информацию",
+      "Ждёт, что человек сам разберётся",
+      "Оставляет вопросы без ответа",
+      "Не ведёт дальше",
+    ],
   },
-  {
-    icon: HelpCircle,
-    title: "Люди остаются с вопросами",
-    text: "И откладывают решение.",
+  solution: {
+    title: "Живое онлайн-представительство",
+    items: [
+      "Начинает диалог сразу",
+      "Отвечает на вопросы",
+      "Помогает понять суть",
+      "Показывает следующий шаг",
+    ],
   },
-  {
-    icon: MessageCircle,
-    title: "Здесь начинается общение",
-    text: "Гость получает ответы сразу.",
-  },
-  {
-    icon: MoveRight,
-    title: "Следующий шаг понятен",
-    text: "Без лишних сообщений и ожиданий.",
-  },
-];
+};
 
 function WhyItMatters() {
   return (
@@ -183,45 +181,80 @@ function WhyItMatters() {
       <div className="absolute top-1/4 -left-20 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50" />
       <div className="absolute bottom-1/4 -right-20 w-64 h-64 bg-cyan-100 rounded-full blur-3xl opacity-50" />
 
-      <div className="relative mx-auto w-full max-w-2xl">
+      <div className="relative mx-auto w-full max-w-3xl">
         <LazyMotion features={domAnimation}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-center"
+            className="text-center mb-12"
           >
-            <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
+            <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-5xl">
               Почему просто сайта уже недостаточно
             </h2>
-            <p className="mt-3 text-muted-foreground text-lg">
+            <p className="mt-4 text-muted-foreground text-lg sm:text-xl">
               Сайт показывает. Представительство — общается.
             </p>
           </motion.div>
 
-          <div className="mt-10 grid grid-cols-2 gap-4">
-            {whyCards.map((card, idx) => (
-              <motion.div
-                key={card.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-              >
-                <Card className="p-5 h-full border-0 bg-white/70 backdrop-blur-sm shadow-lg shadow-black/[0.03] rounded-2xl">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-cyan-50 mb-3">
-                    <card.icon className="w-5 h-5 text-blue-600" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            {/* Обычный сайт */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <Card className="p-8 h-full border-slate-100 bg-white/50 backdrop-blur-sm rounded-3xl shadow-sm">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                    <X className="w-5 h-5" />
                   </div>
-                  <h3 className="font-semibold text-foreground text-sm sm:text-base">
-                    {card.title}
+                  <h3 className="font-serif text-xl font-medium text-slate-900">
+                    {comparisonData.problem.title}
                   </h3>
-                  <p className="mt-1 text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                    {card.text}
-                  </p>
-                </Card>
-              </motion.div>
-            ))}
+                </div>
+                <ul className="space-y-4">
+                  {comparisonData.problem.items.map((text, i) => (
+                    <li key={i} className="flex items-start gap-3 text-slate-500 text-base">
+                      <div className="w-1.5 h-1.5 rounded-full bg-slate-200 mt-2.5 shrink-0" />
+                      {text}
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </motion.div>
+
+            {/* Живое онлайн-представительство */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Card className="p-8 h-full border-blue-100 bg-blue-50/30 backdrop-blur-sm rounded-3xl shadow-sm relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
+                  <Zap className="w-20 h-20 text-blue-500" />
+                </div>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                    <Zap className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-serif text-xl font-medium text-blue-900">
+                    {comparisonData.solution.title}
+                  </h3>
+                </div>
+                <ul className="space-y-4">
+                  {comparisonData.solution.items.map((text, i) => (
+                    <li key={i} className="flex items-start gap-3 text-blue-900/80 text-base font-medium">
+                      <Check className="w-5 h-5 text-blue-500 mt-0.5 shrink-0" />
+                      {text}
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </motion.div>
           </div>
 
           <motion.div
@@ -229,30 +262,21 @@ function WhyItMatters() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-10 text-center"
+            className="mt-16 text-center space-y-8"
           >
-            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-              Обычный сайт ждёт, что человек сам разберётся.<br className="hidden sm:block" />
-              Живое онлайн-представительство помогает понять и двигаться дальше — сразу, в одном месте.
-            </p>
-            <p className="mt-6 text-foreground font-semibold text-lg sm:text-xl">
-              Это не «ещё один сайт». Это формат общения.
-            </p>
-          </motion.div>
+            <div className="space-y-1">
+              <p className="text-slate-500 text-lg">Это не «ещё один сайт».</p>
+              <p className="text-foreground font-serif text-2xl sm:text-3xl font-bold">Это формат общения.</p>
+            </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="mt-10 text-center"
-          >
-            <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
-              <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-blue-500/10 transition-all hover:scale-105 active:scale-95">
-                Смотреть демо
-                <ArrowRight className="h-5 w-5" />
-              </Button>
-            </a>
+            <div>
+              <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
+                <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-blue-500/10 transition-all hover:scale-105 active:scale-95 bg-blue-600 hover:bg-blue-700">
+                  Смотреть демо
+                  <ArrowRight className="h-5 w-5" />
+                </Button>
+              </a>
+            </div>
           </motion.div>
         </LazyMotion>
       </div>
