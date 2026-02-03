@@ -615,7 +615,7 @@ export function LiveAvatarChat({
                 autoPlay
                 playsInline
                 muted
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 data-testid="video-avatar"
               />
               
