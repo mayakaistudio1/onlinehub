@@ -799,6 +799,7 @@ function LiveScenarios() {
           avatarImage: currentConfig.avatarImage,
         }}
         language={language}
+        autoStart={true}
       />
     </section>
   );
@@ -978,6 +979,7 @@ function WowLivePage({ isOpen, onClose, language }: { isOpen: boolean; onClose: 
             description: "Live Avatar Chat",
           }}
           language={language}
+          autoStart={true}
         />
       </div>
       <div className="p-4 pb-8">

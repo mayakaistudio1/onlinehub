@@ -554,7 +554,7 @@ export function LiveAvatarChat({
         </div>
 
         <div className="flex-1 flex flex-col relative overflow-hidden">
-          {sessionState === "idle" && (
+          {sessionState === "idle" && !autoStart && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -604,10 +604,10 @@ export function LiveAvatarChat({
               </div>
             </motion.div>
           )}
-
+          
           {/* ... other states (connecting, waiting, error) remain similar ... */}
 
-          {sessionState === "connected" && (
+          {(sessionState === "connected" || (autoStart && (sessionState === "idle" || sessionState === "connecting" || sessionState === "waiting_avatar"))) && (
             <div className="absolute inset-0 flex items-center justify-center bg-black">
               {/* VIDEO SECTION - TRUE FULL SCREEN */}
               <video
@@ -619,27 +619,39 @@ export function LiveAvatarChat({
                 data-testid="video-avatar"
               />
               
-              {/* Timer Display */}
-              <div className="absolute top-20 left-1/2 transform -translate-x-1/2 z-10">
-                <div className={cn(
-                  "px-4 py-2 rounded-full backdrop-blur-md font-mono text-lg font-semibold",
-                  remainingSeconds <= 10 
-                    ? "bg-red-500/80 text-white" 
-                    : "bg-black/40 text-white/90"
-                )}>
-                  {Math.floor(remainingSeconds / 60)}:{(remainingSeconds % 60).toString().padStart(2, '0')}
+              {/* Connecting Overlay - shown when not yet connected */}
+              {sessionState !== "connected" && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 z-20">
+                  <div className="w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center animate-pulse">
+                    <Video className="w-8 h-8 text-white" />
+                  </div>
+                  <p className="text-white/80 text-sm">{TEXTS.duringCall.connecting}</p>
                 </div>
-              </div>
+              )}
+              
+              {/* Timer Display - only when connected */}
+              {sessionState === "connected" && (
+                <div className="absolute top-20 left-1/2 transform -translate-x-1/2 z-10">
+                  <div className={cn(
+                    "px-4 py-2 rounded-full backdrop-blur-md font-mono text-lg font-semibold",
+                    remainingSeconds <= 10 
+                      ? "bg-red-500/80 text-white" 
+                      : "bg-black/40 text-white/90"
+                  )}>
+                    {Math.floor(remainingSeconds / 60)}:{(remainingSeconds % 60).toString().padStart(2, '0')}
+                  </div>
+                </div>
+              )}
               
               {/* Mute/End buttons Overlay */}
               <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-4 z-10">
                 <button
                   onClick={toggleMute}
-                  disabled={isAvatarSpeaking}
+                  disabled={isAvatarSpeaking || sessionState !== "connected"}
                   className={cn(
                     "w-14 h-14 rounded-full flex items-center justify-center transition-all backdrop-blur-md shadow-lg",
                     isMuted ? "bg-white/20 text-white" : "bg-white text-black",
-                    isAvatarSpeaking && "opacity-50"
+                    (isAvatarSpeaking || sessionState !== "connected") && "opacity-50"
                   )}
                 >
                   {isMuted ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
