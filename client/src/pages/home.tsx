@@ -112,14 +112,6 @@ function Hero() {
           >
             {t.hero.subtitle}
           </motion.p>
-
-          <motion.div 
-            variants={item}
-            className="mt-8 flex items-center justify-center gap-1.5 text-xs text-muted-foreground"
-          >
-            <ChevronDown className="h-3.5 w-3.5 animate-bounce" />
-            <span>{t.hero.scrollHint}</span>
-          </motion.div>
         </motion.div>
       </LazyMotion>
     </section>
@@ -302,14 +294,6 @@ function WhyItMatters() {
             <p className="text-foreground font-serif text-lg font-bold mt-1">{t.why.anchor[1]}</p>
           </div>
 
-          <div className="mt-6 text-center">
-            <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
-              <Button className="h-12 gap-2 rounded-full px-6 text-sm font-semibold shadow-md bg-blue-600 hover:bg-blue-700">
-                {t.why.cta}
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </a>
-          </div>
         </LazyMotion>
       </div>
     </section>
