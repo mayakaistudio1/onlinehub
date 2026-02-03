@@ -130,6 +130,115 @@ function Hero() {
   );
 }
 
+function HowItWorks() {
+  const { t } = useLanguage();
+
+  const scrollToWhy = () => {
+    const whySection = document.getElementById('why');
+    whySection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const cards = [
+    {
+      icon: FileText,
+      title: t.howItWorks.cards.card.title,
+      text: t.howItWorks.cards.card.text,
+    },
+    {
+      icon: MessageCircle,
+      title: t.howItWorks.cards.dialog.title,
+      text: t.howItWorks.cards.dialog.text,
+    },
+    {
+      icon: MoveRight,
+      title: t.howItWorks.cards.nextStep.title,
+      text: t.howItWorks.cards.nextStep.text,
+    },
+  ];
+
+  return (
+    <section
+      className="relative min-h-[100dvh] flex items-center justify-center px-4 py-12 snap-start overflow-hidden"
+      id="how-it-works"
+      data-testid="section-how-it-works"
+    >
+      <div className="relative mx-auto w-full max-w-[420px]">
+        <LazyMotion features={domAnimation}>
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3 }}
+            className="text-center mb-8"
+          >
+            <h2 className="font-serif text-2xl leading-tight tracking-[-0.02em]">
+              {t.howItWorks.title}
+            </h2>
+            <p className="mt-3 text-muted-foreground text-sm max-w-[32ch] mx-auto">
+              {t.howItWorks.subtitle}
+            </p>
+          </motion.div>
+
+          <div className="flex flex-col gap-3">
+            {cards.map((card, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: index * 0.08 }}
+                className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-sm border border-white/50"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 shrink-0 rounded-full bg-blue-50 flex items-center justify-center">
+                    <card.icon className="w-4 h-4 text-blue-500" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-sm text-slate-800 mb-1">
+                      {card.title}
+                    </h3>
+                    <p className="text-xs text-slate-500 leading-relaxed">
+                      {card.text}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+            className="text-center mt-6 font-medium text-slate-700"
+          >
+            {t.howItWorks.anchor}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3, delay: 0.35 }}
+            className="text-center mt-6"
+          >
+            <Button
+              variant="ghost"
+              onClick={scrollToWhy}
+              className="text-sm text-muted-foreground hover:text-slate-800 group"
+              data-testid="button-how-it-works-cta"
+            >
+              {t.howItWorks.cta}
+              <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </motion.div>
+        </LazyMotion>
+      </div>
+    </section>
+  );
+}
+
 function WhyItMatters() {
   const { t } = useLanguage();
   
@@ -925,6 +1034,7 @@ export default function HomePage() {
   return (
     <div className="min-h-dvh" data-testid="page-home">
       <Hero />
+      <HowItWorks />
       <WhyItMatters />
       <TextDemo />
       <LiveScenarios />
