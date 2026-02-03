@@ -184,15 +184,6 @@ function WhyItMatters() {
                 оно общается, объясняет и помогает сделать следующий шаг — сразу, в одном месте.
               </p>
             </div>
-
-            <div className="mt-16">
-              <a href="#demo" className="inline-flex" data-testid="button-scroll-demo-why">
-                <Button className="h-14 gap-3 rounded-full px-8 text-base font-semibold shadow-lg shadow-blue-500/10 transition-all hover:scale-105 active:scale-95">
-                  Смотреть демо
-                  <ArrowRight className="h-5 w-5" />
-                </Button>
-              </a>
-            </div>
           </motion.div>
         </LazyMotion>
       </div>
