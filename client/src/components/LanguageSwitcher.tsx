@@ -29,7 +29,6 @@ export function LanguageSwitcher() {
           )}
           data-testid={`button-language-${lang.code}`}
         >
-          <span className="text-base">{lang.flag}</span>
           <span className="text-xs font-bold">{lang.label}</span>
         </button>
       ))}
