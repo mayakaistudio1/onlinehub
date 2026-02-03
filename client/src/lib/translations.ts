@@ -9,6 +9,26 @@ export const translations = {
       cta: "Попробовать",
       scrollHint: "Листай вниз"
     },
+    howItWorks: {
+      title: "Как работает живое онлайн-представительство",
+      subtitle: "Один адрес — и человек не теряется.",
+      cards: {
+        card: {
+          title: "Твоя онлайн-визитка",
+          text: "Вся ключевая информация о тебе, проектах и направлениях — коротко и по делу."
+        },
+        dialog: {
+          title: "Живой диалог",
+          text: "Ассистент встречает посетителя, отвечает на вопросы и уточняет, что ему нужно."
+        },
+        nextStep: {
+          title: "Понятный следующий шаг",
+          text: "Человек сразу понимает, куда идти дальше: сценарий, контакт, действие."
+        }
+      },
+      anchor: "Не страница. А маршрут для человека.",
+      cta: "Смотреть дальше"
+    },
     why: {
       title: "Почему просто сайта уже недостаточно",
       subtitle: "Сайт показывает. Представительство — общается.",
@@ -162,6 +182,26 @@ export const translations = {
       subtitle: "A place where your idea is truly understood.",
       cta: "Try It",
       scrollHint: "Scroll down"
+    },
+    howItWorks: {
+      title: "How a Live Online Presence Works",
+      subtitle: "One address — and the visitor never gets lost.",
+      cards: {
+        card: {
+          title: "Your Online Card",
+          text: "All key info about you, your projects and directions — short and to the point."
+        },
+        dialog: {
+          title: "Live Dialogue",
+          text: "The assistant greets visitors, answers questions and clarifies what they need."
+        },
+        nextStep: {
+          title: "Clear Next Step",
+          text: "The visitor immediately knows where to go: scenario, contact, action."
+        }
+      },
+      anchor: "Not a page. A journey for the visitor.",
+      cta: "See More"
     },
     why: {
       title: "Why a website alone is no longer enough",
@@ -317,6 +357,26 @@ export const translations = {
       cta: "Ausprobieren",
       scrollHint: "Nach unten scrollen"
     },
+    howItWorks: {
+      title: "So funktioniert eine Live-Online-Präsenz",
+      subtitle: "Eine Adresse — und der Besucher verliert sich nicht.",
+      cards: {
+        card: {
+          title: "Ihre Online-Visitenkarte",
+          text: "Alle wichtigen Infos über Sie, Ihre Projekte und Richtungen — kurz und prägnant."
+        },
+        dialog: {
+          title: "Live-Dialog",
+          text: "Der Assistent begrüßt Besucher, beantwortet Fragen und klärt, was sie brauchen."
+        },
+        nextStep: {
+          title: "Klarer nächster Schritt",
+          text: "Der Besucher weiß sofort, wohin: Szenario, Kontakt, Aktion."
+        }
+      },
+      anchor: "Keine Seite. Ein Weg für den Besucher.",
+      cta: "Mehr sehen"
+    },
     why: {
       title: "Warum eine Website allein nicht mehr ausreicht",
       subtitle: "Eine Website zeigt. Eine Präsenz — kommuniziert.",
@@ -470,6 +530,26 @@ export const translations = {
       subtitle: "Un lugar donde tu idea realmente se entiende.",
       cta: "Probar",
       scrollHint: "Desliza hacia abajo"
+    },
+    howItWorks: {
+      title: "Cómo funciona una presencia online en vivo",
+      subtitle: "Una dirección — y el visitante nunca se pierde.",
+      cards: {
+        card: {
+          title: "Tu tarjeta online",
+          text: "Toda la info clave sobre ti, tus proyectos y direcciones — breve y directo."
+        },
+        dialog: {
+          title: "Diálogo en vivo",
+          text: "El asistente recibe visitantes, responde preguntas y aclara qué necesitan."
+        },
+        nextStep: {
+          title: "Siguiente paso claro",
+          text: "El visitante sabe de inmediato adónde ir: escenario, contacto, acción."
+        }
+      },
+      anchor: "No es una página. Es un recorrido para el visitante.",
+      cta: "Ver más"
     },
     why: {
       title: "Por qué un sitio web ya no es suficiente",
