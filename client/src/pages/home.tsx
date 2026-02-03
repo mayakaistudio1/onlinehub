@@ -941,101 +941,81 @@ function ContactSection() {
 
   return (
     <section
-      className="relative min-h-[100dvh] flex items-center justify-center px-6 py-16 snap-start bg-gradient-to-b from-white via-slate-50/30 to-white"
+      className="relative min-h-[100dvh] flex items-center justify-center px-5 py-10 snap-start bg-white"
       id="contact"
       data-testid="section-contact"
     >
-      <div className="mx-auto w-full max-w-md">
+      <div className="mx-auto w-full max-w-sm">
         <LazyMotion features={domAnimation}>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.6 }}
           >
-            {/* Header Block */}
-            <div className="text-center mb-12">
-              <h2 className="font-serif text-[28px] sm:text-4xl leading-[1.2] tracking-[-0.02em] text-slate-900">
-                Запускаем твоё живое<br />онлайн-представительство
+            {/* Header */}
+            <div className="text-center mb-6">
+              <h2 className="font-serif text-2xl leading-tight tracking-[-0.02em] text-slate-900">
+                Запускаем твоё живое онлайн-представительство
               </h2>
-              <p className="mt-5 text-slate-400 text-[15px] leading-relaxed">
-                Уже через 48 часов у тебя будет формат,<br className="sm:hidden" />
-                который встречает людей<br className="hidden sm:block" />
-                и объясняет твой бизнес за тебя.
+              <p className="mt-3 text-slate-400 text-sm">
+                Через 48 часов — формат, который работает за тебя.
               </p>
             </div>
 
-            {/* Description Block */}
-            <div className="text-center mb-10">
-              <p className="text-slate-500 text-[15px] leading-relaxed">
-                Это не сайт и не визитка.<br />
-                Это цифровое представительство с ассистентами,<br className="hidden sm:block" />
-                которые знают твой контекст и ведут диалог.
-              </p>
-            </div>
-
-            {/* What you get - визуально отделённый блок */}
-            <div className="relative mb-10">
-              <div className="absolute inset-0 bg-gradient-to-b from-slate-100/60 to-slate-50/30 rounded-3xl" />
-              <div className="relative px-7 py-6">
-                <p className="text-[13px] font-medium text-slate-400 uppercase tracking-wide mb-4">Что ты получаешь</p>
-                <div className="space-y-2.5 text-slate-700 text-[15px]">
-                  <p>— живое онлайн-представительство</p>
-                  <p>— ассистентов под твою задачу</p>
-                  <p>— понятный первый шаг для посетителей</p>
-                </div>
+            {/* What you get */}
+            <div className="mb-5 py-4 px-5 bg-slate-50 rounded-2xl">
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">Что ты получаешь</p>
+              <div className="space-y-1.5 text-slate-600 text-sm">
+                <p>— живое онлайн-представительство</p>
+                <p>— ассистентов под твою задачу</p>
+                <p>— понятный первый шаг для посетителей</p>
               </div>
             </div>
 
-            {/* FOMO - тонкая линия-акцент */}
-            <div className="text-center mb-10 px-4">
-              <p className="text-[13px] text-violet-500/90 leading-relaxed">
-                Сейчас мы запускаем ограниченное количество<br className="sm:hidden" />
-                таких представительств и работаем с теми,<br className="hidden sm:block" />
-                кто заходит первым.
-              </p>
-            </div>
+            {/* FOMO */}
+            <p className="text-center text-xs text-violet-500 mb-5">
+              Количество запусков ограничено. Работаем с теми, кто первый.
+            </p>
 
-            {/* Form Card */}
-            <div className="bg-white rounded-3xl p-6 shadow-[0_2px_20px_-4px_rgba(0,0,0,0.06)] border border-slate-100/80">
-              <div className="space-y-3">
-                <Input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Твоё имя"
-                  className="h-[52px] rounded-xl bg-slate-50 border-0 px-5 text-[15px] placeholder:text-slate-400 focus-visible:ring-1 focus-visible:ring-slate-300 transition-all"
-                  data-testid="input-name"
-                />
-                <Input
-                  value={contact}
-                  onChange={(e) => setContact(e.target.value)}
-                  placeholder="Telegram или email"
-                  className="h-[52px] rounded-xl bg-slate-50 border-0 px-5 text-[15px] placeholder:text-slate-400 focus-visible:ring-1 focus-visible:ring-slate-300 transition-all"
-                  data-testid="input-contact"
-                />
-                <Button
-                  onClick={submit}
-                  className="h-[52px] w-full rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-[15px] transition-all active:scale-[0.98] shadow-sm"
-                  disabled={status !== "idle" || !name || !contact}
-                  data-testid="button-submit-lead"
-                >
-                  {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено!" : "Обсудить запуск"}
-                </Button>
-              </div>
-              
-              {status === "sent" && (
-                <motion.p 
-                  initial={{ opacity: 0 }} 
-                  animate={{ opacity: 1 }} 
-                  className="mt-4 text-center text-sm text-green-600"
-                >
-                  Спасибо, {name}! Свяжемся через {contact}
-                </motion.p>
-              )}
+            {/* Form */}
+            <div className="space-y-2.5">
+              <Input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Твоё имя"
+                className="h-12 rounded-xl bg-slate-50 border-0 px-4 text-sm placeholder:text-slate-400 focus-visible:ring-1 focus-visible:ring-slate-200"
+                data-testid="input-name"
+              />
+              <Input
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+                placeholder="Telegram или email"
+                className="h-12 rounded-xl bg-slate-50 border-0 px-4 text-sm placeholder:text-slate-400 focus-visible:ring-1 focus-visible:ring-slate-200"
+                data-testid="input-contact"
+              />
+              <Button
+                onClick={submit}
+                className="h-12 w-full rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-sm transition-all active:scale-[0.98]"
+                disabled={status !== "idle" || !name || !contact}
+                data-testid="button-submit-lead"
+              >
+                {status === "sending" ? "Отправка..." : status === "sent" ? "Отправлено!" : "Обсудить запуск"}
+              </Button>
             </div>
+            
+            {status === "sent" && (
+              <motion.p 
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                className="mt-3 text-center text-sm text-green-600"
+              >
+                Спасибо, {name}! Свяжемся через {contact}
+              </motion.p>
+            )}
 
             {/* Microtext */}
-            <p className="mt-6 text-center text-[11px] text-slate-400 tracking-wide">
+            <p className="mt-5 text-center text-[10px] text-slate-400">
               Без спама. Без воронок. Просто разговор.
             </p>
           </motion.div>
