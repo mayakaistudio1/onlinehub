@@ -1030,11 +1030,11 @@ function WowLivePage({ isOpen, onClose, language }: { isOpen: boolean; onClose: 
           language={language}
         />
       </div>
-      <div className="p-4 pb-8">
+      <div className="p-4 pb-8 text-center">
         <Button
           variant="ghost"
           onClick={onClose}
-          className="w-full text-white/80 hover:text-white hover:bg-white/10"
+          className="mx-auto text-white/80 hover:text-white hover:bg-white/10"
           data-testid="button-back-to-presentation"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -1091,10 +1091,21 @@ export default function HomePage() {
         <ChatPreviewBar onOpenChat={openLive} />
       )}
       
-      <WowLiveScreen
-        isOpen={isLiveOpen}
-        onClose={closeLive}
-        language={language}
+      <AnimatePresence>
+        {isLiveOpen && (
+          <WowLivePage
+            isOpen={isLiveOpen}
+            onClose={closeLive}
+            language={language}
+          />
+        )}
+      </AnimatePresence>
+
+      <ChatModal 
+        isOpen={isChatOpen} 
+        onClose={closeChat}
+        onSwitchToLiveAvatar={openLive}
+        initialMessage={initialChatMessage}
       />
     </div>
   );
