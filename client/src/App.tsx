@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { TelegramProvider } from "@/lib/telegram";
 import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/home";
 
@@ -20,13 +21,15 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
-          <LanguageSwitcher />
-          <Router />
-        </TooltipProvider>
-      </LanguageProvider>
+      <TelegramProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <LanguageSwitcher />
+            <Router />
+          </TooltipProvider>
+        </LanguageProvider>
+      </TelegramProvider>
     </QueryClientProvider>
   );
 }
