@@ -954,9 +954,7 @@ function ContactSection() {
             transition={{ duration: 0.5 }}
           >
             <div className="text-center mb-8">
-              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">
-                Запустим пилот?
-              </h2>
+              <h2 className="font-serif text-3xl leading-tight tracking-[-0.02em] sm:text-4xl">Хочешь уже через 48 часов иметь своё живое онлайн-представительство?</h2>
               <p className="mt-3 text-muted-foreground">
                 Настройка под ключ — $2,500
               </p>
