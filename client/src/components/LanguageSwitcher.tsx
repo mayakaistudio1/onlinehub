@@ -14,62 +14,25 @@ const languages: { code: Language; label: string; flag: string }[] = [
 
 export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
-  const [isOpen, setIsOpen] = useState(false);
-
-  const currentLang = languages.find(l => l.code === language) || languages[0];
 
   return (
-    <div className="fixed top-4 right-4 z-50">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 px-3 py-2 bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-slate-200/50 hover:bg-white transition-colors"
-        data-testid="button-language-switcher"
-      >
-        <Globe className="w-4 h-4 text-slate-500" />
-        <span className="text-sm font-medium text-slate-700">{currentLang.label}</span>
-      </button>
-
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40"
-              onClick={() => setIsOpen(false)}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: -10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -10 }}
-              transition={{ duration: 0.15 }}
-              className="absolute right-0 mt-2 w-40 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden z-50"
-            >
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => {
-                    setLanguage(lang.code);
-                    setIsOpen(false);
-                  }}
-                  className={cn(
-                    "w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-slate-50 transition-colors",
-                    language === lang.code && "bg-violet-50"
-                  )}
-                  data-testid={`button-language-${lang.code}`}
-                >
-                  <span className="text-lg">{lang.flag}</span>
-                  <span className="text-sm font-medium text-slate-700 flex-1">{lang.label}</span>
-                  {language === lang.code && (
-                    <Check className="w-4 h-4 text-violet-600" />
-                  )}
-                </button>
-              ))}
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+    <div className="fixed top-4 right-4 z-50 flex gap-2">
+      {languages.map((lang) => (
+        <button
+          key={lang.code}
+          onClick={() => setLanguage(lang.code)}
+          className={cn(
+            "flex items-center gap-1.5 px-2.5 py-1.5 rounded-full shadow-lg border transition-all active:scale-95",
+            language === lang.code 
+              ? "bg-slate-900 border-slate-900 text-white" 
+              : "bg-white/90 backdrop-blur-md border-slate-200/50 text-slate-700 hover:bg-white"
+          )}
+          data-testid={`button-language-${lang.code}`}
+        >
+          <span className="text-base">{lang.flag}</span>
+          <span className="text-xs font-bold">{lang.label}</span>
+        </button>
+      ))}
     </div>
   );
 }
