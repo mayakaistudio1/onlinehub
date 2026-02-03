@@ -981,12 +981,14 @@ function ContactSection() {
             </div>
 
             {/* FOMO line */}
-            <p className="mt-6 text-blue-500/80 text-sm font-medium max-w-[300px] sm:max-w-none">
-              Сейчас мы запускаем ограниченное количество таких представительств и работаем с теми, кто заходит первым.
-            </p>
+            <div className="mt-12 mb-8">
+              <p className="text-blue-500/80 text-sm font-medium max-w-[300px] sm:max-w-none">
+                Сейчас мы запускаем ограниченное количество таких представительств и работаем с теми, кто заходит первым.
+              </p>
+            </div>
 
             {/* Form */}
-            <div className="mt-10 w-full space-y-3">
+            <div className="w-full space-y-3">
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
