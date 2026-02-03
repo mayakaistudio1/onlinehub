@@ -110,18 +110,7 @@ export function registerTelegramRoutes(app: Express): void {
         });
       } else {
         const aiResponse = await getAIResponse(userMessage);
-        const miniAppUrl = process.env.MINIAPP_URL || "https://yourhub.replit.app";
-
-        await sendTelegramMessage(chatId, aiResponse, {
-          inline_keyboard: [
-            [
-              {
-                text: "🎬 Попробовать Live демо",
-                web_app: { url: miniAppUrl },
-              },
-            ],
-          ],
-        });
+        await sendTelegramMessage(chatId, aiResponse);
       }
 
       res.sendStatus(200);
