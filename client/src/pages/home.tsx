@@ -113,15 +113,6 @@ function Hero() {
             {t.hero.subtitle}
           </motion.p>
 
-          <motion.div variants={item} className="mt-8">
-            <a href="#demo" className="inline-flex" data-testid="button-scroll-demo">
-              <Button className="h-12 gap-2 rounded-full px-6 text-sm font-semibold shadow-md shadow-black/10">
-                {t.hero.cta}
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </a>
-          </motion.div>
-
           <motion.div 
             variants={item}
             className="mt-8 flex items-center justify-center gap-1.5 text-xs text-muted-foreground"
