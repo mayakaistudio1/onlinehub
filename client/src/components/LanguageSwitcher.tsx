@@ -1,6 +1,5 @@
 import { useLanguage } from '@/lib/LanguageContext';
 import { Language } from '@/lib/translations';
-import { useTelegram } from '@/lib/telegram';
 import { cn } from '@/lib/utils';
 
 const languages: { code: Language; label: string; flag: string }[] = [
@@ -12,11 +11,6 @@ const languages: { code: Language; label: string; flag: string }[] = [
 
 export function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
-  const { isTelegramContext } = useTelegram();
-
-  if (isTelegramContext) {
-    return null;
-  }
 
   return (
     <div className="fixed top-4 right-4 z-50 flex gap-2">
