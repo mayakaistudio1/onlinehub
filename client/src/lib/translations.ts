@@ -56,7 +56,7 @@ export const translations = {
     demo: {
       title: "Как это работает",
       subtitle: "Посмотри, как твоё представительство общается в реальности",
-      greeting: "Привет! Я — консультант сервиса. Расскажу, как работает онлайн-представительство. Что тебя интересует?",
+      greeting: "Привет 👋\nЯ — Demo Agent. Показываю, как может выглядеть живой текстовый диалог на сайте, когда вместо кнопок с тобой сразу общаются.\n\nПо сути, это пример того, как сайт может не \"показывать\", а разговаривать — объяснять, отвечать и вести дальше.\n\nКак тебе вообще такая идея?",
       questions: [
         "Что это такое?",
         "Кому подойдёт?",
@@ -77,7 +77,7 @@ export const translations = {
       subtitle: "Нажмите для общения"
     },
     wowLive: {
-      greeting: "Привет! Я live-консультант WOW Page Live.\nМожем пообщаться здесь в чате или перейти в живой видеозвонок. С чего начнём?",
+      greeting: "Привет 👋\nЯ — Demo Agent. Показываю, как может выглядеть живой текстовый диалог на сайте.\n\nМожем пообщаться здесь в чате или перейти в живой видеозвонок.\n\nКак тебе вообще такая идея?",
       consultantOnline: "Live консультант онлайн",
       startLiveCall: "Начать живое общение",
       liveCallHint: "Видеозвонок с live-аватаром"
@@ -244,7 +244,7 @@ export const translations = {
     demo: {
       title: "How It Works",
       subtitle: "See how your presence communicates in real life",
-      greeting: "Hi! I'm a service consultant. I'll explain how the online presence works. What interests you?",
+      greeting: "Hi 👋\nI'm Demo Agent. I'm showing you what a live text dialogue on a website can look like, where instead of clicking buttons, you just chat.\n\nBasically, this is an example of how a website can \"talk\" instead of just \"show\" — explaining, answering, and guiding.\n\nWhat do you think of this idea?",
       questions: [
         "What is this?",
         "Who is it for?",
@@ -265,7 +265,7 @@ export const translations = {
       subtitle: "Tap to chat"
     },
     wowLive: {
-      greeting: "Hi! I'm your WOW Page Live consultant.\nWe can chat here or switch to a live video call. Where shall we start?",
+      greeting: "Hi 👋\nI'm Demo Agent. I'm showing you what a live text dialogue on a website can look like.\n\nWe can chat here or switch to a live video call.\n\nWhat do you think of this idea?",
       consultantOnline: "Live consultant online",
       startLiveCall: "Start live call",
       liveCallHint: "Video call with live avatar"
@@ -432,7 +432,7 @@ export const translations = {
     demo: {
       title: "So funktioniert es",
       subtitle: "Sehen Sie, wie Ihre Präsenz in der Realität kommuniziert",
-      greeting: "Hallo! Ich bin ein Service-Berater. Ich erkläre, wie die Online-Präsenz funktioniert. Was interessiert Sie?",
+      greeting: "Hallo 👋\nIch bin Demo Agent. Ich zeige dir, wie ein lebendiger Textdialog auf einer Website aussehen kann, wo du statt Buttons zu klicken, einfach chattest.\n\nIm Grunde ist das ein Beispiel dafür, wie eine Website \"reden\" statt nur \"zeigen\" kann — erklären, antworten und weiterführen.\n\nWas hältst du von dieser Idee?",
       questions: [
         "Was ist das?",
         "Für wen ist es?",
@@ -453,7 +453,7 @@ export const translations = {
       subtitle: "Tippen zum Chatten"
     },
     wowLive: {
-      greeting: "Hallo! Ich bin Ihr WOW Page Live-Berater.\nWir können hier chatten oder zu einem Live-Videoanruf wechseln. Womit fangen wir an?",
+      greeting: "Hallo 👋\nIch bin Demo Agent. Ich zeige dir, wie ein lebendiger Textdialog auf einer Website aussehen kann.\n\nWir können hier chatten oder zu einem Live-Videoanruf wechseln.\n\nWas hältst du von dieser Idee?",
       consultantOnline: "Live-Berater online",
       startLiveCall: "Live-Anruf starten",
       liveCallHint: "Videoanruf mit Live-Avatar"
@@ -620,7 +620,7 @@ export const translations = {
     demo: {
       title: "Cómo funciona",
       subtitle: "Mira cómo tu presencia se comunica en la realidad",
-      greeting: "¡Hola! Soy un consultor del servicio. Te explicaré cómo funciona la presencia online. ¿Qué te interesa?",
+      greeting: "¡Hola 👋\nSoy Demo Agent. Te muestro cómo puede verse un diálogo de texto vivo en un sitio web, donde en lugar de hacer clic en botones, simplemente chateas.\n\nBásicamente, esto es un ejemplo de cómo un sitio web puede \"hablar\" en lugar de solo \"mostrar\" — explicando, respondiendo y guiando.\n\n¿Qué te parece esta idea?",
       questions: [
         "¿Qué es esto?",
         "¿Para quién es?",
@@ -641,7 +641,7 @@ export const translations = {
       subtitle: "Toca para chatear"
     },
     wowLive: {
-      greeting: "¡Hola! Soy tu consultor de WOW Page Live.\nPodemos chatear aquí o pasar a una videollamada en vivo. ¿Por dónde empezamos?",
+      greeting: "¡Hola 👋\nSoy Demo Agent. Te muestro cómo puede verse un diálogo de texto vivo en un sitio web.\n\nPodemos chatear aquí o pasar a una videollamada en vivo.\n\n¿Qué te parece esta idea?",
       consultantOnline: "Consultor en vivo online",
       startLiveCall: "Iniciar llamada en vivo",
       liveCallHint: "Videollamada con avatar en vivo"
