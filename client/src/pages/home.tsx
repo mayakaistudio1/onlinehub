@@ -938,17 +938,17 @@ function Footer({ onOpenResearch }: { onOpenResearch: () => void }) {
   const { t } = useLanguage();
   
   return (
-    <footer className="border-t border-slate-100 py-8 px-6" data-testid="footer">
+    <footer className="border-t border-slate-100 py-8 px-6 pb-32" data-testid="footer">
       <div className="mx-auto max-w-lg text-center space-y-4">
         <div className="text-sm text-muted-foreground" data-testid="text-footer">
           {t.hero.title}
         </div>
         <button
           onClick={onOpenResearch}
-          className="inline-flex items-center gap-2 text-xs text-violet-600 hover:text-violet-700 transition-colors"
+          className="inline-flex items-center gap-2 text-sm px-4 py-2 bg-violet-50 text-violet-700 hover:bg-violet-100 rounded-full transition-colors"
           data-testid="button-open-research"
         >
-          <FileText className="w-3.5 h-3.5" />
+          <FileText className="w-4 h-4" />
           {t.research?.button || "Читать исследование"}
         </button>
       </div>
