@@ -1,0 +1,1 @@
+export { registerAvatarTestRoutes } from "./routes";
