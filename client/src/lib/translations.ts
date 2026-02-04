@@ -187,11 +187,6 @@ export const translations = {
         sent: "Отправлено!"
       },
       footer: "Без спама. Без воронок. Просто разговор."
-    },
-    research: {
-      title: "Исследование",
-      button: "Читать исследование",
-      subtitle: "Эволюция первого касания в бизнесе"
     }
   },
   en: {
@@ -380,11 +375,6 @@ export const translations = {
         sent: "Sent!"
       },
       footer: "No spam. No funnels. Just a conversation."
-    },
-    research: {
-      title: "Research",
-      button: "Read research",
-      subtitle: "Evolution of first touch in business"
     }
   },
   de: {
@@ -573,11 +563,6 @@ export const translations = {
         sent: "Gesendet!"
       },
       footer: "Kein Spam. Keine Trichter. Nur ein Gespräch."
-    },
-    research: {
-      title: "Forschung",
-      button: "Forschung lesen",
-      subtitle: "Evolution des Erstkontakts im Business"
     }
   },
   es: {
@@ -766,11 +751,6 @@ export const translations = {
         sent: "¡Enviado!"
       },
       footer: "Sin spam. Sin embudos. Solo una conversación."
-    },
-    research: {
-      title: "Investigación",
-      button: "Leer investigación",
-      subtitle: "Evolución del primer contacto en negocios"
     }
   }
 };

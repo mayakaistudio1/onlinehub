@@ -35,7 +35,6 @@ import { LiveAvatarChat } from "@/components/ui/LiveAvatarChat";
 import { ChatModal } from "@/components/ui/ChatModal";
 import { ChatPreviewBar } from "@/components/ui/ChatPreviewBar";
 import { WowLiveScreen } from "@/components/ui/WowLiveScreen";
-import { ResearchScreen } from "@/components/ui/ResearchScreen";
 import { useLanguage } from '@/lib/LanguageContext';
 
 type ChatIntent = "what" | "who" | "where";
@@ -934,23 +933,15 @@ function ContactSection() {
 }
 
 
-function Footer({ onOpenResearch }: { onOpenResearch: () => void }) {
+function Footer() {
   const { t } = useLanguage();
   
   return (
-    <footer className="border-t border-slate-100 py-8 px-6 pb-32" data-testid="footer">
-      <div className="mx-auto max-w-lg text-center space-y-4">
+    <footer className="border-t border-slate-100 py-8 px-6" data-testid="footer">
+      <div className="mx-auto max-w-lg text-center">
         <div className="text-sm text-muted-foreground" data-testid="text-footer">
           {t.hero.title}
         </div>
-        <button
-          onClick={onOpenResearch}
-          className="inline-flex items-center gap-2 text-sm px-4 py-2 bg-violet-50 text-violet-700 hover:bg-violet-100 rounded-full transition-colors"
-          data-testid="button-open-research"
-        >
-          <FileText className="w-4 h-4" />
-          {t.research?.button || "Читать исследование"}
-        </button>
       </div>
     </footer>
   );
@@ -1020,10 +1011,9 @@ function WowLivePage({ isOpen, onClose, language }: { isOpen: boolean; onClose: 
 }
 
 export default function HomePage() {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [isLiveOpen, setIsLiveOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isResearchOpen, setIsResearchOpen] = useState(false);
   const [initialChatMessage, setInitialChatMessage] = useState<string | undefined>();
   const scrollPositionRef = useRef(0);
 
@@ -1060,31 +1050,16 @@ export default function HomePage() {
       <LiveScenarios />
       <WhyItMatters />
       <ContactSection />
-      <Footer onOpenResearch={() => setIsResearchOpen(true)} />
+      <Footer />
       
       {!isLiveOpen && !isChatOpen && (
-        <>
-          <ChatPreviewBar onOpenChat={openLive} />
-          <button
-            onClick={() => setIsResearchOpen(true)}
-            className="fixed bottom-24 left-4 z-50 flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 text-slate-700 text-xs rounded-full shadow-lg hover:bg-slate-50 transition-colors"
-            data-testid="button-open-research-floating"
-          >
-            <FileText className="w-3.5 h-3.5" />
-            {t.research?.button || "Исследование"}
-          </button>
-        </>
+        <ChatPreviewBar onOpenChat={openLive} />
       )}
       
       <WowLiveScreen
         isOpen={isLiveOpen}
         onClose={closeLive}
         language={language}
-      />
-
-      <ResearchScreen
-        isOpen={isResearchOpen}
-        onClose={() => setIsResearchOpen(false)}
       />
     </div>
   );
