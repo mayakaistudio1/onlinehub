@@ -84,6 +84,7 @@ export function WowLiveScreen({ isOpen, onClose, language }: WowLiveScreenProps)
         body: JSON.stringify({
           message: text.trim(),
           history,
+          language,
         }),
       });
 

@@ -472,8 +472,10 @@ function LiveScenarios() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || isLoading) return;
     
     const userMsg: ChatMessage = {
       id: Date.now().toString(),
@@ -482,16 +484,47 @@ function LiveScenarios() {
     };
     
     setMessages(prev => [...prev, userMsg]);
+    const messageText = inputValue;
     setInputValue("");
+    setIsLoading(true);
 
-    setTimeout(() => {
-      const assistantMsg: ChatMessage = {
+    try {
+      const history = messages.map(m => ({
+        role: m.role,
+        content: m.text,
+      }));
+
+      const response = await fetch("/api/demo/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: messageText,
+          history,
+          language,
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.reply) {
+        const assistantMsg: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          text: data.reply
+        };
+        setMessages(prev => [...prev, assistantMsg]);
+      }
+    } catch (error) {
+      console.error("Chat error:", error);
+      const errorMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        text: t.scenarios.chatGreeting.replace("{name}", businessCard.avatarName)
+        text: "Извините, произошла ошибка. Попробуйте ещё раз."
       };
-      setMessages(prev => [...prev, assistantMsg]);
-    }, 1000);
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const chatGreetingText = t.scenarios.chatGreeting.replace("{name}", businessCard.avatarName);

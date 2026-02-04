@@ -12,14 +12,22 @@ export function registerChatRoutes(app: Express): void {
   // Demo chat endpoint - stateless, with system prompt
   app.post("/api/demo/chat", async (req: Request, res: Response) => {
     try {
-      const { message, history = [] } = req.body;
+      const { message, history = [], language = "ru" } = req.body;
 
       if (!message) {
         return res.status(400).json({ error: "Message is required" });
       }
 
+      const languageNames: Record<string, string> = {
+        ru: "Russian",
+        en: "English",
+        de: "German",
+        es: "Spanish"
+      };
+      const languageInstruction = `\n\nIMPORTANT: You MUST respond in ${languageNames[language] || "Russian"} language only.`;
+
       const messages: OpenAI.ChatCompletionMessageParam[] = [
-        { role: "system", content: WOW_PAGE_SYSTEM_PROMPT },
+        { role: "system", content: WOW_PAGE_SYSTEM_PROMPT + languageInstruction },
         ...history.map((m: { role: string; content: string }) => ({
           role: m.role as "user" | "assistant",
           content: m.content,

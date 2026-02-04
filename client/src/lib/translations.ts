@@ -77,7 +77,7 @@ export const translations = {
       subtitle: "Нажмите для общения"
     },
     wowLive: {
-      greeting: "Привет 👋\nЯ — Demo Agent. Показываю, как может выглядеть живой текстовый диалог на сайте.\n\nМожем пообщаться здесь в чате или перейти в живой видеозвонок.\n\nКак тебе вообще такая идея?",
+      greeting: "Привет! Я live-консультант WOW Page.\nМожем пообщаться здесь в чате или перейти в живой видеозвонок. С чего начнём?",
       consultantOnline: "Live консультант онлайн",
       startLiveCall: "Начать живое общение",
       liveCallHint: "Видеозвонок с live-аватаром"
@@ -265,7 +265,7 @@ export const translations = {
       subtitle: "Tap to chat"
     },
     wowLive: {
-      greeting: "Hi 👋\nI'm Demo Agent. I'm showing you what a live text dialogue on a website can look like.\n\nWe can chat here or switch to a live video call.\n\nWhat do you think of this idea?",
+      greeting: "Hi! I'm your WOW Page Live consultant.\nWe can chat here or switch to a live video call. Where shall we start?",
       consultantOnline: "Live consultant online",
       startLiveCall: "Start live call",
       liveCallHint: "Video call with live avatar"
@@ -453,7 +453,7 @@ export const translations = {
       subtitle: "Tippen zum Chatten"
     },
     wowLive: {
-      greeting: "Hallo 👋\nIch bin Demo Agent. Ich zeige dir, wie ein lebendiger Textdialog auf einer Website aussehen kann.\n\nWir können hier chatten oder zu einem Live-Videoanruf wechseln.\n\nWas hältst du von dieser Idee?",
+      greeting: "Hallo! Ich bin Ihr WOW Page Live-Berater.\nWir können hier chatten oder zu einem Live-Videoanruf wechseln. Womit fangen wir an?",
       consultantOnline: "Live-Berater online",
       startLiveCall: "Live-Anruf starten",
       liveCallHint: "Videoanruf mit Live-Avatar"
@@ -641,7 +641,7 @@ export const translations = {
       subtitle: "Toca para chatear"
     },
     wowLive: {
-      greeting: "¡Hola 👋\nSoy Demo Agent. Te muestro cómo puede verse un diálogo de texto vivo en un sitio web.\n\nPodemos chatear aquí o pasar a una videollamada en vivo.\n\n¿Qué te parece esta idea?",
+      greeting: "¡Hola! Soy tu consultor de WOW Page Live.\nPodemos chatear aquí o pasar a una videollamada en vivo. ¿Por dónde empezamos?",
       consultantOnline: "Consultor en vivo online",
       startLiveCall: "Iniciar llamada en vivo",
       liveCallHint: "Videollamada con avatar en vivo"

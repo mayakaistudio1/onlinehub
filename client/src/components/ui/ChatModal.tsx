@@ -20,7 +20,7 @@ interface ChatModalProps {
 }
 
 export function ChatModal({ isOpen, onClose, onSwitchToLiveAvatar, initialMessage }: ChatModalProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -86,6 +86,7 @@ export function ChatModal({ isOpen, onClose, onSwitchToLiveAvatar, initialMessag
         body: JSON.stringify({
           message: text.trim(),
           history,
+          language,
         }),
       });
 
