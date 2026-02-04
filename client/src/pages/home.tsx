@@ -35,6 +35,7 @@ import { LiveAvatarChat } from "@/components/ui/LiveAvatarChat";
 import { ChatModal } from "@/components/ui/ChatModal";
 import { ChatPreviewBar } from "@/components/ui/ChatPreviewBar";
 import { WowLiveScreen } from "@/components/ui/WowLiveScreen";
+import { ResearchScreen } from "@/components/ui/ResearchScreen";
 import { useLanguage } from '@/lib/LanguageContext';
 
 type ChatIntent = "what" | "who" | "where";
@@ -933,15 +934,23 @@ function ContactSection() {
 }
 
 
-function Footer() {
+function Footer({ onOpenResearch }: { onOpenResearch: () => void }) {
   const { t } = useLanguage();
   
   return (
     <footer className="border-t border-slate-100 py-8 px-6" data-testid="footer">
-      <div className="mx-auto max-w-lg text-center">
+      <div className="mx-auto max-w-lg text-center space-y-4">
         <div className="text-sm text-muted-foreground" data-testid="text-footer">
           {t.hero.title}
         </div>
+        <button
+          onClick={onOpenResearch}
+          className="inline-flex items-center gap-2 text-xs text-violet-600 hover:text-violet-700 transition-colors"
+          data-testid="button-open-research"
+        >
+          <FileText className="w-3.5 h-3.5" />
+          {t.research?.button || "Читать исследование"}
+        </button>
       </div>
     </footer>
   );
@@ -1014,6 +1023,7 @@ export default function HomePage() {
   const { language } = useLanguage();
   const [isLiveOpen, setIsLiveOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isResearchOpen, setIsResearchOpen] = useState(false);
   const [initialChatMessage, setInitialChatMessage] = useState<string | undefined>();
   const scrollPositionRef = useRef(0);
 
@@ -1050,7 +1060,7 @@ export default function HomePage() {
       <LiveScenarios />
       <WhyItMatters />
       <ContactSection />
-      <Footer />
+      <Footer onOpenResearch={() => setIsResearchOpen(true)} />
       
       {!isLiveOpen && !isChatOpen && (
         <ChatPreviewBar onOpenChat={openLive} />
@@ -1060,6 +1070,11 @@ export default function HomePage() {
         isOpen={isLiveOpen}
         onClose={closeLive}
         language={language}
+      />
+
+      <ResearchScreen
+        isOpen={isResearchOpen}
+        onClose={() => setIsResearchOpen(false)}
       />
     </div>
   );
