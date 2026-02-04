@@ -134,9 +134,14 @@ export default function AvatarTestsPage() {
         <h1 className="text-3xl font-bold mb-6" data-testid="text-page-title">
           Тестирование LiveAvatar (Sandbox)
         </h1>
-        <p className="text-gray-400 mb-8">
-          Sandbox режим — бесплатно, сессии до 1 минуты
-        </p>
+        <div className="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-8">
+          <div className="text-green-400 font-medium mb-2">Sandbox режим — кредиты НЕ списываются</div>
+          <div className="text-gray-400 text-sm space-y-1">
+            <div>Context ID: <span className="text-blue-400">ff6ea605-fd86-449c-8b22-ecb41bd4b27e</span> (WOW Live)</div>
+            <div>Аватар: Wayne (sandbox)</div>
+            <div>Сессия: ~1 минута, 1 вопрос на сессию</div>
+          </div>
+        </div>
 
         <Tabs defaultValue="questions" className="space-y-6">
           <TabsList className="bg-gray-800">
