@@ -933,29 +933,16 @@ function ContactSection() {
 }
 
 
-function Footer({ children }: { children?: React.ReactNode }) {
+function Footer() {
   const { t } = useLanguage();
   
   return (
-    <footer className="border-t border-slate-100 pt-8 pb-6 px-6" data-testid="footer">
-      <div className="mx-auto max-w-lg text-center space-y-4">
+    <footer className="border-t border-slate-100 py-8 px-6" data-testid="footer">
+      <div className="mx-auto max-w-lg text-center">
         <div className="text-sm text-muted-foreground" data-testid="text-footer">
           {t.hero.title}
         </div>
-        <a
-          href="/research"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm text-violet-600 hover:text-violet-700 transition-colors"
-          data-testid="link-research"
-        >
-          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-          {t.research.badge}
-        </a>
       </div>
-      {children}
     </footer>
   );
 }
@@ -1057,19 +1044,17 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-dvh" data-testid="page-home">
+    <div className="min-h-dvh pb-28" data-testid="page-home">
       <Hero />
       <HowItWorks />
       <LiveScenarios />
       <WhyItMatters />
       <ContactSection />
-      <Footer>
-        {!isLiveOpen && !isChatOpen && (
-          <div className="mt-6">
-            <ChatPreviewBar onOpenChat={openLive} />
-          </div>
-        )}
-      </Footer>
+      <Footer />
+      
+      {!isLiveOpen && !isChatOpen && (
+        <ChatPreviewBar onOpenChat={openLive} />
+      )}
       
       <WowLiveScreen
         isOpen={isLiveOpen}
