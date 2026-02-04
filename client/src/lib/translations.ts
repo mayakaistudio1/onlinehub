@@ -171,6 +171,50 @@ export const translations = {
         expert: "Andrew"
       }
     },
+    research: {
+      badge: "Исследование",
+      title: "Почему все идёт к этому формату",
+      subtitle: "От визиток до AI — эволюция первого впечатления",
+      evolution: {
+        title: "Эволюция",
+        stages: [
+          { year: "1975", label: "Визитки", desc: "Бумага, ручная передача" },
+          { year: "2005", label: "Сайты", desc: "Статично, ищи сам" },
+          { year: "2015", label: "Соцсети", desc: "Шум, алгоритмы" },
+          { year: "2026", label: "WOW Page", desc: "Живой диалог 24/7" }
+        ]
+      },
+      problems: {
+        title: "Что не так сегодня",
+        items: [
+          { icon: "clock", title: "Соцсети съедают время", desc: "5-8 часов в неделю на контент, который видят 2% подписчиков" },
+          { icon: "users", title: "Сайты молчат", desc: "Посетитель ушёл с вопросом — ты даже не узнал" },
+          { icon: "zap", title: "Ты работаешь на алгоритм", desc: "Вместо того, чтобы AI работал на тебя" }
+        ]
+      },
+      solution: {
+        title: "WOW Page — первое решение",
+        subtitle: "Объединяет всё в одном",
+        points: [
+          "Усиливает соцсети — одна ссылка, WOW-эффект",
+          "Работает без посетителей — уже крутая визитка",
+          "AI работает НА тебя — 24/7 без твоего участия",
+          "Премиум-опыт — впечатляет с первой секунды"
+        ]
+      },
+      stats: [
+        { value: "88%", label: "визиток выбрасывают за неделю" },
+        { value: "2%", label: "органический охват в соцсетях" },
+        { value: "47%", label: "уходят с сайта без ответа" },
+        { value: "3x", label: "быстрее привлекают WOW Page" }
+      ],
+      fomo: {
+        title: "Пилот запускается",
+        subtitle: "Ограниченное количество мест по специальной цене",
+        cta: "Занять место",
+        spots: "осталось мест"
+      }
+    },
     contact: {
       title: "Запускаем твоё живое онлайн-представительство",
       trigger: "Через 48 часов — формат, который работает за тебя.",
@@ -375,6 +419,50 @@ export const translations = {
         sent: "Sent!"
       },
       footer: "No spam. No funnels. Just a conversation."
+    },
+    research: {
+      badge: "Research",
+      title: "Why everything leads to this format",
+      subtitle: "From business cards to AI — the evolution of first impressions",
+      evolution: {
+        title: "Evolution",
+        stages: [
+          { year: "1975", label: "Business Cards", desc: "Paper, hand-to-hand" },
+          { year: "2005", label: "Websites", desc: "Static, find it yourself" },
+          { year: "2015", label: "Social Media", desc: "Noise, algorithms" },
+          { year: "2026", label: "WOW Page", desc: "Live dialogue 24/7" }
+        ]
+      },
+      problems: {
+        title: "What's wrong today",
+        items: [
+          { icon: "clock", title: "Social media eats your time", desc: "5-8 hours a week on content seen by 2% of followers" },
+          { icon: "users", title: "Websites stay silent", desc: "Visitor left with a question — you never knew" },
+          { icon: "zap", title: "You work for the algorithm", desc: "Instead of AI working for you" }
+        ]
+      },
+      solution: {
+        title: "WOW Page — the first solution",
+        subtitle: "Combines everything in one",
+        points: [
+          "Amplifies social media — one link, WOW effect",
+          "Works without visitors — already a great business card",
+          "AI works FOR you — 24/7 without your involvement",
+          "Premium experience — impresses from the first second"
+        ]
+      },
+      stats: [
+        { value: "88%", label: "of business cards thrown away in a week" },
+        { value: "2%", label: "organic reach on social media" },
+        { value: "47%", label: "leave websites without answers" },
+        { value: "3x", label: "faster attraction with WOW Page" }
+      ],
+      fomo: {
+        title: "Pilot is launching",
+        subtitle: "Limited spots at a special price",
+        cta: "Claim your spot",
+        spots: "spots left"
+      }
     }
   },
   de: {
@@ -563,6 +651,50 @@ export const translations = {
         sent: "Gesendet!"
       },
       footer: "Kein Spam. Keine Trichter. Nur ein Gespräch."
+    },
+    research: {
+      badge: "Forschung",
+      title: "Warum alles zu diesem Format führt",
+      subtitle: "Von Visitenkarten zu AI — die Evolution des ersten Eindrucks",
+      evolution: {
+        title: "Evolution",
+        stages: [
+          { year: "1975", label: "Visitenkarten", desc: "Papier, Handübergabe" },
+          { year: "2005", label: "Websites", desc: "Statisch, selbst suchen" },
+          { year: "2015", label: "Social Media", desc: "Lärm, Algorithmen" },
+          { year: "2026", label: "WOW Page", desc: "Live-Dialog 24/7" }
+        ]
+      },
+      problems: {
+        title: "Was heute falsch läuft",
+        items: [
+          { icon: "clock", title: "Social Media frisst Zeit", desc: "5-8 Stunden pro Woche für Inhalte, die 2% sehen" },
+          { icon: "users", title: "Websites schweigen", desc: "Besucher ging mit Frage — du wusstest es nie" },
+          { icon: "zap", title: "Du arbeitest für den Algorithmus", desc: "Statt dass AI für dich arbeitet" }
+        ]
+      },
+      solution: {
+        title: "WOW Page — die erste Lösung",
+        subtitle: "Vereint alles in einem",
+        points: [
+          "Verstärkt Social Media — ein Link, WOW-Effekt",
+          "Funktioniert ohne Besucher — schon eine tolle Visitenkarte",
+          "AI arbeitet FÜR dich — 24/7 ohne dein Zutun",
+          "Premium-Erlebnis — beeindruckt ab der ersten Sekunde"
+        ]
+      },
+      stats: [
+        { value: "88%", label: "der Visitenkarten werden in einer Woche weggeworfen" },
+        { value: "2%", label: "organische Reichweite in Social Media" },
+        { value: "47%", label: "verlassen Websites ohne Antwort" },
+        { value: "3x", label: "schnellere Anziehung mit WOW Page" }
+      ],
+      fomo: {
+        title: "Pilot startet",
+        subtitle: "Begrenzte Plätze zum Sonderpreis",
+        cta: "Platz sichern",
+        spots: "Plätze übrig"
+      }
     }
   },
   es: {
@@ -751,6 +883,50 @@ export const translations = {
         sent: "¡Enviado!"
       },
       footer: "Sin spam. Sin embudos. Solo una conversación."
+    },
+    research: {
+      badge: "Investigación",
+      title: "Por qué todo lleva a este formato",
+      subtitle: "De tarjetas de visita a AI — la evolución de la primera impresión",
+      evolution: {
+        title: "Evolución",
+        stages: [
+          { year: "1975", label: "Tarjetas", desc: "Papel, mano a mano" },
+          { year: "2005", label: "Sitios web", desc: "Estático, búscalo tú" },
+          { year: "2015", label: "Redes sociales", desc: "Ruido, algoritmos" },
+          { year: "2026", label: "WOW Page", desc: "Diálogo vivo 24/7" }
+        ]
+      },
+      problems: {
+        title: "Qué está mal hoy",
+        items: [
+          { icon: "clock", title: "Las redes devoran tu tiempo", desc: "5-8 horas a la semana en contenido que ve el 2%" },
+          { icon: "users", title: "Los sitios web callan", desc: "El visitante se fue con preguntas — nunca lo supiste" },
+          { icon: "zap", title: "Trabajas para el algoritmo", desc: "En lugar de que AI trabaje para ti" }
+        ]
+      },
+      solution: {
+        title: "WOW Page — la primera solución",
+        subtitle: "Une todo en uno",
+        points: [
+          "Amplifica las redes — un enlace, efecto WOW",
+          "Funciona sin visitantes — ya es una gran tarjeta",
+          "AI trabaja PARA ti — 24/7 sin tu participación",
+          "Experiencia premium — impresiona desde el primer segundo"
+        ]
+      },
+      stats: [
+        { value: "88%", label: "de tarjetas se tiran en una semana" },
+        { value: "2%", label: "alcance orgánico en redes sociales" },
+        { value: "47%", label: "abandonan sitios sin respuestas" },
+        { value: "3x", label: "atracción más rápida con WOW Page" }
+      ],
+      fomo: {
+        title: "El piloto comienza",
+        subtitle: "Plazas limitadas a precio especial",
+        cta: "Reservar plaza",
+        spots: "plazas disponibles"
+      }
     }
   }
 };

@@ -35,6 +35,7 @@ import { LiveAvatarChat } from "@/components/ui/LiveAvatarChat";
 import { ChatModal } from "@/components/ui/ChatModal";
 import { ChatPreviewBar } from "@/components/ui/ChatPreviewBar";
 import { WowLiveScreen } from "@/components/ui/WowLiveScreen";
+import { ResearchSection } from "@/components/ui/ResearchSection";
 import { useLanguage } from '@/lib/LanguageContext';
 
 type ChatIntent = "what" | "who" | "where";
@@ -1049,6 +1050,7 @@ export default function HomePage() {
       <HowItWorks />
       <LiveScenarios />
       <WhyItMatters />
+      <ResearchSection />
       <ContactSection />
       <Footer />
       
