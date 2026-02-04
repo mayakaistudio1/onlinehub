@@ -66,18 +66,24 @@ export function registerAvatarTestRoutes(app: Express): void {
 
       const startTime = Date.now();
 
-      const tokenResult = await getSessionToken("ru", undefined, true);
+      // Используем WOW Live контекст (ff6ea605-fd86-449c-8b22-ecb41bd4b27e) в sandbox режиме
+      const tokenResult = await getSessionToken("ru", "wow-live", true);
       const { session_id, session_token } = tokenResult;
+
+      console.log(`[Avatar Test] Sandbox session created: ${session_id}, is_sandbox: true`);
 
       await storage.updateTestRun(testRun.id, { sessionId: session_id });
 
       await startSession(session_token);
 
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Ждём инициализации аватара
+      await new Promise(resolve => setTimeout(resolve, 3000));
 
+      // Отправляем вопрос
       await sendEvent(session_token, "text_input", { text: question });
 
-      await new Promise(resolve => setTimeout(resolve, 15000));
+      // Ждём ответа аватара (sandbox до 1 мин, ответ обычно 10-20 сек)
+      await new Promise(resolve => setTimeout(resolve, 20000));
 
       await stopSession(session_id, session_token);
 
@@ -136,16 +142,19 @@ export function registerAvatarTestRoutes(app: Express): void {
             await storage.updateTestRun(run.id, { status: "running" });
             const startTime = Date.now();
 
-            const tokenResult = await getSessionToken("ru", undefined, true);
+            // Используем WOW Live контекст в sandbox режиме
+            const tokenResult = await getSessionToken("ru", "wow-live", true);
             const { session_id, session_token } = tokenResult;
+
+            console.log(`[Avatar Test] Run ${run.id}: Sandbox session ${session_id}`);
 
             await storage.updateTestRun(run.id, { sessionId: session_id });
 
             await startSession(session_token);
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise(resolve => setTimeout(resolve, 3000));
 
             await sendEvent(session_token, "text_input", { text: run.question });
-            await new Promise(resolve => setTimeout(resolve, 15000));
+            await new Promise(resolve => setTimeout(resolve, 20000));
 
             await stopSession(session_id, session_token);
             await new Promise(resolve => setTimeout(resolve, 2000));
