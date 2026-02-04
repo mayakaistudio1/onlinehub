@@ -64,7 +64,7 @@ export default function ResearchPage() {
               </h2>
               
               <div className="relative ml-5 pl-8 border-l-2 border-slate-200 space-y-10">
-                {content.history.eras.map((era, index) => (
+                {content.history.eras.map((era: any, index: number) => (
                   <motion.div
                     key={era.period}
                     initial={{ opacity: 0, x: -10 }}
@@ -86,7 +86,7 @@ export default function ResearchPage() {
                     </h3>
                     <p className="text-slate-600 text-sm leading-relaxed mb-3">{era.description}</p>
                     <div className="flex flex-wrap gap-2">
-                      {era.stats.map((stat, i) => (
+                      {era.stats.map((stat: string, i: number) => (
                         <span key={i} className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-lg">
                           {stat}
                         </span>
@@ -106,7 +106,7 @@ export default function ResearchPage() {
               </h2>
               
               <div className="space-y-4">
-                {content.problems.items.map((item, index) => (
+                {content.problems.items.map((item: any, index: number) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 10 }}
@@ -149,7 +149,7 @@ export default function ResearchPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {content.economics.table.rows.map((row, index) => (
+                    {content.economics.table.rows.map((row: any, index: number) => (
                       <tr key={index} className={row.highlight ? "bg-violet-50" : ""}>
                         <td className={`p-3 border-b border-slate-100 ${row.highlight ? "font-semibold text-violet-700" : "text-slate-700"}`}>
                           {row.channel}
@@ -180,7 +180,7 @@ export default function ResearchPage() {
               </h2>
               
               <div className="space-y-4">
-                {content.comparison.solutions.map((solution, index) => (
+                {content.comparison.solutions.map((solution: any, index: number) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 10 }}
@@ -218,12 +218,12 @@ export default function ResearchPage() {
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-1.5">
-                      {solution.pros.map((pro, i) => (
+                      {solution.pros.map((pro: string, i: number) => (
                         <span key={i} className="text-xs bg-green-50 text-green-700 px-2 py-1 rounded">
                           + {pro}
                         </span>
                       ))}
-                      {solution.cons.map((con, i) => (
+                      {solution.cons.map((con: string, i: number) => (
                         <span key={i} className="text-xs bg-red-50 text-red-600 px-2 py-1 rounded">
                           − {con}
                         </span>
@@ -248,7 +248,7 @@ export default function ResearchPage() {
                 <div className="p-5 bg-slate-50 rounded-xl border border-slate-100">
                   <h4 className="font-semibold text-slate-700 mb-3">{content.roi.traditional.title}</h4>
                   <ul className="space-y-2 text-sm text-slate-600">
-                    {content.roi.traditional.items.map((item, i) => (
+                    {content.roi.traditional.items.map((item: any, i: number) => (
                       <li key={i} className="flex justify-between">
                         <span>{item.label}</span>
                         <span className="font-medium text-slate-700">{item.value}</span>
@@ -264,7 +264,7 @@ export default function ResearchPage() {
                 <div className="p-5 bg-violet-50 rounded-xl border border-violet-200">
                   <h4 className="font-semibold text-violet-700 mb-3">{content.roi.wowpage.title}</h4>
                   <ul className="space-y-2 text-sm text-slate-600">
-                    {content.roi.wowpage.items.map((item, i) => (
+                    {content.roi.wowpage.items.map((item: any, i: number) => (
                       <li key={i} className="flex justify-between">
                         <span>{item.label}</span>
                         <span className="font-medium text-violet-700">{item.value}</span>
@@ -293,7 +293,7 @@ export default function ResearchPage() {
               <h2 className="font-serif text-2xl mb-4">{content.solution.title}</h2>
               <p className="text-violet-100 mb-6 leading-relaxed">{content.solution.description}</p>
               <ul className="space-y-3 mb-6">
-                {content.solution.points.map((point, index) => (
+                {content.solution.points.map((point: string, index: number) => (
                   <li key={index} className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-violet-200 flex-shrink-0 mt-0.5" />
                     <span>{point}</span>
@@ -301,7 +301,7 @@ export default function ResearchPage() {
                 ))}
               </ul>
               <div className="grid grid-cols-3 gap-4">
-                {content.solution.stats.map((stat, index) => (
+                {content.solution.stats.map((stat: any, index: number) => (
                   <div key={index} className="text-center">
                     <div className="text-2xl font-bold">{stat.value}</div>
                     <div className="text-xs text-violet-200">{stat.label}</div>
@@ -313,7 +313,7 @@ export default function ResearchPage() {
             <section className="mb-12">
               <h2 className="font-serif text-2xl text-slate-900 mb-6">{content.conclusion.title}</h2>
               <div className="prose prose-slate max-w-none">
-                {content.conclusion.paragraphs.map((p, i) => (
+                {content.conclusion.paragraphs.map((p: string, i: number) => (
                   <p key={i} className="text-slate-600 leading-relaxed mb-4">{p}</p>
                 ))}
               </div>
@@ -446,7 +446,7 @@ const researchContent: Record<string, any> = {
           { channel: "Выставки", cost: "$500-2,000", conversion: "5-15%", cpl: "$3,300-40,000" },
           { channel: "Корп. сайт", cost: "$100-500/мес", conversion: "1-3%", cpl: "$3,300-50,000" },
           { channel: "Контекстная реклама", cost: "$15-100/клик", conversion: "2-5%", cpl: "$300-5,000" },
-          { channel: "AI-чатбот (GPT)", cost: "$200-1,500/мес", conversion: "12-20%", cpl: "$250-1,000" },
+          { channel: "AI-чатбот (LLM)", cost: "$200-1,500/мес", conversion: "12-20%", cpl: "$250-1,000" },
           { channel: "WOW Page", cost: "$150-400/мес", conversion: "15-25%", cpl: "$80-533", highlight: true }
         ]
       },
@@ -488,7 +488,7 @@ const researchContent: Record<string, any> = {
           cons: ["Роботизированность", "Сценарная логика"]
         },
         {
-          name: "AI-чатбот (GPT)",
+          name: "AI-чатбот (LLM)",
           period: "2023-2024",
           cost: "$2,000-25,000 + $200-1,500/мес",
           conversion: "12-20%",
@@ -537,7 +537,7 @@ const researchContent: Record<string, any> = {
       title: "Почему WOW Page — оптимальный выбор",
       description: "WOW Page объединяет преимущества всех предыдущих решений: интерактивность AI-чатбота, визуальное воздействие видео, доступность 24/7 и персонализацию под каждого посетителя.",
       points: [
-        "GPT-4o для глубокого понимания контекста и естественного диалога",
+        "Лучшие AI-модели для глубокого понимания контекста и естественного диалога",
         "LiveAvatar для живого видеоприсутствия без вашего участия",
         "Работает в Telegram и браузере — один опыт везде",
         "Адаптируется под намерение посетителя: холодный контакт, тёплое введение, партнёр"
@@ -647,7 +647,7 @@ const researchContent: Record<string, any> = {
           { channel: "Exhibitions", cost: "$500-2,000", conversion: "5-15%", cpl: "$3,300-40,000" },
           { channel: "Corporate website", cost: "$100-500/mo", conversion: "1-3%", cpl: "$3,300-50,000" },
           { channel: "PPC advertising", cost: "$15-100/click", conversion: "2-5%", cpl: "$300-5,000" },
-          { channel: "AI chatbot (GPT)", cost: "$200-1,500/mo", conversion: "12-20%", cpl: "$250-1,000" },
+          { channel: "AI chatbot (LLM)", cost: "$200-1,500/mo", conversion: "12-20%", cpl: "$250-1,000" },
           { channel: "WOW Page", cost: "$150-400/mo", conversion: "15-25%", cpl: "$80-533", highlight: true }
         ]
       },
@@ -689,7 +689,7 @@ const researchContent: Record<string, any> = {
           cons: ["Robotic", "Scripted logic"]
         },
         {
-          name: "AI Chatbot (GPT)",
+          name: "AI Chatbot (LLM)",
           period: "2023-2024",
           cost: "$2,000-25,000 + $200-1,500/mo",
           conversion: "12-20%",
@@ -738,7 +738,7 @@ const researchContent: Record<string, any> = {
       title: "Why WOW Page is the Optimal Choice",
       description: "WOW Page combines advantages of all previous solutions: AI chatbot interactivity, video visual impact, 24/7 availability, and personalization for each visitor.",
       points: [
-        "GPT-4o for deep context understanding and natural dialogue",
+        "Best-in-class AI models for deep context understanding and natural dialogue",
         "LiveAvatar for live video presence without your participation",
         "Works in Telegram and browser—same experience everywhere",
         "Adapts to visitor intent: cold contact, warm intro, partner"
@@ -848,7 +848,7 @@ const researchContent: Record<string, any> = {
           { channel: "Messen", cost: "$500-2.000", conversion: "5-15%", cpl: "$3.300-40.000" },
           { channel: "Unternehmenswebsite", cost: "$100-500/Mo", conversion: "1-3%", cpl: "$3.300-50.000" },
           { channel: "PPC-Werbung", cost: "$15-100/Klick", conversion: "2-5%", cpl: "$300-5.000" },
-          { channel: "AI-Chatbot (GPT)", cost: "$200-1.500/Mo", conversion: "12-20%", cpl: "$250-1.000" },
+          { channel: "AI-Chatbot (LLM)", cost: "$200-1.500/Mo", conversion: "12-20%", cpl: "$250-1.000" },
           { channel: "WOW Page", cost: "$150-400/Mo", conversion: "15-25%", cpl: "$80-533", highlight: true }
         ]
       },
@@ -865,7 +865,7 @@ const researchContent: Record<string, any> = {
         { name: "Unternehmenswebsite", period: "2010er", cost: "$5.000-50.000", conversion: "1-3%", pros: ["Volle Kontrolle"], cons: ["Statisch"] },
         { name: "Landing Page", period: "2015+", cost: "$1.000-15.000", conversion: "2-10%", pros: ["Aktionsfokus"], cons: ["Eine Aufgabe"] },
         { name: "Einfacher Chatbot", period: "2018-2022", cost: "$500-5.000", conversion: "5-10%", pros: ["FAQ-Automatisierung"], cons: ["Roboterhaft"] },
-        { name: "AI-Chatbot (GPT)", period: "2023-2024", cost: "$2.000-25.000", conversion: "12-20%", pros: ["Kontextverständnis"], cons: ["Nur Text"] },
+        { name: "AI-Chatbot (LLM)", period: "2023-2024", cost: "$2.000-25.000", conversion: "12-20%", pros: ["Kontextverständnis"], cons: ["Nur Text"] },
         { name: "WOW Page", period: "2024+", cost: "$2.000-8.000", conversion: "15-25%", pros: ["Text + Video", "24/7"], cons: [], recommended: true }
       ]
     },
@@ -880,7 +880,7 @@ const researchContent: Record<string, any> = {
     solution: {
       title: "Warum WOW Page die optimale Wahl ist",
       description: "WOW Page vereint die Vorteile aller bisherigen Lösungen.",
-      points: ["GPT-4o für tiefes Kontextverständnis", "LiveAvatar für Live-Video-Präsenz", "Funktioniert in Telegram und Browser", "Passt sich der Besucherabsicht an"],
+      points: ["Beste AI-Modelle für tiefes Kontextverständnis", "LiveAvatar für Live-Video-Präsenz", "Funktioniert in Telegram und Browser", "Passt sich der Besucherabsicht an"],
       stats: [{ value: "24/7", label: "Non-Stop-Betrieb" }, { value: "2,5-3x", label: "Schnellere Anziehung" }, { value: "40%", label: "Preisaufschlag" }]
     },
     conclusion: {
@@ -929,7 +929,7 @@ const researchContent: Record<string, any> = {
           { channel: "Ferias", cost: "$500-2.000", conversion: "5-15%", cpl: "$3.300-40.000" },
           { channel: "Web corporativa", cost: "$100-500/mes", conversion: "1-3%", cpl: "$3.300-50.000" },
           { channel: "Publicidad PPC", cost: "$15-100/clic", conversion: "2-5%", cpl: "$300-5.000" },
-          { channel: "AI Chatbot (GPT)", cost: "$200-1.500/mes", conversion: "12-20%", cpl: "$250-1.000" },
+          { channel: "AI Chatbot (LLM)", cost: "$200-1.500/mes", conversion: "12-20%", cpl: "$250-1.000" },
           { channel: "WOW Page", cost: "$150-400/mes", conversion: "15-25%", cpl: "$80-533", highlight: true }
         ]
       },
@@ -943,7 +943,7 @@ const researchContent: Record<string, any> = {
         { name: "Web Corporativa", period: "2010s", cost: "$5.000-50.000", conversion: "1-3%", pros: ["Control total"], cons: ["Estática"] },
         { name: "Landing Page", period: "2015+", cost: "$1.000-15.000", conversion: "2-10%", pros: ["Enfoque en acción"], cons: ["Una tarea"] },
         { name: "Chatbot Simple", period: "2018-2022", cost: "$500-5.000", conversion: "5-10%", pros: ["Automatización FAQ"], cons: ["Robótico"] },
-        { name: "AI Chatbot (GPT)", period: "2023-2024", cost: "$2.000-25.000", conversion: "12-20%", pros: ["Comprensión contextual"], cons: ["Solo texto"] },
+        { name: "AI Chatbot (LLM)", period: "2023-2024", cost: "$2.000-25.000", conversion: "12-20%", pros: ["Comprensión contextual"], cons: ["Solo texto"] },
         { name: "WOW Page", period: "2024+", cost: "$2.000-8.000", conversion: "15-25%", pros: ["Texto + video", "24/7"], cons: [], recommended: true }
       ]
     },
@@ -958,7 +958,7 @@ const researchContent: Record<string, any> = {
     solution: {
       title: "Por Qué WOW Page es la Elección Óptima",
       description: "WOW Page combina las ventajas de todas las soluciones anteriores.",
-      points: ["GPT-4o para comprensión profunda del contexto", "LiveAvatar para presencia de video en vivo", "Funciona en Telegram y navegador", "Se adapta a la intención del visitante"],
+      points: ["Mejores modelos AI para comprensión profunda del contexto", "LiveAvatar para presencia de video en vivo", "Funciona en Telegram y navegador", "Se adapta a la intención del visitante"],
       stats: [{ value: "24/7", label: "Operación continua" }, { value: "2,5-3x", label: "Atracción más rápida" }, { value: "40%", label: "Prima de precio" }]
     },
     conclusion: {
