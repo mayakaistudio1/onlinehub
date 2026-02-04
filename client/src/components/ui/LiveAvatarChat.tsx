@@ -608,14 +608,14 @@ export function LiveAvatarChat({
           {/* ... other states (connecting, waiting, error) remain similar ... */}
 
           {(sessionState === "connected" || (autoStart && (sessionState === "idle" || sessionState === "connecting" || sessionState === "waiting_avatar"))) && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black">
-              {/* VIDEO SECTION - TRUE FULL SCREEN */}
+            <div className="absolute inset-0 bg-black">
+              {/* VIDEO SECTION - TRUE FULL SCREEN 9:16 */}
               <video
                 ref={videoRef}
                 autoPlay
                 playsInline
                 muted
-                className="w-full h-full object-contain"
+                className="absolute inset-0 w-full h-full object-cover"
                 data-testid="video-avatar"
               />
               
