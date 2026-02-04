@@ -1,6 +1,6 @@
 import type { Express, Request, Response } from "express";
 import { storage } from "../../storage";
-import { getSessionToken, startSession, stopSession, sendEvent, getSessionTranscript } from "../liveavatar/routes";
+import { getSessionToken, getSessionTranscript } from "../liveavatar/routes";
 import { insertAvatarTestQuestionSchema } from "@shared/schema";
 
 export function registerAvatarTestRoutes(app: Express): void {
@@ -48,146 +48,65 @@ export function registerAvatarTestRoutes(app: Express): void {
     }
   });
 
-  app.post("/api/avatar-tests/run-single", async (req: Request, res: Response) => {
+  // Создать sandbox токен для тестирования
+  app.post("/api/avatar-tests/sandbox-token", async (req: Request, res: Response) => {
     try {
-      const { questionId, question } = req.body;
-      if (!questionId || !question) {
-        return res.status(400).json({ error: "Missing questionId or question" });
+      // Используем WOW Live контекст в sandbox режиме
+      const tokenResult = await getSessionToken("ru", "wow-live", true);
+      
+      console.log(`[Avatar Test] Sandbox session created: ${tokenResult.session_id}`);
+      
+      res.status(200).json({
+        session_id: tokenResult.session_id,
+        session_token: tokenResult.session_token,
+        is_sandbox: true
+      });
+    } catch (error: any) {
+      console.error("Sandbox token error:", error);
+      res.status(500).json({ error: "Failed to create sandbox token", details: error?.message });
+    }
+  });
+
+  // Записать результат теста после сессии
+  app.post("/api/avatar-tests/save-result", async (req: Request, res: Response) => {
+    try {
+      const { questionId, question, sessionId } = req.body;
+      
+      if (!questionId || !question || !sessionId) {
+        return res.status(400).json({ error: "Missing required fields" });
       }
 
-      const testRun = await storage.createTestRun({
-        questionId,
-        question,
-        status: "running",
-        answer: null,
-        sessionId: null,
-        responseTimeMs: null,
-      });
-
-      const startTime = Date.now();
-
-      // Используем WOW Live контекст (ff6ea605-fd86-449c-8b22-ecb41bd4b27e) в sandbox режиме
-      const tokenResult = await getSessionToken("ru", "wow-live", true);
-      const { session_id, session_token } = tokenResult;
-
-      console.log(`[Avatar Test] Sandbox session created: ${session_id}, is_sandbox: true`);
-
-      await storage.updateTestRun(testRun.id, { sessionId: session_id });
-
-      await startSession(session_token);
-
-      // Ждём инициализации аватара
-      await new Promise(resolve => setTimeout(resolve, 3000));
-
-      // Отправляем вопрос
-      await sendEvent(session_token, "text_input", { text: question });
-
-      // Ждём ответа аватара (sandbox до 1 мин, ответ обычно 10-20 сек)
-      await new Promise(resolve => setTimeout(resolve, 20000));
-
-      await stopSession(session_id, session_token);
-
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
+      // Получаем транскрипт сессии
       let answer = "";
+      let responseTimeMs = null;
+      
       try {
-        const transcript = await getSessionTranscript(session_id);
+        const transcript = await getSessionTranscript(sessionId);
         if (transcript?.data?.messages) {
-          const aiMessages = transcript.data.messages.filter((m: any) => m.role === "assistant" || m.role === "ai");
+          const aiMessages = transcript.data.messages.filter(
+            (m: any) => m.role === "assistant" || m.role === "ai" || m.role === "agent"
+          );
           if (aiMessages.length > 0) {
-            answer = aiMessages[aiMessages.length - 1].content || aiMessages[aiMessages.length - 1].text || "";
+            answer = aiMessages.map((m: any) => m.content || m.text || "").join("\n\n");
           }
         }
       } catch (e) {
         console.error("Failed to get transcript:", e);
       }
 
-      const responseTimeMs = Date.now() - startTime;
-
-      const updatedRun = await storage.updateTestRun(testRun.id, {
+      const testRun = await storage.createTestRun({
+        questionId,
+        question,
+        sessionId,
+        answer: answer || "Транскрипт недоступен",
         status: "completed",
-        answer,
         responseTimeMs,
       });
 
-      res.status(200).json(updatedRun);
+      res.status(200).json(testRun);
     } catch (error: any) {
-      console.error("Run single test error:", error);
-      res.status(500).json({ error: "Test failed", details: error?.message });
-    }
-  });
-
-  app.post("/api/avatar-tests/run-all", async (_req: Request, res: Response) => {
-    try {
-      const questions = await storage.getTestQuestions();
-      
-      const runs = [];
-      for (const q of questions) {
-        const testRun = await storage.createTestRun({
-          questionId: q.id,
-          question: q.question,
-          status: "pending",
-          answer: null,
-          sessionId: null,
-          responseTimeMs: null,
-        });
-        runs.push(testRun);
-      }
-
-      res.status(200).json({ message: `Created ${runs.length} test runs`, runs });
-      
-      (async () => {
-        for (const run of runs) {
-          try {
-            await storage.updateTestRun(run.id, { status: "running" });
-            const startTime = Date.now();
-
-            // Используем WOW Live контекст в sandbox режиме
-            const tokenResult = await getSessionToken("ru", "wow-live", true);
-            const { session_id, session_token } = tokenResult;
-
-            console.log(`[Avatar Test] Run ${run.id}: Sandbox session ${session_id}`);
-
-            await storage.updateTestRun(run.id, { sessionId: session_id });
-
-            await startSession(session_token);
-            await new Promise(resolve => setTimeout(resolve, 3000));
-
-            await sendEvent(session_token, "text_input", { text: run.question });
-            await new Promise(resolve => setTimeout(resolve, 20000));
-
-            await stopSession(session_id, session_token);
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            let answer = "";
-            try {
-              const transcript = await getSessionTranscript(session_id);
-              if (transcript?.data?.messages) {
-                const aiMessages = transcript.data.messages.filter((m: any) => m.role === "assistant" || m.role === "ai");
-                if (aiMessages.length > 0) {
-                  answer = aiMessages[aiMessages.length - 1].content || aiMessages[aiMessages.length - 1].text || "";
-                }
-              }
-            } catch (e) {
-              console.error("Failed to get transcript:", e);
-            }
-
-            const responseTimeMs = Date.now() - startTime;
-            await storage.updateTestRun(run.id, {
-              status: "completed",
-              answer,
-              responseTimeMs,
-            });
-          } catch (error) {
-            console.error(`Test run ${run.id} failed:`, error);
-            await storage.updateTestRun(run.id, { status: "failed" });
-          }
-        }
-      })();
-
-    } catch (error: any) {
-      console.error("Run all tests error:", error);
-      res.status(500).json({ error: "Failed to start tests", details: error?.message });
+      console.error("Save result error:", error);
+      res.status(500).json({ error: "Failed to save result", details: error?.message });
     }
   });
 
