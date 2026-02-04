@@ -1,0 +1,205 @@
+Вот **полное ТЗ**, которое можно целиком отдать ИИ в Replit внутри текущего проекта.
+
+***
+
+## Полное ТЗ для Replit-проекта (LiveAvatar Sandbox Tester)
+
+> **Цель:**  
+> В существующем Replit‑проекте добавить модуль/функционал для тестирования промптов LiveAvatar в sandbox‑режиме (без видео/стрима), чтобы прогонять десятки/сотни вопросов, получать ответы аватара и сохранять логи для анализа (CSV/JSON).  
+
+***
+
+### 1. Документация LiveAvatar (использовать обязательно)
+
+Опирайся на официальную документацию LiveAvatar для API и примеров кода:  
+- Общий обзор и API: https://docs.liveavatar.com [docs.liveavatar](https://docs.liveavatar.com)
+- Quickstart (создание сессии, токены, базовый пример): https://docs.liveavatar.com/docs/quick-start-guide [docs.liveavatar](https://docs.liveavatar.com/docs/quick-start-guide)
+- Sandbox Mode (режим разработки, без расхода видео‑кредитов): https://docs.liveavatar.com/docs/developing-in-sandbox-mode [docs.liveavatar](https://docs.liveavatar.com/docs/developing-in-sandbox-mode)
+- Конфигурация аватара, контекста, настроек: https://docs.liveavatar.com/docs/configuring-your-liveavatar [docs.liveavatar](https://docs.liveavatar.com/docs/configuring-your-liveavatar)
+
+Нужно реализовать код, строго следуя тому, как в доках создаются сессии и вызывается LiveAvatar API, но с включённым sandbox‑режимом.
+
+***
+
+### 2. Технологический контекст
+
+> Адаптируй под текущий стек проекта (Node.js / TypeScript / Express или другой фреймворк), но соблюдай следующие требования:
+
+- API‑ключ и ID аватара должны читаться из переменных окружения Replit:
+  - `LIVEAVATAR_API_KEY`
+  - `LIVEAVATAR_AVATAR_ID`
+- Все секреты — через Replit Secrets, **не** хардкодить.  
+- Код должен работать в бесплатной среде Replit (никаких внешних баз данных по умолчанию).
+
+***
+
+### 3. Новый модуль: `sandboxTester`  
+
+Создай отдельный модуль/файл, например `sandboxTester.ts` или `sandboxTester.js` (формат под текущий проект), который экспортирует функцию:
+
+```ts
+async function runSandboxTest(params: {
+  systemPrompt: string;        // базовый промпт/инструкция для аватара
+  questions: string[];         // список пользовательских вопросов (от 1 до 1000)
+}): Promise<{
+  results: {
+    question: string;
+    answer: string | null;
+    error?: string;
+    timestamp: string;
+    durationMs?: number;
+  }[];
+  stats: {
+    total: number;
+    success: number;
+    failed: number;
+  };
+}>
+```
+
+**Требования к реализации:**
+
+1. **Инициализация клиента LiveAvatar**
+   - Один раз создаётся клиент/инстанс для работы с LiveAvatar API.
+   - Используются данные:
+     - API key: `process.env.LIVEAVATAR_API_KEY`
+     - Avatar ID: `process.env.LIVEAVATAR_AVATAR_ID`
+   - Включён **sandbox‑режим** согласно документации `Developing in Sandbox Mode` (используй те же параметры/флаги, что указаны в доке). [docs.liveavatar](https://docs.liveavatar.com/docs/developing-in-sandbox-mode)
+
+2. **Системный промпт / контекст**
+   - При старте теста учитывается `systemPrompt` как базовая инструкция для аватара (persona, тон, сценарий).
+   - Используй тот механизм, который рекомендуют в `Configuring your LiveAvatar` (custom mode / instructions / context). [docs.liveavatar](https://docs.liveavatar.com/docs/configuring-your-liveavatar)
+
+3. **Обработка списка вопросов**
+   - На вход приходит массив `questions` (могут быть десятки/сотни).
+   - Для **каждого** вопроса:
+     - Замерь время запроса (durationMs).
+     - Отправь запрос в LiveAvatar в sandbox‑режиме.
+     - Получи текстовый ответ (без видео/аудио).
+     - Если произошла ошибка (таймаут, 4xx, 5xx) — не падай, а сохрани `error` и `answer: null`.
+
+4. **Результат функции**
+   - Верни:
+     - `results`: список объектов `{ question, answer, error?, timestamp, durationMs? }`.
+     - `stats`:
+       - `total` — общее количество вопросов.
+       - `success` — количество успешных ответов (без error).
+       - `failed` — количество с error.
+
+5. **Логирование в файл**
+   - После выполнения `runSandboxTest` дополнительно сохрани логи в файл в корне проекта:
+     - Имя файла: `sandbox_logs_<YYYY-MM-DD_HH-mm-ss>.json`.
+     - Структура JSON:
+       ```json
+       {
+         "systemPrompt": "...",
+         "createdAt": "ISO_TIMESTAMP",
+         "stats": { "total": 0, "success": 0, "failed": 0 },
+         "results": [
+           {
+             "question": "...",
+             "answer": "...",
+             "error": null,
+             "timestamp": "...",
+             "durationMs": 123
+           }
+         ]
+       }
+       ```
+   - Если запись в файл не удалась — логировать ошибку в консоль, но не ломать основной ответ API.
+
+***
+
+### 4. HTTP‑endpoint для вызова теста
+
+Добавь HTTP‑endpoint в существующий сервер (или создай минимальный):
+
+- Метод: `POST`
+- Путь: `/sandbox-test`
+
+**Формат входящего JSON:**
+
+```json
+{
+  "systemPrompt": "Ты — аватар WOW Agent, помогаешь предпринимателям...",
+  "questions": [
+    "Привет, кто ты?",
+    "Что ты умеешь для моего бизнеса?",
+    "Как с тобой интегрироваться на сайт?",
+    "Сколько стоит пилот?"
+  ]
+}
+```
+
+**Требования к обработке:**
+
+1. Валидация:
+   - `systemPrompt` — обязательная строка, не пустая.
+   - `questions` — обязательный массив строк (1–1000 элементов).
+   - При ошибке валидации вернуть 400 с JSON:
+     ```json
+     { "error": "Invalid input", "details": "..." }
+     ```
+
+2. Вызов:
+   - Вызвать `runSandboxTest(...)` с переданными значениями.
+   - Ожидать результат и вернуть его клиенту.
+
+3. Формат ответа (пример):
+
+```json
+{
+  "stats": {
+    "total": 4,
+    "success": 4,
+    "failed": 0
+  },
+  "results": [
+    {
+      "question": "Привет, кто ты?",
+      "answer": "Я цифровой аватар WOW Agent, помогаю вам ...",
+      "error": null,
+      "timestamp": "2026-02-04T01:00:00.000Z",
+      "durationMs": 520
+    }
+  ]
+}
+```
+
+4. Ошибки:
+   - Если нет `LIVEAVATAR_API_KEY` или `LIVEAVATAR_AVATAR_ID` — вернуть 500 с понятным сообщением:
+     ```json
+     { "error": "LiveAvatar config missing", "details": "Set LIVEAVATAR_API_KEY and LIVEAVATAR_AVATAR_ID in Replit Secrets." }
+     ```
+
+***
+
+### 5. Настройка Replit
+
+1. В Replit добавить Secrets:
+   - `LIVEAVATAR_API_KEY` = `<реальный ключ из LiveAvatar>`
+   - `LIVEAVATAR_AVATAR_ID` = `<ID аватара из LiveAvatar dashboard>`
+
+2. Убедиться, что проект запускается командой (например) `npm run dev` или `node index.js`.
+
+3. После реализации:
+   - Запустить проект.
+   - Отправить `POST /sandbox-test` через встроенный HTTP‑клиент Replit или Postman.
+   - Проверить:
+     - Получение JSON‑ответа с результатами.
+     - Появление файла `sandbox_logs_<date>.json` в корне проекта.
+
+***
+
+### 6. Критерии готовности (Definition of Done)
+
+- Код компилируется/запускается в текущем Replit‑проекте без ошибок.
+- При корректной конфигурации ключей:
+  - `POST /sandbox-test` возвращает валидный JSON с `stats` и `results`.
+  - Для нескольких вопросов (4–10) ответы приходят от LiveAvatar в sandbox‑режиме.
+- В корне репозитория создаётся лог‑файл с полной информацией о запуске.
+- В случае ошибок API или отсутствия ключей возвращаются понятные JSON‑ошибки, а сервер не падает.
+
+***
+
+Скопируй этот блок целиком и вставь в чат ИИ внутри Replit — он по контексту проекта подберёт SDK, импорты и конкретные вызовы LiveAvatar API из документации по ссылкам выше.
