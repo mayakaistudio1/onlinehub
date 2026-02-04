@@ -1,6 +1,6 @@
 import type { Express, Request, Response } from "express";
 import OpenAI from "openai";
-import { WOW_PAGE_SYSTEM_PROMPT } from "../shared/prompts";
+import { WOW_LIVE_CONSULTANT_PROMPT } from "../shared/prompts";
 
 const openai = new OpenAI({
   apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
@@ -60,10 +60,16 @@ async function sendTelegramMessage(
 
 async function getAIResponse(userMessage: string): Promise<string> {
   try {
+    // Detect language from message (simple heuristics)
+    const hasRussian = /[а-яё]/i.test(userMessage);
+    const languageInstruction = hasRussian 
+      ? "\n\nIMPORTANT: Respond in Russian language."
+      : "\n\nIMPORTANT: Respond in the same language as the user's message.";
+
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
-        { role: "system", content: WOW_PAGE_SYSTEM_PROMPT },
+        { role: "system", content: WOW_LIVE_CONSULTANT_PROMPT + languageInstruction },
         { role: "user", content: userMessage },
       ],
       max_tokens: 300,
