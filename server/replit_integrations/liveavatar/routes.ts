@@ -1,41 +1,32 @@
 import type { Express, Request, Response } from "express";
 
 const LIVEAVATAR_API_KEY = process.env.LIVEAVATAR_API_KEY;
-const LIVEAVATAR_AVATAR_ID = process.env.LIVEAVATAR_AVATAR_ID || "";
-const LIVEAVATAR_VOICE_ID = process.env.LIVEAVATAR_VOICE_ID || "";
-const LIVEAVATAR_CONTEXT_ID = process.env.LIVEAVATAR_CONTEXT_ID || "";
 const LIVEAVATAR_BASE_URL = "https://api.liveavatar.com/v1";
 
-const CONTEXT_IDS: Record<string, string | undefined> = {
-  sales: process.env.LIVEAVATAR_CONTEXT_ID_SALES,
-  projects: process.env.LIVEAVATAR_CONTEXT_ID_PROJECTS,
-  team: process.env.LIVEAVATAR_CONTEXT_ID_TEAM,
-  expert: process.env.LIVEAVATAR_CONTEXT_ID_EXPERT,
-  "wow-live": process.env.LIVEAVATAR_CONTEXT_ID_WOW_LIVE || "ff6ea605-fd86-449c-8b22-ecb41bd4b27e",
-};
+// Configuration for 4 scenarios (sales, projects, team, expert)
+const SCENARIOS_AVATAR_ID = process.env.LIVEAVATAR_SCENARIOS_AVATAR_ID || "0930fd59-c8ad-434d-ad53-b391a1768720";
+const SCENARIOS_CONTEXT_ID = process.env.LIVEAVATAR_SCENARIOS_CONTEXT_ID || "9a8af2cd-6cc2-4189-8073-fb5031d9c421";
+const SCENARIOS_VOICE_ID = process.env.LIVEAVATAR_SCENARIOS_VOICE_ID || "b952f553-f7f3-4e52-8625-86b4c415384f";
 
-const WOW_LIVE_AVATAR_ID = "a173664e-ac0a-472d-9812-10e77968b7e8";
-const WOW_LIVE_VOICE_ID = "b952f553-f7f3-4e52-8625-86b4c415384f";
+// Configuration for WOW Live (bottom bar)
+const WOW_LIVE_AVATAR_ID = process.env.LIVEAVATAR_WOW_AVATAR_ID || "9650a758-1085-4d49-8bf3-f347565ec229";
+const WOW_LIVE_CONTEXT_ID = process.env.LIVEAVATAR_WOW_CONTEXT_ID || "ff6ea605-fd86-449c-8b22-ecb41bd4b27e";
+const WOW_LIVE_VOICE_ID = process.env.LIVEAVATAR_WOW_VOICE_ID || "f91568c4-c0a5-4dcd-8a05-69f3b8006f86";
 
-function getContextIdForDirection(direction?: string): string {
-  if (direction && CONTEXT_IDS[direction]) {
-    return CONTEXT_IDS[direction]!;
-  }
-  return LIVEAVATAR_CONTEXT_ID;
-}
-
-function getAvatarIdForDirection(direction?: string): string {
+function getConfigForDirection(direction?: string): { avatarId: string; contextId: string; voiceId: string } {
   if (direction === "wow-live") {
-    return WOW_LIVE_AVATAR_ID;
+    return {
+      avatarId: WOW_LIVE_AVATAR_ID,
+      contextId: WOW_LIVE_CONTEXT_ID,
+      voiceId: WOW_LIVE_VOICE_ID
+    };
   }
-  return LIVEAVATAR_AVATAR_ID;
-}
-
-function getVoiceIdForDirection(direction?: string): string {
-  if (direction === "wow-live") {
-    return WOW_LIVE_VOICE_ID;
-  }
-  return LIVEAVATAR_VOICE_ID;
+  // All other scenarios (sales, projects, team, expert) use same config
+  return {
+    avatarId: SCENARIOS_AVATAR_ID,
+    contextId: SCENARIOS_CONTEXT_ID,
+    voiceId: SCENARIOS_VOICE_ID
+  };
 }
 
 export async function getSessionToken(
@@ -46,16 +37,14 @@ export async function getSessionToken(
     throw new Error("Missing LIVEAVATAR_API_KEY in environment");
   }
 
-  const contextId = getContextIdForDirection(direction);
-  const avatarId = getAvatarIdForDirection(direction);
-  const voiceId = getVoiceIdForDirection(direction);
+  const config = getConfigForDirection(direction);
 
   const payload = {
     mode: "FULL",
-    avatar_id: avatarId,
+    avatar_id: config.avatarId,
     avatar_persona: {
-      voice_id: voiceId,
-      context_id: contextId,
+      voice_id: config.voiceId,
+      context_id: config.contextId,
       language
     }
   };
