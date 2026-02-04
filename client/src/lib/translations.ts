@@ -89,7 +89,7 @@ export const translations = {
       online: "в сети",
       whyWorks: "Почему это работает",
       chatPlaceholder: "Напиши вопрос...",
-      chatGreeting: "Привет! Я {name}. Помогу разобраться — что хочешь узнать?",
+      chatGreeting: "Привет 👋\nЯ — Demo Agent. Показываю, как может выглядеть живой текстовый диалог на сайте.\n\nПо сути, это пример того, как сайт может не \"показывать\", а разговаривать.\n\nКак тебе такая идея?",
       cards: {
         sales: {
           title: "Продажи и партнёрства",
@@ -277,7 +277,7 @@ export const translations = {
       online: "online",
       whyWorks: "Why it works",
       chatPlaceholder: "Ask a question...",
-      chatGreeting: "Hi! I'm {name}. I'll help you understand — what would you like to know?",
+      chatGreeting: "Hi 👋\nI'm Demo Agent. I'm showing you what a live text dialogue on a website can look like.\n\nBasically, this is an example of how a website can \"talk\" instead of just \"show\".\n\nWhat do you think of this idea?",
       cards: {
         sales: {
           title: "Sales & Partnerships",
@@ -465,7 +465,7 @@ export const translations = {
       online: "online",
       whyWorks: "Warum es funktioniert",
       chatPlaceholder: "Frage stellen...",
-      chatGreeting: "Hallo! Ich bin {name}. Ich helfe Ihnen — was möchten Sie wissen?",
+      chatGreeting: "Hallo 👋\nIch bin Demo Agent. Ich zeige dir, wie ein lebendiger Textdialog auf einer Website aussehen kann.\n\nIm Grunde ist das ein Beispiel dafür, wie eine Website \"reden\" statt nur \"zeigen\" kann.\n\nWas hältst du von dieser Idee?",
       cards: {
         sales: {
           title: "Vertrieb & Partnerschaften",
@@ -653,7 +653,7 @@ export const translations = {
       online: "en línea",
       whyWorks: "Por qué funciona",
       chatPlaceholder: "Escribe una pregunta...",
-      chatGreeting: "¡Hola! Soy {name}. Te ayudaré a entender — ¿qué quieres saber?",
+      chatGreeting: "¡Hola 👋\nSoy Demo Agent. Te muestro cómo puede verse un diálogo de texto vivo en un sitio web.\n\nBásicamente, esto es un ejemplo de cómo un sitio web puede \"hablar\" en lugar de solo \"mostrar\".\n\n¿Qué te parece esta idea?",
       cards: {
         sales: {
           title: "Ventas y alianzas",
