@@ -8,13 +8,11 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { TelegramProvider } from "@/lib/telegram";
 import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/home";
-import AvatarTestsPage from "@/pages/avatar-tests";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={HomePage} />
-      <Route path="/admin/avatar-tests" component={AvatarTestsPage} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -31,8 +31,7 @@ function getConfigForDirection(direction?: string): { avatarId: string; contextI
 
 export async function getSessionToken(
   language: string = "ru",
-  direction?: string,
-  isSandbox: boolean = false
+  direction?: string
 ): Promise<any> {
   if (!LIVEAVATAR_API_KEY) {
     throw new Error("Missing LIVEAVATAR_API_KEY in environment");
@@ -40,19 +39,15 @@ export async function getSessionToken(
 
   const config = getConfigForDirection(direction);
 
-  const payload: any = {
+  const payload = {
     mode: "FULL",
-    avatar_id: isSandbox ? "dd73ea75-1218-4ef3-92ce-606d5f7fbc0a" : config.avatarId,
+    avatar_id: config.avatarId,
     avatar_persona: {
       voice_id: config.voiceId,
       context_id: config.contextId,
       language
     }
   };
-  
-  if (isSandbox) {
-    payload.is_sandbox = true;
-  }
 
   const response = await fetch(`${LIVEAVATAR_BASE_URL}/sessions/token`, {
     method: "POST",

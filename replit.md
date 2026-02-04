@@ -58,24 +58,7 @@ Preferred communication style: Simple, everyday language.
 
 **Current Schema**:
 - `users` table with id, username, password fields
-- `avatar_test_questions` table - тестовые вопросы для LiveAvatar по категориям
-- `avatar_test_runs` table - результаты тестов (вопрос, ответ аватара, время ответа)
 - Uses `gen_random_uuid()` for ID generation
-
-### Avatar Testing System
-
-Система автоматизированного тестирования LiveAvatar (Sandbox Mode):
-
-**Страница**: `/admin/avatar-tests`
-
-**Функции**:
-- Добавление тестовых вопросов по категориям (Приветствие, О компании, Возражения и т.д.)
-- Запуск одиночных тестов или прогон всех вопросов
-- Sandbox Mode — бесплатно, сессии до 1 минуты
-- Сбор ответов аватара и времени ответа
-- Экспорт результатов в CSV
-
-**API**: `/api/avatar-tests/...`
 
 ### Build System
 

@@ -4,7 +4,6 @@ import { storage } from "./storage";
 import { registerLiveAvatarRoutes } from "./replit_integrations/liveavatar";
 import { registerChatRoutes } from "./replit_integrations/chat";
 import { registerTelegramRoutes } from "./replit_integrations/telegram";
-import { registerAvatarTestRoutes } from "./replit_integrations/avatar-tests";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -13,7 +12,6 @@ export async function registerRoutes(
   registerLiveAvatarRoutes(app);
   registerChatRoutes(app);
   registerTelegramRoutes(app);
-  registerAvatarTestRoutes(app);
 
   return httpServer;
 }
