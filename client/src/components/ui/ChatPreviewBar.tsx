@@ -11,10 +11,10 @@ export function ChatPreviewBar({ onOpenChat }: ChatPreviewBarProps) {
 
   return (
     <motion.div
-      initial={{ y: 100, opacity: 0 }}
+      initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.5, duration: 0.4 }}
-      className="fixed bottom-4 left-4 right-4 z-40 pb-[env(safe-area-inset-bottom)]"
+      transition={{ delay: 0.3, duration: 0.4 }}
+      className="w-full px-4 pb-[env(safe-area-inset-bottom)]"
       data-testid="live-consultant-bar"
     >
       <button

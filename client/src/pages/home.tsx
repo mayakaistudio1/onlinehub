@@ -933,12 +933,12 @@ function ContactSection() {
 }
 
 
-function Footer() {
+function Footer({ children }: { children?: React.ReactNode }) {
   const { t } = useLanguage();
   
   return (
-    <footer className="border-t border-slate-100 pt-8 pb-40 px-6" data-testid="footer">
-      <div className="mx-auto max-w-lg text-center space-y-3">
+    <footer className="border-t border-slate-100 pt-8 pb-6 px-6" data-testid="footer">
+      <div className="mx-auto max-w-lg text-center space-y-4">
         <div className="text-sm text-muted-foreground" data-testid="text-footer">
           {t.hero.title}
         </div>
@@ -955,6 +955,7 @@ function Footer() {
           {t.research.badge}
         </a>
       </div>
+      {children}
     </footer>
   );
 }
@@ -1056,17 +1057,19 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-dvh pb-28" data-testid="page-home">
+    <div className="min-h-dvh" data-testid="page-home">
       <Hero />
       <HowItWorks />
       <LiveScenarios />
       <WhyItMatters />
       <ContactSection />
-      <Footer />
-      
-      {!isLiveOpen && !isChatOpen && (
-        <ChatPreviewBar onOpenChat={openLive} />
-      )}
+      <Footer>
+        {!isLiveOpen && !isChatOpen && (
+          <div className="mt-6">
+            <ChatPreviewBar onOpenChat={openLive} />
+          </div>
+        )}
+      </Footer>
       
       <WowLiveScreen
         isOpen={isLiveOpen}
