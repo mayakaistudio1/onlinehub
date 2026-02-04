@@ -246,22 +246,19 @@ export function WowLiveScreen({ isOpen, onClose, language }: WowLiveScreenProps)
             </div>
           </>
         ) : (
-          /* Live Call Mode */
-          <div className="flex-1 flex flex-col bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
-            <div className="flex-1 flex items-center justify-center">
-              <LiveAvatarChat
-                isOpen={true}
-                onClose={endLiveCall}
-                scenario={{
-                  key: "wow-live",
-                  title: "WOW Live",
-                  description: "Live Avatar Chat",
-                }}
-                language={language}
-                autoStart={true}
-              />
-            </div>
-          </div>
+          /* Live Call Mode - Full Screen */
+          <LiveAvatarChat
+            isOpen={true}
+            onClose={endLiveCall}
+            scenario={{
+              key: "wow-live",
+              title: "WOW Live",
+              description: "Live Avatar Chat",
+            }}
+            language={language}
+            autoStart={true}
+            className="!fixed !inset-0 !z-[110]"
+          />
         )}
       </motion.div>
     </AnimatePresence>

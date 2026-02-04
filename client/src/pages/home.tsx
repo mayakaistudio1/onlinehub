@@ -962,38 +962,18 @@ function WowLivePage({ isOpen, onClose, language }: { isOpen: boolean; onClose: 
   if (!isOpen) return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 flex flex-col"
-      data-testid="wow-live-page"
-    >
-      <div className="flex-1 flex items-center justify-center">
-        <LiveAvatarChat
-          isOpen={true}
-          onClose={onClose}
-          scenario={{
-            key: "wow-live",
-            title: "WOW Live",
-            description: "Live Avatar Chat",
-          }}
-          language={language}
-          autoStart={true}
-        />
-      </div>
-      <div className="p-4 pb-8">
-        <Button
-          variant="ghost"
-          onClick={onClose}
-          className="w-full text-white/80 hover:text-white hover:bg-white/10"
-          data-testid="button-back-to-presentation"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Вернуться в презентацию
-        </Button>
-      </div>
-    </motion.div>
+    <LiveAvatarChat
+      isOpen={true}
+      onClose={onClose}
+      scenario={{
+        key: "wow-live",
+        title: "WOW Live",
+        description: "Live Avatar Chat",
+      }}
+      language={language}
+      autoStart={true}
+      className="!z-[100]"
+    />
   );
 }
 
