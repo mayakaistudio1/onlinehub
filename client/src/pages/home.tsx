@@ -937,7 +937,7 @@ function Footer() {
   const { t } = useLanguage();
   
   return (
-    <footer className="border-t border-slate-100 pt-8 pb-32 px-6" data-testid="footer">
+    <footer className="border-t border-slate-100 pt-8 pb-40 px-6" data-testid="footer">
       <div className="mx-auto max-w-lg text-center space-y-3">
         <div className="text-sm text-muted-foreground" data-testid="text-footer">
           {t.hero.title}
