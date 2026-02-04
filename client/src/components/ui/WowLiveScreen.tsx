@@ -85,6 +85,7 @@ export function WowLiveScreen({ isOpen, onClose, language }: WowLiveScreenProps)
           message: text.trim(),
           history,
           language,
+          mode: "wowlive",
         }),
       });
 

@@ -87,6 +87,7 @@ export function ChatModal({ isOpen, onClose, onSwitchToLiveAvatar, initialMessag
           message: text.trim(),
           history,
           language,
+          mode: "wowlive",
         }),
       });
 

@@ -1,7 +1,7 @@
 import type { Express, Request, Response } from "express";
 import OpenAI from "openai";
 import { chatStorage } from "./storage";
-import { WOW_PAGE_SYSTEM_PROMPT } from "../shared/prompts";
+import { DEMO_AGENT_PROMPT, WOW_LIVE_CONSULTANT_PROMPT } from "../shared/prompts";
 
 const openai = new OpenAI({
   apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
@@ -10,9 +10,10 @@ const openai = new OpenAI({
 
 export function registerChatRoutes(app: Express): void {
   // Demo chat endpoint - stateless, with system prompt
+  // mode: "demo" for 4 scenarios, "wowlive" for main consultant
   app.post("/api/demo/chat", async (req: Request, res: Response) => {
     try {
-      const { message, history = [], language = "ru" } = req.body;
+      const { message, history = [], language = "ru", mode = "demo" } = req.body;
 
       if (!message) {
         return res.status(400).json({ error: "Message is required" });
@@ -26,8 +27,11 @@ export function registerChatRoutes(app: Express): void {
       };
       const languageInstruction = `\n\nIMPORTANT: You MUST respond in ${languageNames[language] || "Russian"} language only.`;
 
+      // Choose prompt based on mode
+      const systemPrompt = mode === "wowlive" ? WOW_LIVE_CONSULTANT_PROMPT : DEMO_AGENT_PROMPT;
+
       const messages: OpenAI.ChatCompletionMessageParam[] = [
-        { role: "system", content: WOW_PAGE_SYSTEM_PROMPT + languageInstruction },
+        { role: "system", content: systemPrompt + languageInstruction },
         ...history.map((m: { role: string; content: string }) => ({
           role: m.role as "user" | "assistant",
           content: m.content,
