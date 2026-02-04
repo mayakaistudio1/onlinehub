@@ -1020,7 +1020,7 @@ function WowLivePage({ isOpen, onClose, language }: { isOpen: boolean; onClose: 
 }
 
 export default function HomePage() {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [isLiveOpen, setIsLiveOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isResearchOpen, setIsResearchOpen] = useState(false);
@@ -1063,7 +1063,17 @@ export default function HomePage() {
       <Footer onOpenResearch={() => setIsResearchOpen(true)} />
       
       {!isLiveOpen && !isChatOpen && (
-        <ChatPreviewBar onOpenChat={openLive} />
+        <>
+          <ChatPreviewBar onOpenChat={openLive} />
+          <button
+            onClick={() => setIsResearchOpen(true)}
+            className="fixed bottom-24 left-4 z-50 flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 text-slate-700 text-xs rounded-full shadow-lg hover:bg-slate-50 transition-colors"
+            data-testid="button-open-research-floating"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            {t.research?.button || "Исследование"}
+          </button>
+        </>
       )}
       
       <WowLiveScreen
